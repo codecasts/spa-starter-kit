@@ -14,6 +14,7 @@ const routes = [].concat(dashboard, categories)
 
 const router = new Router({
   routes,
+  linkActiveClass: 'active',
   mode: 'history', // do not use /#/.
 })
 

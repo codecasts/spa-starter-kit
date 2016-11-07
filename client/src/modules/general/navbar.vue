@@ -10,12 +10,12 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li>
-              <router-link :to="{ name: 'dashboard.index' }">Dashboard</router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'categories.index' }">Categorias</router-link>
-            </li>
+            <router-link tag="li" :to="{ name: 'dashboard.index' }" exact>
+              <a>Dashboard</a>
+            </router-link>
+            <router-link tag="li" :to="{ name: 'categories.index' }">
+              <a>Categorias</a>
+            </router-link>
           </ul>
         </div>
       </div>
