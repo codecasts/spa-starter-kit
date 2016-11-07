@@ -10,3 +10,5 @@ export default {
   name: 'Codecasts',
 }
 </script>
+
+<style lang="sass" src="assets/sass/app.scss"></style>
