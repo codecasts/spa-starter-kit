@@ -1,5 +1,7 @@
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     data() {
       return {
@@ -8,8 +10,13 @@
       }
     },
     methods: {
+      ...mapActions(['setToken']),
       submit() {
-
+        const payload = { email: this.email, password: this.password }
+        this.$http.post('login', payload).then((response) => {
+          this.setToken(response.data.token)
+          this.$router.push({ name: 'dashboard.index' })
+        })
       },
       reset() {
         this.email = ''
