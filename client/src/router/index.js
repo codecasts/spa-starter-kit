@@ -7,10 +7,11 @@ import Router from 'vue-router'
 */
 import dashboard from '../modules/dashboard/routes'
 import categories from '../modules/categories/routes'
+import login from '../modules/login/routes'
 
 Vue.use(Router)
 
-const routes = [].concat(dashboard, categories)
+const routes = [].concat(login, categories, dashboard)
 
 const router = new Router({
   routes,
