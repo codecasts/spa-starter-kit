@@ -20,8 +20,13 @@ const router = new Router({
   mode: 'history', // do not use /#/.
 })
 
+/**
+* Before a route is resolved we check for
+* the token if the route is marked as
+* requireAuth.
+*/
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth === undefined || !to.meta.requiresAuth) {
+  if (to.meta.requiresAuth === undefined || !to.meta.requiresAuth || store.state.token !== '') {
     next()
   }
   if (to.meta.requiresAuth !== undefined && to.meta.requiresAuth && store.state.token === '') {
