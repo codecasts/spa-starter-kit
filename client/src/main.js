@@ -9,8 +9,14 @@ import store from './store'
 * This is the Router
 */
 import router from './router'
+/**
+* $http plugin based on axios
+*/
+import Http from './plugins/http'
 
 require('./includes')
+
+Vue.use(Http)
 
 /* eslint-disable no-new */
 new Vue({
