@@ -1,14 +1,22 @@
 # Codecast's SPA Boilerplate
 
-This package contains two separate projects to act as a starting point for an SPA: a Vue.js project (created with vue-cli + webpack template) and a Laravel 5.3 project.
+This package contains two separate projects to act as a starting point for a Single Page Application: a Vue.js project (created with vue-cli + webpack template) and a Laravel 5.3 project.
 
-They're not just newly created projects but a fully working application that can be modified and expanded to become your own application.
+They're not just freshly created projects but a fully working application that can be modified and expanded to become your own application.
 
 ## Features
 
-1. list
-2. features
-3. here
+1. Client side
+    . Vue.js 2.0 project create with vue-cli + webpack template
+    . Centralized state management with Vuex
+    . Routes management with Vue-router
+    . Authentication with JWT
+    . HTTP requests with Axios
+
+2. Server side
+    . Laravel 5.3
+    . Authentication with JWT
+    . Web service RESTful with Dingo (soon)
 
 ## Installation
 
