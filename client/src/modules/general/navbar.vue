@@ -1,8 +1,11 @@
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
+    computed: {
+      ...mapState(['user']),
+    },
     methods: {
       ...mapActions(['setToken', 'setUser']),
       logout() {
@@ -33,6 +36,7 @@
             </router-link>
           </ul>
           <div class="nav navbar-form navbar-right">
+            <span class="username">{{ user.name }}</span>
             <button class="btn btn-default" @click="logout">Logout</button>
           </div>
         </div>
@@ -40,3 +44,12 @@
     </nav>
   </div>
 </template>
+
+<style scoped>
+  .username {
+    padding: 6px 20px;
+    border-radius: 20px;
+    background-color: #ddd;
+    display: inline-block;
+  }
+</style>
