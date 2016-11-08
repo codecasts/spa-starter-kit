@@ -1,4 +1,18 @@
 
+<script>
+  import { mapActions } from 'vuex'
+
+  export default {
+    methods: {
+      ...mapActions(['setToken']),
+      logout() {
+        this.setToken('')
+        this.$router.push({ name: 'login.index' })
+      },
+    },
+  }
+</script>
+
 <template>
   <div>
     <nav class="navbar navbar-default">
@@ -17,6 +31,9 @@
               <a>Categorias</a>
             </router-link>
           </ul>
+          <div class="nav navbar-form navbar-right">
+            <button class="btn btn-default" @click="logout">Logout</button>
+          </div>
         </div>
       </div>
     </nav>
