@@ -3,8 +3,8 @@
   export default {
     data () {
         return {
-          email: '',
-          password: '',
+          email: 'happy.developer@vuejsisawesome.com',
+          password: '123456',
         }
     },
     methods: {
