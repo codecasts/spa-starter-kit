@@ -10,11 +10,12 @@
       }
     },
     methods: {
-      ...mapActions(['setToken']),
+      ...mapActions(['setToken', 'setUser']),
       submit() {
         const payload = { email: this.email, password: this.password }
         this.$http.post('login', payload).then((response) => {
           this.setToken(response.data.token)
+          this.setUser(response.data.user)
           this.$router.push({ name: 'dashboard.index' })
         })
       },

@@ -4,9 +4,10 @@
 
   export default {
     methods: {
-      ...mapActions(['setToken']),
+      ...mapActions(['setToken', 'setUser']),
       logout() {
         this.setToken('')
+        this.setUser({})
         this.$router.push({ name: 'login.index' })
       },
     },

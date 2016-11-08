@@ -6,4 +6,9 @@ export default {
       token,
     })
   },
+  setUser: ({ commit }, user) => {
+    commit(TYPES.MAIN_SET_USER, {
+      user,
+    })
+  },
 }

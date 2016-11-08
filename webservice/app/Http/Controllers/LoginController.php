@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use JWTAuth;
 use JWTException;
 
@@ -23,7 +24,9 @@ class LoginController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+        $user = Auth::user();
+
         // all good so return the token
-        return response()->json(compact('token'));
+        return response()->json(compact('token', 'user'));
     }
 }
