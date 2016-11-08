@@ -18,6 +18,11 @@ import router from './router'
 import http from './plugins/http'
 
 /**
+* eventbus plugin
+*/
+import eventbus from './plugins/eventbus'
+
+/**
 * jQuery and Bootstrap includes
 */
 require('./includes')
@@ -26,6 +31,11 @@ require('./includes')
 * Make $http avaible to all components
 */
 Vue.use(http)
+
+/**
+* Make $bus avaible to all components
+*/
+Vue.use(eventbus)
 
 /* eslint-disable no-new */
 new Vue({
