@@ -12,6 +12,7 @@ They're not just freshly created projects but a fully working application that c
     . Routes management with Vue-router
     . Authentication with JWT
     . HTTP requests with Axios
+    . ESList, no semi-colons
 
 2. Server side
     . Laravel 5.3
