@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 /**
 * Routes are always stored close to
@@ -17,6 +18,15 @@ const router = new Router({
   routes,
   linkActiveClass: 'active',
   mode: 'history', // do not use /#/.
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth === undefined || !to.meta.requiresAuth) {
+    next()
+  }
+  if (to.meta.requiresAuth !== undefined && to.meta.requiresAuth && store.state.token === '') {
+    next({ name: 'login.index' })
+  }
 })
 
 export default router
