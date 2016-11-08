@@ -1,22 +1,31 @@
 import Vue from 'vue'
 import App from './App'
+
 /**
 * This is the Vuex store and it is
 * avaible to all your components
 */
 import store from './store'
+
 /**
 * This is the Router
 */
 import router from './router'
+
 /**
 * $http plugin based on axios
 */
-import Http from './plugins/http'
+import http from './plugins/http'
 
+/**
+* jQuery and Bootstrap includes
+*/
 require('./includes')
 
-Vue.use(Http)
+/**
+* Make $http avaible to all components
+*/
+Vue.use(http)
 
 /* eslint-disable no-new */
 new Vue({
