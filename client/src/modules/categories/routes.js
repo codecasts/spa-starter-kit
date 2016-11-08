@@ -1,5 +1,10 @@
-import Self from './main.vue'
+import Self from './main'
 
 export default [
-  { name: 'categories.index', path: '/categorias', component: Self, meta: { requiresAuth: false } }
+  {
+    name: 'categories.index',
+    path: '/categorias',
+    component: Self,
+    meta: { requiresAuth: false },
+  },
 ]

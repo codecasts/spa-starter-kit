@@ -1,5 +1,9 @@
-import Self from './main.vue'
+import Self from './main'
 
 export default [
-  { name: 'login.index', path: '/login', component: Self}
+  {
+    name: 'login.index',
+    path: '/login',
+    component: Self,
+  },
 ]

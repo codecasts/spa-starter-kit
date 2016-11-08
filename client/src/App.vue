@@ -1,14 +1,15 @@
 <script>
-import NavBar from './modules/general/navbar.vue'
+import NavBar from './modules/general/navbar'
+
 export default {
   name: 'Codecasts',
   components: {
-    NavBar
+    NavBar,
   },
   computed: {
-      shouldShowNavigation () {
-        return this.$route.name !== 'login.index'
-      }
+    shouldShowNavigation() {
+      return this.$route.name !== 'login.index'
+    },
   },
 }
 </script>

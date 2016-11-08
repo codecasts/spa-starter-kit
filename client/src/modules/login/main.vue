@@ -1,20 +1,20 @@
 
 <script>
   export default {
-    data () {
-        return {
-          email: 'happy.developer@vuejsisawesome.com',
-          password: '123456',
-        }
+    data() {
+      return {
+        email: 'happy.developer@vuejsisawesome.com',
+        password: '123456',
+      }
     },
     methods: {
-        submit () {
+      submit() {
 
-        },
-        reset () {
-            this.email = ''
-            this.password = ''
-        },
+      },
+      reset() {
+        this.email = ''
+        this.password = ''
+      },
     },
   }
 </script>
