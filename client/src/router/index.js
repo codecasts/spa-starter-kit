@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+import { localStorageGetItem } from '../utils/local'
 
 /**
 * Routes are always stored close to
@@ -26,10 +27,39 @@ const router = new Router({
 * requireAuth.
 */
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth === undefined || !to.meta.requiresAuth || store.state.token !== '') {
+  let token = store.state.token
+  const auth = to.meta.requiresAuth
+
+  if (token === '') {
+    const localStoredToken = localStorageGetItem('token')
+    const localStoredUser = localStorageGetItem('user')
+
+    /**
+    * Do we have token and user local stored?
+    * If so then use it!
+    */
+    if (localStoredToken !== undefined && localStoredUser !== undefined) {
+      token = localStorageGetItem('token').token
+      store.dispatch('setToken', token)
+      store.dispatch('setUser', localStoredUser.user)
+    }
+  }
+
+  /**
+  * If route doesn't require authentication
+  * OR we have a token then let the route
+  * be normally accessed.
+  */
+  if (auth === undefined || !auth || token !== '') {
     next()
   }
-  if (to.meta.requiresAuth !== undefined && to.meta.requiresAuth && store.state.token === '') {
+
+  /**
+  * Otherwise  if authentication is required
+  * AND the token is empty, then redirect to
+  * login.
+  */
+  if (auth !== undefined && auth && token === '') {
     next({ name: 'login.index' })
   }
 })

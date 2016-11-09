@@ -36,8 +36,7 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 1. Client side
 	* Your application will be available on **http://localhost:8080**
 2. Server side
-	* Your application will be available on **http://localhost:8000**. API endpoint is http://**localhost:8000/api**
-
+	* API endpoint is http://**localhost:8000/api**
 
 ## Contributing
 
@@ -50,7 +49,6 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 ## Credits
 
 [Fábio Vedovelli](https://github.com/vedovelli)
-
 
 ## License
 
