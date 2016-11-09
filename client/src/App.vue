@@ -1,11 +1,11 @@
 <script>
-import NavBar from './modules/general/navbar'
+import CcNavBar from './modules/general/navbar'
 import CcAlerts from './modules/general/alerts'
 
 export default {
-  name: 'Codecasts',
+  name: 'Application',
   components: {
-    NavBar,
+    CcNavBar,
     CcAlerts,
   },
   computed: {
@@ -18,7 +18,7 @@ export default {
 
 <template>
   <div id="app">
-    <nav-bar v-show="shouldShowNavigation"></nav-bar>
+    <cc-nav-bar v-show="shouldShowNavigation"></cc-nav-bar>
     <cc-alerts></cc-alerts>
     <div class="container">
       <router-view></router-view>

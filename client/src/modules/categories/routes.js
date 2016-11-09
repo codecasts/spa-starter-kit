@@ -1,10 +1,10 @@
-import Self from './main'
+import component from './main'
 
 export default [
   {
     name: 'categories.index',
     path: '/categorias',
-    component: Self,
+    component,
     meta: { requiresAuth: true },
   },
 ]

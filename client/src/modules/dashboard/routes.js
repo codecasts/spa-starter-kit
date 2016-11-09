@@ -1,15 +1,15 @@
-import Self from './main'
+import component from './main'
 
 export default [
   {
     name: 'dashboard.index',
     path: '/',
-    component: Self,
+    component,
     meta: { requiresAuth: true },
   }, {
     name: 'catchall',
     path: '*',
-    component: Self,
+    component,
     meta: { requiresAuth: true },
   },
 ]

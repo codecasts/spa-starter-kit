@@ -1,9 +1,10 @@
-import Self from './main'
+import component from './main'
 
 export default [
   {
     name: 'login.index',
     path: '/login',
-    component: Self,
+    component,
+    meta: { requiresAuth: false },
   },
 ]
