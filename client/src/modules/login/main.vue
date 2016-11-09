@@ -3,6 +3,9 @@
   import { mapActions } from 'vuex'
 
   export default {
+    /**
+    * Component's local state
+    */
     data() {
       return {
         email: 'happy.developer@vuejsisawesome.com',
@@ -10,16 +13,35 @@
       }
     },
     methods: {
+      /**
+      * Map the actions from Vuex to this component.
+      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator
+      */
       ...mapActions(['setToken', 'setUser', 'setMessage']),
+
+      /**
+      * Handle form's submit event
+      */
       submit() {
         const payload = { email: this.email, password: this.password }
         this.$http.post('login', payload).then((response) => {
-          this.setToken(response.data.token)
-          this.setUser(response.data.user)
-          this.setMessage({ type: 'error', message: [] })
-          this.$router.push({ name: 'dashboard.index' })
+          this.handleResponse(response)
         })
       },
+
+      /**
+      * Handle success response from AJAX call
+      */
+      handleResponse(response) {
+        this.setToken(response.data.token) // this is a Vuex action
+        this.setUser(response.data.user) // this is a Vuex action
+        this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
+        this.$router.push({ name: 'dashboard.index' })
+      },
+
+      /**
+      * Reset component's local state
+      */
       reset() {
         this.email = ''
         this.password = ''
