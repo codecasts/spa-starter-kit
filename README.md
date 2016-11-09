@@ -1,5 +1,7 @@
 # Codecast's SPA Starter Kit
 
+> A **highly opinionated** Single Page Application starter kit built on top of Vue.js and Laravel.
+
 This package contains two separate projects to act as a starting point for a Single Page Application: a Vue.js project (created with vue-cli + webpack template) and a Laravel 5.3 project.
 
 They're not just freshly created projects but a fully working application that can be modified and expanded to become your own application.
