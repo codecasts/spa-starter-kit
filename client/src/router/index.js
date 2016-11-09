@@ -13,7 +13,7 @@ import login from '../modules/login/routes'
 
 Vue.use(Router)
 
-const routes = [].concat(login, categories, dashboard)
+const routes = [...login, ...categories, ...dashboard]
 
 const router = new Router({
   routes,

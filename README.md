@@ -11,14 +11,15 @@ They're not just freshly created projects but a fully working application that c
 1. Client side
     * Vue.js 2.0 project create with vue-cli + webpack template
     * Centralized state management with Vuex
-    * Routes management with Vue-router
+    * Route management with Vue-router
     * Authentication with JWT
+    * Keep user signed in using local stored info
     * HTTP requests with Axios
     * ESList, no semi-colons
 2. Server side
     * Laravel 5.3
     * Authentication with JWT
-    * Web service RESTful with Dingo (soon)
+    * Web service RESTful with Dingo *(planned)*
 
 ## Prerequisites
 
