@@ -18,20 +18,24 @@ They're not just freshly created projects but a fully working application that c
     * Authentication with JWT
     * Web service RESTful with Dingo (soon)
 
+## Prerequisites
+
+Make sure you have installed **Node** and **NPM** (latest versions) as well as **PHP 7** and **MySQL**.
+
 ## Installation
 
 1. Client side
-	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/). 
+	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/).
 2. Server side
 	* With Terminal `cd webservice && composer install && php artisan serve`.
- 
+
 ## Usage
 
 1. Client side
 	* Your application will be available on **http://localhost:8080**
 2. Server side
 	* Your application will be available on **http://localhost:8000**. API endpoint is http://**localhost:8000/api**
-	
+
 
 ## Contributing
 
