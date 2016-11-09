@@ -13,7 +13,6 @@ They're not just freshly created projects but a fully working application that c
     * Authentication with JWT
     * HTTP requests with Axios
     * ESList, no semi-colons
-
 2. Server side
     * Laravel 5.3
     * Authentication with JWT
@@ -23,7 +22,6 @@ They're not just freshly created projects but a fully working application that c
 
 1. Client side
 	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/). 
-	
 2. Server side
 	* With Terminal `cd webservice && composer install && php artisan serve`.
  
