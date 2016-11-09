@@ -10,12 +10,13 @@
       }
     },
     methods: {
-      ...mapActions(['setToken', 'setUser']),
+      ...mapActions(['setToken', 'setUser', 'setMessage']),
       submit() {
         const payload = { email: this.email, password: this.password }
         this.$http.post('login', payload).then((response) => {
           this.setToken(response.data.token)
           this.setUser(response.data.user)
+          this.setMessage({ type: 'error', message: [] })
           this.$router.push({ name: 'dashboard.index' })
         })
       },
@@ -29,7 +30,7 @@
 
 <template>
   <div class="container">
-    <h3 class="text-center">Codecasts - SPA - Boilerplate</h3>
+    <h3 class="text-center">Codecasts - SPA - Starter Kit</h3>
     <form class="well" @submit.prevent="submit">
       <div class="form-group">
         <label for="email" class="control-label">E-mail</label>
