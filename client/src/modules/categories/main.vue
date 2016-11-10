@@ -1,6 +1,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import CcPagination from '../general/pagination'
 
   export default {
     /**
@@ -8,6 +9,14 @@
     * Vue.js Devtools
     */
     name: 'Categories',
+
+    /**
+    * Components registered with
+    * this component
+    */
+    components: {
+        CcPagination
+    },
 
     /**
     * mapActions will bring indicated Vuex
@@ -62,5 +71,8 @@
         </tr>
       </tbody>
     </table>
+    <div class="text-center">
+      <cc-pagination :pager="pager"></cc-pagination>
+    </div>
   </div>
 </template>
