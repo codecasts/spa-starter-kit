@@ -1,5 +1,6 @@
 
 <script>
+  import Vue from 'vue'
   import { mapActions, mapState } from 'vuex'
   import CcPagination from '../general/pagination'
 
@@ -9,6 +10,12 @@
     * Vue.js Devtools
     */
     name: 'Categories',
+
+    data() {
+      return {
+        isSearching: false,
+      }
+    },
 
     /**
     * Components registered with
@@ -25,13 +32,15 @@
     methods: {
       ...mapActions(['categoriesSetPager']),
       fetch() {
+        this.isSearching = true
         this.$http.get(`categorias?page=${this.currentPage}`).then((response) => {
           this.categoriesSetPager({ pager: response.data.pager })
+          this.isSearching = false
         })
       },
       navigate(obj) {
         this.$router.push({ name: 'categories.index', query: { page: obj.page } })
-        this.fetch()
+        Vue.nextTick(() => this.fetch())
       },
     },
 
@@ -47,7 +56,7 @@
         return this.pager.data
       },
       currentPage() {
-        return this.$route.query.page
+        return parseInt(this.$route.query.page, 10)
       },
     },
     mounted() {
@@ -78,7 +87,7 @@
           <th>Nome</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody :class="{ blur: isSearching }">
         <tr v-for="category in categories">
           <td width="1%" nowrap>{{ category.id }}</td>
           <td>{{ category.name }}</td>
@@ -86,7 +95,13 @@
       </tbody>
     </table>
     <div class="text-center">
-      <cc-pagination :pager="pager"></cc-pagination>
+      <cc-pagination :pager="pager" :current-page="currentPage"></cc-pagination>
     </div>
   </div>
 </template>
+
+<style scoped>
+  .blur {
+    filter: blur(7px);
+  }
+</style>
