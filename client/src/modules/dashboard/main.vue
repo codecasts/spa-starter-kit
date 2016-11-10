@@ -7,6 +7,8 @@
 
 <template>
   <div>
-    <h1>Dashboard Component</h1>
+      <blockquote>
+        A highly opinionated Single Page Application starter kit built on top of Vue.js and Laravel.
+      </blockquote>
   </div>
 </template>

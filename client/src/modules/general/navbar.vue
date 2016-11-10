@@ -22,8 +22,8 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">
-            Codecasts
+          <a class="navbar-brand" href="http://www.codecasts.com.br/">
+            Codecasts.com.br
           </a>
         </div>
         <div class="collapse navbar-collapse">
