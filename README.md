@@ -16,6 +16,7 @@ They're not just freshly created projects but a fully working application that c
     * Keep user signed in using local stored info
     * HTTP requests with Axios
     * ESList, no semi-colons
+    * Pagination integrated with Laravel's LengthAwarePaginator
 2. Server side
     * Laravel 5.3
     * Authentication with JWT
