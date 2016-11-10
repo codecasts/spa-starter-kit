@@ -3,19 +3,44 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
+    /**
+    * Components name to be displayed on
+    * Vue.js Devtools
+    */
     name: 'Categories',
+
+    /**
+    * mapActions will bring indicated Vuex
+    * actions to the scope of this component.
+    */
     methods: {
-      ...mapActions(['categoriesSetList']),
+      ...mapActions(['categoriesSetPager']),
     },
+
+    /**
+    * mapState will bring indicated Vuex
+    * state properties to the scope of this component.
+    */
     computed: {
       ...mapState({
-        categories: state => state.Categories.list,
+        pager: state => state.Categories.pager,
       }),
+      categories() {
+        return this.pager.data
+      },
     },
     mounted() {
-      this.$http.get('categorias').then((response) => {
-        this.categoriesSetList({ list: response.data.categories })
-      })
+      /**
+      * We only fetch data the first time
+      * component is mounted. We can set
+      * up a timer to fetch new data
+      * from time to time
+      */
+      if (this.pager.data === undefined) {
+        this.$http.get('categorias').then((response) => {
+          this.categoriesSetPager({ pager: response.data.pager })
+        })
+      }
     },
   }
 </script>

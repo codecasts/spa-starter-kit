@@ -1,19 +1,19 @@
 import * as TYPES from '../../store/types'
 
 const state = {
-  list: [],
+  pager: {},
 }
 
 /* eslint-disable no-param-reassign */
 const mutations = {
-  [TYPES.CATEGORIES_SET_LIST](st, obj) {
-    st.list = obj.list
+  [TYPES.CATEGORIES_SET_PAGER](st, obj) {
+    st.pager = obj.pager
   },
 }
 
 const actions = {
-  categoriesSetList({ commit }, obj) {
-    commit(TYPES.CATEGORIES_SET_LIST, obj)
+  categoriesSetPager({ commit }, obj) {
+    commit(TYPES.CATEGORIES_SET_PAGER, obj)
   },
 }
 

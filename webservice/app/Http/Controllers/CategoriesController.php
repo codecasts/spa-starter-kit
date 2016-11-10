@@ -9,7 +9,7 @@ class CategoriesController extends Controller
 {
     public function all()
     {
-        $categories = Category::all();
-        return response()->json(compact('categories'), 200);
+        $pager = Category::paginate(10);
+        return response()->json(compact('pager'), 200);
     }
 }
