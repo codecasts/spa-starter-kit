@@ -11,6 +11,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        \App\User::truncate();
+
         \App\User::create([
             'name' => 'Happy Developer =D',
             'email' => 'happy.developer@vuejsisawesome.com',
