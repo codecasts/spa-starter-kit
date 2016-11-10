@@ -2,6 +2,7 @@
 
 import * as TYPES from './types'
 import { localStorageSetItem } from '../utils/local'
+import { setToken as httpSetToken } from '../plugins/http'
 
 export default {
 
@@ -15,6 +16,11 @@ export default {
     * for auto-login purpose
     */
     localStorageSetItem('token', { token })
+
+    /**
+    * Set the Authorization header with the token
+    */
+    httpSetToken(token)
 
     /**
     * Commit the mutation
