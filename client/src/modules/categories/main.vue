@@ -15,7 +15,7 @@
     * this component
     */
     components: {
-        CcPagination
+      CcPagination,
     },
 
     /**
@@ -24,6 +24,15 @@
     */
     methods: {
       ...mapActions(['categoriesSetPager']),
+      fetch() {
+        this.$http.get(`categorias?page=${this.currentPage}`).then((response) => {
+          this.categoriesSetPager({ pager: response.data.pager })
+        })
+      },
+      navigate(obj) {
+        this.$router.push({ name: 'categories.index', query: { page: obj.page } })
+        this.fetch()
+      },
     },
 
     /**
@@ -37,8 +46,15 @@
       categories() {
         return this.pager.data
       },
+      currentPage() {
+        return this.$route.query.page
+      },
     },
     mounted() {
+      /**
+      * Listen to pagination navigate event
+      */
+      this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
       * We only fetch data the first time
       * component is mounted. We can set
@@ -46,9 +62,7 @@
       * from time to time
       */
       if (this.pager.data === undefined) {
-        this.$http.get('categorias').then((response) => {
-          this.categoriesSetPager({ pager: response.data.pager })
-        })
+        this.fetch()
       }
     },
   }

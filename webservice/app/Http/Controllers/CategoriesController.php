@@ -7,7 +7,7 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
-    public function all()
+    public function all(Request $request)
     {
         $pager = Category::paginate(10);
         return response()->json(compact('pager'), 200);

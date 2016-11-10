@@ -31,7 +31,7 @@
             <router-link tag="li" :to="{ name: 'dashboard.index' }" exact>
               <a>Dashboard</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'categories.index' }">
+            <router-link tag="li" :to="{ name: 'categories.index', query: { page: 1 } }">
               <a>Categorias</a>
             </router-link>
           </ul>
