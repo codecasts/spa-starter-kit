@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'Categories',
+    name: 'CcCategories',
 
     data() {
       return {

@@ -1,7 +1,7 @@
 
 <script>
   export default {
-    name: 'Dashboard',
+    name: 'CcDashboard',
   }
 </script>
 

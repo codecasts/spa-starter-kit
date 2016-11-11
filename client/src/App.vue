@@ -3,7 +3,7 @@ import CcNavBar from './modules/general/navbar'
 import CcAlerts from './modules/general/alerts'
 
 export default {
-  name: 'Application',
+  name: 'Codecasts',
   components: {
     CcNavBar,
     CcAlerts,
