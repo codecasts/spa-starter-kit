@@ -6,6 +6,12 @@
       pages() {
         return Math.ceil(this.pager.total / this.pager.per_page)
       },
+      isLast() {
+        return this.currentPage === this.pages
+      },
+      isFirst() {
+        return this.currentPage === 1
+      },
     },
     methods: {
       navigate(page) {
@@ -14,15 +20,13 @@
         }
       },
       navigatePrevious() {
-        if (this.currentPage > 1) {
-          const page = this.currentPage - 1
-          this.dispatch(page)
+        if (!this.isFirst) {
+          this.dispatch(this.currentPage - 1)
         }
       },
       navigateNext() {
-        if (this.currentPage < this.pages) {
-          const page = this.currentPage + 1
-          this.dispatch(page)
+        if (!this.isLast) {
+          this.dispatch(this.currentPage + 1)
         }
       },
       dispatch(page) {
@@ -36,7 +40,7 @@
   <div>
     <nav aria-label="Page navigation">
       <ul class="pagination">
-        <li>
+        <li :class="{ disabled: isFirst }">
           <a href="#" aria-label="Previous" @click.prevent="navigatePrevious()">
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -44,7 +48,7 @@
         <li v-for="page in pages" :class="{ active: currentPage === page }">
           <a href="#" @click.prevent="navigate(page)">{{ page }}</a>
         </li>
-        <li>
+        <li :class="{ disabled: isLast }">
           <a href="#" aria-label="Next" @click.prevent="navigateNext()">
             <span aria-hidden="true">&raquo;</span>
           </a>
