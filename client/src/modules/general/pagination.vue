@@ -10,8 +10,23 @@
     methods: {
       navigate(page) {
         if (page !== this.currentPage) {
-          this.$bus.$emit('navigate', { page })
+          this.dispatch(page)
         }
+      },
+      navigatePrevious() {
+        if (this.currentPage > 1) {
+          const page = this.currentPage - 1
+          this.dispatch(page)
+        }
+      },
+      navigateNext() {
+        if (this.currentPage < this.pages) {
+          const page = this.currentPage + 1
+          this.dispatch(page)
+        }
+      },
+      dispatch(page) {
+        this.$bus.$emit('navigate', { page })
       },
     },
   }
@@ -22,7 +37,7 @@
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li>
-          <a href="#" aria-label="Previous">
+          <a href="#" aria-label="Previous" @click.prevent="navigatePrevious()">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
@@ -30,7 +45,7 @@
           <a href="#" @click.prevent="navigate(page)">{{ page }}</a>
         </li>
         <li>
-          <a href="#" aria-label="Next">
+          <a href="#" aria-label="Next" @click.prevent="navigateNext()">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
