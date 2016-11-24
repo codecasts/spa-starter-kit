@@ -17,12 +17,12 @@ class CategoriesTableSeeder extends Seeder
         /**
         * Create 50 categories
         */
-        factory(\App\Category::class, 50)->create()->each(function ($category) use ($faker) {
+        factory(\App\Category::class, 5000)->create()->each(function ($category) use ($faker) {
             /**
             * For each category 3 to 30 products will
             * be created and assigned
             */
-            $quantity = $faker->numberBetween(3, 30);
+            $quantity = $faker->numberBetween(1, 3);
 
             /**
             * Generate in memory the products
