@@ -31,8 +31,10 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 1. Client side
 	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/).
 2. Server side
-    * Create a database and configure connection by changing Laravel's provided .env file. Then...
 	* With Terminal:
+        * Navigate to **webservice** folder and then:
+        * `touch database/database.sqlite`
+        * `cp .env.example .env`
         * `cd webservice`
         * `composer install`
         * `php artisan migrate`
