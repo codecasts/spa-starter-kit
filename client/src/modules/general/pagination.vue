@@ -4,7 +4,10 @@
     // https://vuejs.org/v2/guide/components.html#Prop-Validation
     props: {
       pager: Object,
-      currentPage: Number,
+      currentPage: {
+        type: Number,
+        default: 1,
+      },
       maxItems: {
         type: Number,
         default: 10,
@@ -21,10 +24,23 @@
           this.currentPage, this.pager.total, this.pager.per_page, parseInt(this.maxItems, 10))
       },
       isLast() {
-        return this.currentPage === this.pages
+        return this.currentPage === this.pager.last_page
       },
       isFirst() {
         return this.currentPage === 1
+      },
+      isOutOfRange() {
+        /**
+        * ?page= not presente in the URL or present but empty
+        */
+        if (isNaN(this.currentPage) || this.currentPage === null) {
+          return true
+        }
+
+        /**
+        * ?page=0 or higher than the total number of pages
+        */
+        return this.currentPage > this.pager.last_page || this.currentPage < 1
       },
       currentRange() {
         let firstItem = (this.pager.per_page * (this.currentPage - 1)) + 1
@@ -62,6 +78,10 @@
         this.$bus.$emit('navigate', { page })
       },
       generatePagesArray(currentPage, collectionLength, rowsPerPage, maxItems) {
+        if (this.isOutOfRange) {
+          this.navigate(1)
+          return false
+        }
         const pages = []
         const totalPages = Math.ceil(collectionLength / rowsPerPage)
         const halfWay = Math.ceil(maxItems / 2)
