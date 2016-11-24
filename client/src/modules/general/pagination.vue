@@ -93,7 +93,8 @@
           </a>
         </li>
         <li v-for="page in pages" :class="{ active: currentPage === page }">
-          <a href="#" @click.prevent="navigate(page)">{{ page }}</a>
+          <a v-if="page !== '...'" href="#" @click.prevent="navigate(page)">{{ page }}</a>
+          <span v-if="page === '...'">{{ page }}</span>
         </li>
         <li :class="{ disabled: isLast }">
           <a href="#" aria-label="Next" @click.prevent="navigateNext()">
