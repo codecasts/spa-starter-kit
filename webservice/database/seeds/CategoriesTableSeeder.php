@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Category;
+use App\Product;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -11,23 +13,23 @@ class CategoriesTableSeeder extends Seeder
         /**
         * Clear up the tables before adding new data
         */
-        \App\Category::truncate();
-        \App\Product::truncate();
+        Category::truncate();
+        Product::truncate();
 
         /**
         * Create 50 categories
         */
-        factory(\App\Category::class, 5000)->create()->each(function ($category) use ($faker) {
+        factory(Category::class, 5000)->create()->each(function ($category) use ($faker) {
             /**
-            * For each category 3 to 30 products will
+            * For each category 2 to 5 products will
             * be created and assigned
             */
-            $quantity = $faker->numberBetween(1, 3);
+            $quantity = $faker->numberBetween(2, 5);
 
             /**
             * Generate in memory the products
             */
-            $products = factory(\App\Product::class, $quantity)->make();
+            $products = factory(Product::class, $quantity)->make();
 
             foreach ($products as $product) {
                 /**
