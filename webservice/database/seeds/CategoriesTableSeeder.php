@@ -19,7 +19,7 @@ class CategoriesTableSeeder extends Seeder
         /**
         * Create 50 categories
         */
-        factory(Category::class, 5000)->create()->each(function ($category) use ($faker) {
+        factory(Category::class, 200)->create()->each(function ($category) use ($faker) {
             /**
             * For each category 2 to 5 products will
             * be created and assigned
