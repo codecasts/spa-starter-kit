@@ -95,7 +95,11 @@
       </tbody>
     </table>
     <div class="text-center">
-      <cc-pagination :pager="pager" :current-page="currentPage"></cc-pagination>
+      <cc-pagination
+        :pager="pager"
+        :current-page="currentPage"
+        max-items="20">
+      </cc-pagination>
     </div>
   </div>
 </template>
