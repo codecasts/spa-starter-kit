@@ -1,17 +1,39 @@
 
 <script>
   export default {
-    props: ['pager', 'current-page', 'max-items'],
+    props: {
+      pager: Object,
+      currentPage: Number,
+      maxItems: {
+        type: Number,
+        default: 10,
+      },
+    },
     computed: {
       pages() {
         return this.generatePagesArray(
-          this.currentPage, this.pager.total, this.pager.per_page, this.maxItems)
+          this.currentPage, this.pager.total, this.pager.per_page, parseInt(this.maxItems, 10))
       },
       isLast() {
         return this.currentPage === this.pages
       },
       isFirst() {
         return this.currentPage === 1
+      },
+      currentRange() {
+        let firstItem = (this.pager.per_page * (this.currentPage - 1)) + 1
+        let lastItem = (this.pager.per_page * this.currentPage)
+
+        if (this.pager.total < lastItem) {
+          lastItem = this.pager.total
+        }
+        if (this.totalPages === 1) {
+          firstItem = 1
+        }
+        if (this.totalPages === 0) {
+          firstItem = 0
+        }
+        return `${firstItem} a ${lastItem}`
       },
     },
     methods: {
@@ -85,23 +107,36 @@
 
 <template>
   <div>
-    <nav aria-label="Page navigation">
-      <ul class="pagination">
-        <li :class="{ disabled: isFirst }">
-          <a href="#" aria-label="Previous" @click.prevent="navigatePrevious()">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li v-for="page in pages" :class="{ active: currentPage === page }">
-          <a v-if="page !== '...'" href="#" @click.prevent="navigate(page)">{{ page }}</a>
-          <span v-if="page === '...'">{{ page }}</span>
-        </li>
-        <li :class="{ disabled: isLast }">
-          <a href="#" aria-label="Next" @click.prevent="navigateNext()">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="rangeInformation">Mostrando {{ currentRange }} de {{ pager.total }}</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li :class="{ disabled: isFirst }">
+              <a href="#" aria-label="Previous" @click.prevent="navigatePrevious()">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li v-for="page in pages" :class="{ active: currentPage === page }">
+              <a v-if="page !== '...'" href="#" @click.prevent="navigate(page)">{{ page }}</a>
+              <span v-if="page === '...'">{{ page }}</span>
+            </li>
+            <li :class="{ disabled: isLast }">
+              <a href="#" aria-label="Next" @click.prevent="navigateNext()">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+  .rangeInformation {
+    margin-top: 28px;
+  }
+</style>

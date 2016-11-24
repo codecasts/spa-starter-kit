@@ -94,11 +94,11 @@
         </tr>
       </tbody>
     </table>
-    <div class="text-center">
+    <div>
       <cc-pagination
         :pager="pager"
         :current-page="currentPage"
-        max-items="20">
+        :max-items="12">
       </cc-pagination>
     </div>
   </div>
