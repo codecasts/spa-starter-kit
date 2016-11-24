@@ -1,6 +1,7 @@
 
 <script>
   export default {
+    // https://vuejs.org/v2/guide/components.html#Prop-Validation
     props: {
       pager: Object,
       currentPage: Number,
@@ -11,6 +12,11 @@
     },
     computed: {
       pages() {
+        /**
+        * The generatePagesArray method will calculate
+        * the need of ellipsis (...) in case of a super
+        * big array of records
+        */
         return this.generatePagesArray(
           this.currentPage, this.pager.total, this.pager.per_page, parseInt(this.maxItems, 10))
       },
