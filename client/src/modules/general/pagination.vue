@@ -13,6 +13,9 @@
         default: 10,
       },
     },
+    mounted() {
+      this.enableKeyboardNavigation()
+    },
     computed: {
       pages() {
         /**
@@ -59,6 +62,16 @@
       },
     },
     methods: {
+      enableKeyboardNavigation() {
+        jQuery('body').on('keyup', ({ keyCode }) => {
+          if (keyCode === 37) {
+            this.navigatePrevious()
+          }
+          if (keyCode === 39) {
+            this.navigateNext()
+          }
+        })
+      },
       navigate(page) {
         if (page !== this.currentPage) {
           this.dispatch(page)
