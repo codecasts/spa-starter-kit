@@ -12,4 +12,11 @@ class CategoriesController extends Controller
         $pager = Category::paginate(10);
         return response()->json(compact('pager'), 200);
     }
+
+    public function remove($id)
+    {
+        $category = Category::find($id);
+        $category->delete();
+        return response()->json(['result' => 'success'], 200);
+    }
 }

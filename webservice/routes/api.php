@@ -7,6 +7,7 @@ Route::group(['middleware' => ['cors', 'api']], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::group(['prefix' => 'categorias'], function () {
             Route::get('', ['uses' => 'CategoriesController@all']);
+            Route::delete('{id}/remover', ['uses' => 'CategoriesController@remove']);
         });
     });
 });
