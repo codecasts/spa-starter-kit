@@ -14,6 +14,12 @@ export default {
     commit(TYPES.MAIN_SET_MESSAGE, obj)
   },
 
+  resetMessages({ commit }) {
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'success', message: '' })
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'error', message: '' })
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'warning', message: '' })
+  },
+
   setToken({ commit }, token) {
     /**
     * Sets the token to the local storage
