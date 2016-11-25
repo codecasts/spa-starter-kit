@@ -8,4 +8,5 @@ export default {
     error: '',
     warning: '',
   },
+  fetching: false,
 }

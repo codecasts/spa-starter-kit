@@ -6,6 +6,10 @@ import { setToken as httpSetToken } from '../plugins/http'
 
 export default {
 
+  setFetching({ commit }, obj) {
+    commit(TYPES.MAIN_SET_FETCHING, obj)
+  },
+
   setMessage({ commit }, obj) {
     commit(TYPES.MAIN_SET_MESSAGE, obj)
   },
