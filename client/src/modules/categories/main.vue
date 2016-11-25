@@ -36,6 +36,22 @@
         this.$router.push({ name: 'categories.index', query: { page: obj.page } })
         Vue.nextTick(() => this.fetch())
       },
+      remove(category) {
+        swal({
+          title: 'Tem certeza',
+          text: `A categoria ${category.name} será permanentemente removida.`,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'Sim, remova!',
+          closeOnConfirm: false,
+        }, () => {
+          this.$http.delete(`categorias/${category.id}/remover`).then(() => {
+            this.fetch()
+            swal('Removido!', 'Registro removido com sucesso.', 'success')
+          })
+        })
+      },
     },
 
     /**
@@ -59,8 +75,6 @@
       * Listen to pagination navigate event
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
-    },
-    created() {
       /**
       * We only fetch data the first time
       * component is mounted. We can set
@@ -70,6 +84,8 @@
       if (this.pager.data === undefined) {
         this.fetch()
       }
+    },
+    created() {
     },
     /**
     * This hook is called every time DOM
@@ -113,7 +129,12 @@
             <a href="#" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Editar">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
-            <a href="#" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Excluir">
+            <a href="#"
+              @click="remove(category)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Excluir">
               <i class="fa fa-fw fa-times"></i>
             </a>
           </td>
