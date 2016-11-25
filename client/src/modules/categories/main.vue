@@ -36,7 +36,7 @@
         this.$router.push({ name: 'categories.index', query: { page: obj.page } })
         Vue.nextTick(() => this.fetch())
       },
-      remove(category) {
+      askRemove(category) {
         swal({
           title: 'Tem certeza',
           text: `A categoria ${category.name} será permanentemente removida.`,
@@ -45,11 +45,15 @@
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Sim, remova!',
           closeOnConfirm: false,
-        }, () => {
-          this.$http.delete(`categorias/${category.id}/remover`).then(() => {
-            this.fetch()
-            swal('Removido!', 'Registro removido com sucesso.', 'success')
-          })
+        }, () => this.remove(category))
+      },
+      remove(category) {
+        this.$http.delete(`categorias/${category.id}/remover`).then(() => {
+          this.fetch()
+          swal('Removido!', 'Registro removido com sucesso.', 'success')
+        })
+        .catch((error) => {
+          swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
     },
@@ -84,8 +88,6 @@
       if (this.pager.data === undefined) {
         this.fetch()
       }
-    },
-    created() {
     },
     /**
     * This hook is called every time DOM
@@ -130,7 +132,7 @@
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"
-              @click="remove(category)"
+              @click="askRemove(category)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"

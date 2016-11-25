@@ -9,14 +9,22 @@ class CategoriesController extends Controller
 {
     public function all(Request $request)
     {
-        $pager = Category::paginate(10);
-        return response()->json(compact('pager'), 200);
+        try {
+            $pager = Category::paginate(10);
+            return response()->json(compact('pager'), 200);
+        } catch(\Exception $e) {
+            return response()->json(['messages' => ['Não foi possível obter a lista de categorias']], 404);
+        }
     }
 
     public function remove($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return response()->json(['result' => 'success'], 200);
+        try {
+            $category = Category::find($id);
+            $category->delete();
+            return response()->json(['result' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['messages' => ['Não foi possível remover a categoria']], 422);
+        }
     }
 }
