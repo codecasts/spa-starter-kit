@@ -18,7 +18,7 @@ export default {
     localStorageSetItem('token', { token })
 
     /**
-    * Set the Authorization header with the token
+    * Set the Axios Authorization header with the token
     */
     httpSetToken(token)
 
