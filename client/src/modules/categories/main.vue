@@ -24,18 +24,69 @@
     * actions to the scope of this component.
     */
     methods: {
+      /**
+      * Brings actions from Vuex to the scope of
+      * this component
+      */
       ...mapActions(['categoriesSetPager', 'setFetching']),
+
+      /**
+      * Fetch a new set of categories
+      * based on the current page
+      */
       fetch() {
+        /**
+        * Vuex action to set fetching property
+        * to true, thus showing the spinner
+        * that is part of navbar.vue
+        */
         this.setFetching({ fetching: true })
+
+        /**
+        * Makes the HTTP request to the API
+        * $http is a Vue.js plugins exposing
+        * an Axios object.
+        * See /src/plugins/http.js
+        */
         this.$http.get(`categorias?page=${this.currentPage}`).then((response) => {
+          /**
+          * Vuex action to set pager object in
+          * the Vuex Categories module
+          */
           this.categoriesSetPager({ pager: response.data.pager })
+
+          /**
+          * Vuex action to set fetching property
+          * to false, thus hiding the spinner
+          * that is part of navbar.vue
+          */
           this.setFetching({ fetching: false })
         })
       },
+
+      /**
+      * Navigate to a specific page, provided in the
+      * obj received by the method
+      */
       navigate(obj) {
+        /**
+        * Push the page number to the query string
+        */
         this.$router.push({ name: 'categories.index', query: { page: obj.page } })
+
+        /**
+        * Fetch a new set of Categories based on
+        * current page number. Mind the nextTick()
+        * which delays a the request a fraction
+        * of a second. This ensures the currentPage
+        * property is set before making the request.
+        */
         Vue.nextTick(() => this.fetch())
       },
+
+      /**
+      * Shows a confirmation dialog
+      */
       askRemove(category) {
         swal({
           title: 'Tem certeza',
@@ -45,14 +96,32 @@
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Sim, remova!',
           closeOnConfirm: false,
-        }, () => this.remove(category))
+        }, () => this.remove(category)) // callback executed when OK is pressed
       },
+
+      /**
+      * Makes the HTTP requesto to the API
+      */
       remove(category) {
         this.$http.delete(`categorias/${category.id}/remover`).then(() => {
+          /**
+          * On success fetch a new set of Categories
+          * based on current page number
+          */
           this.fetch()
+
+          /**
+          * Shows a differente dialog based on the result
+          */
           swal('Removido!', 'Registro removido com sucesso.', 'success')
         })
         .catch((error) => {
+          /**
+          * Just shows the result in a form or error.
+          * The general error message is displayed by
+          * the action dispatched by the interceptor.
+          * See /src/plugins/http.js
+          */
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
