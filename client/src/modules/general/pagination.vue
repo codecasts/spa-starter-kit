@@ -17,6 +17,9 @@
       this.enableKeyboardNavigation()
     },
     computed: {
+      hasData() {
+        return this.pager.total !== undefined
+      },
       pages() {
         /**
         * The generatePagesArray method will calculate
@@ -146,7 +149,7 @@
 
 <template>
   <div>
-    <div class="row">
+    <div class="row" v-if="hasData">
       <div class="col-md-6">
         <p class="rangeInformation">Mostrando {{ currentRange }} de {{ pager.total }}</p>
       </div>
