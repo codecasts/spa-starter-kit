@@ -14,6 +14,17 @@ export function setToken(token) {
   http.defaults.headers.common.Authorization = `Bearer: ${token}`
 }
 
+/**
+* Before making request we clear
+* any message that might be visible
+*/
+http.interceptors.request.use(
+  (request) => {
+    store.dispatch('resetMessages')
+    return request
+  }
+)
+
 http.interceptors.response.use(
   response => response,
   /**
@@ -31,6 +42,8 @@ http.interceptors.response.use(
       router.push({ name: 'login.index' })
     }
     store.dispatch('setMessage', { type: 'error', message: error.response.data.messages })
+    store.dispatch('setFetching', { fetching: false })
+    return Promise.reject(error)
   }
 )
 
