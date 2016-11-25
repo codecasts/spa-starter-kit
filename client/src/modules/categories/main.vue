@@ -102,8 +102,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nome</th>
-          <th>&nbsp;</th>
+          <th colspan="2">Nome</th>
         </tr>
       </thead>
       <tbody :class="{ blur: fetching }">
