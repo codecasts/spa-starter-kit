@@ -64,6 +64,8 @@
       * Listen to pagination navigate event
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
+    },
+    created() {
       /**
       * We only fetch data the first time
       * component is mounted. We can set
