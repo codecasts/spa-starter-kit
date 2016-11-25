@@ -1,8 +1,12 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import CcSpinner from '../general/spinner'
 
   export default {
+    components: {
+      CcSpinner,
+    },
     computed: {
       ...mapState(['user']),
     },
@@ -36,6 +40,7 @@
             </router-link>
           </ul>
           <div class="nav navbar-form navbar-right">
+            <cc-spinner></cc-spinner>
             <span class="username">{{ user.name }}</span>
             <button class="btn btn-default" @click="logout">Logout</button>
           </div>
