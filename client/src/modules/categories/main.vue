@@ -11,12 +11,6 @@
     */
     name: 'CcCategories',
 
-    data() {
-      return {
-        isSearching: false,
-      }
-    },
-
     /**
     * Components registered with
     * this component
@@ -30,12 +24,12 @@
     * actions to the scope of this component.
     */
     methods: {
-      ...mapActions(['categoriesSetPager']),
+      ...mapActions(['categoriesSetPager', 'setFetching']),
       fetch() {
-        this.isSearching = true
+        this.setFetching({ fetching: true })
         this.$http.get(`categorias?page=${this.currentPage}`).then((response) => {
           this.categoriesSetPager({ pager: response.data.pager })
-          this.isSearching = false
+          this.setFetching({ fetching: false })
         })
       },
       navigate(obj) {
@@ -50,6 +44,7 @@
     */
     computed: {
       ...mapState({
+        fetching: state => state.fetching,
         pager: state => state.Categories.pager,
       }),
       categories() {
@@ -111,7 +106,7 @@
           <th>&nbsp;</th>
         </tr>
       </thead>
-      <tbody :class="{ blur: isSearching }">
+      <tbody :class="{ blur: fetching }">
         <tr v-for="category in categories">
           <td width="1%" nowrap>{{ category.id }}</td>
           <td>{{ category.name }}</td>
