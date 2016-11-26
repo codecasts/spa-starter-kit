@@ -36,7 +36,7 @@
               <a>Dashboard</a>
             </router-link>
             <router-link tag="li" :to="{ name: 'categories.index', query: { page: 1 } }">
-              <a>Categorias</a>
+              <a>Categories</a>
             </router-link>
           </ul>
           <div class="nav navbar-form navbar-right">

@@ -5,12 +5,12 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['cors', 'api']], function () {
     Route::post('login', ['uses' => 'LoginController@login']);
     Route::group(['middleware' => 'jwt.auth'], function () {
-        Route::group(['prefix' => 'categorias'], function () {
+        Route::group(['prefix' => 'categories'], function () {
             Route::get('', ['uses' => 'CategoriesController@all']);
-            Route::post('nova', ['uses' => 'CategoriesController@create']);
-            Route::delete('{id}/remover', ['uses' => 'CategoriesController@remove']);
-            Route::put('{id}/atualizar', ['uses' => 'CategoriesController@update']);
-            Route::get('{id}', ['uses' => 'CategoriesController@get']);
+            Route::get('{id}/get', ['uses' => 'CategoriesController@get']);
+            Route::post('create', ['uses' => 'CategoriesController@create']);
+            Route::put('{id}/update', ['uses' => 'CategoriesController@update']);
+            Route::delete('{id}/remove', ['uses' => 'CategoriesController@remove']);
         });
     });
 });
