@@ -19,10 +19,6 @@
       CcPagination,
     },
 
-    /**
-    * mapActions will bring indicated Vuex
-    * actions to the scope of this component.
-    */
     methods: {
       /**
       * Navigates to the URL to show

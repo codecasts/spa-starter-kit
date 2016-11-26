@@ -13,8 +13,14 @@
       this.$refs.firstInput.focus()
     },
     methods: {
-      ...mapActions(['setMessage']),
+      ...mapActions(['setFetching', 'setMessage']),
+
       submit() {
+        /**
+        * Shows the global spinner
+        */
+        this.setFetching({ fetching: true })
+
         this.$http.post('categorias/nova', { name: this.name }).then(() => {
           /**
           * This event will notify the world about
@@ -24,13 +30,24 @@
           */
           this.$bus.$emit('category.created')
 
-          this.setMessage({ type: 'success', message: 'Categoria criada com sucesso!' })
-          this.back()
+          /**
+          * Hides the global spinner
+          */
+          this.setFetching({ fetching: false })
+
+          /**
+          * Sets the global feedback message
+          */
+          this.setMessage({ type: 'success', message: 'Categoria criada com sucesso' })
+
+          /**
+          * Resets component's state
+          */
+          this.reset()
         })
       },
-      back() {
-        const { query } = this.$route // http://wesbos.com/destructuring-objects/
-        this.$router.push({ name: 'categories.index', query })
+      reset() {
+        this.name = ''
       },
     },
   }
