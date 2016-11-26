@@ -20,16 +20,17 @@
     },
 
     methods: {
-      /**
-      * Navigates to the URL to show
-      * the form to create new category
-      */
-      showHideForm() {
-        let name = 'categories.new'
-        if (this.$route.name === 'categories.new') {
-          name = 'categories.index'
-        }
-        this.$router.push({ name, query: { page: this.currentPage } })
+      edit(id) {
+        this.$router.push({
+          name: 'categories.edit',
+          params: { id },
+          query: { page: this.currentPage } })
+      },
+      create() {
+        this.$router.push({ name: 'categories.new', query: { page: this.currentPage } })
+      },
+      hide() {
+        this.$router.push({ name: 'categories.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
@@ -118,9 +119,17 @@
           this.fetch()
 
           /**
-          * Shows a differente dialog based on the result
+          * Shows a different dialog based on the result
           */
           swal('Removido!', 'Registro removido com sucesso.', 'success')
+
+          /**
+          * Redirects back to the main list,
+          * in case the form is open
+          */
+          if (this.isFormVisible) {
+            this.$router.push({ name: 'categories.index', query: { page: this.currentPage } })
+          }
         })
         .catch((error) => {
           /**
@@ -149,8 +158,8 @@
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
-      hasForm() {
-        return this.$route.name === 'categories.new'
+      isFormVisible() {
+        return this.$route.name === 'categories.new' || this.$route.name === 'categories.edit'
       },
     },
     mounted() {
@@ -159,9 +168,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Category was created, refresh the list
+      * Category was created or updated, refresh the list
       */
       this.$bus.$on('category.created', () => this.fetch())
+      this.$bus.$on('category.updated', () => this.fetch())
       /**
       * We only fetch data the first time
       * component is mounted. We can set
@@ -194,12 +204,20 @@
       <div class="col-md-6 text-right">
         <div class="button-within-header">
           <a href="#"
-            @click.prevent="showHideForm"
+            v-show="!isFormVisible"
+            @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
             title="Nova Categoria">
-            <i class="fa fa-fw fa-plus" v-show="!hasForm"></i>
-            <i class="fa fa-fw fa-minus" v-show="hasForm"></i>
+            <i class="fa fa-fw fa-plus"></i>
+          </a>
+          <a href="#"
+            v-show="isFormVisible"
+            @click.prevent="hide"
+            class="btn btn-xs btn-default"
+            data-toggle="tooltip" data-placement="top"
+            title="Nova Categoria">
+            <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
       </div>
@@ -224,7 +242,12 @@
           <td width="1%" nowrap>{{ category.id }}</td>
           <td>{{ category.name }}</td>
           <td width="1%" nowrap="nowrap">
-            <a href="#" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Editar">
+            <a href="#"
+              @click.prevent="edit(category.id)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Editar">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"

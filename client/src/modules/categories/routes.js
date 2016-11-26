@@ -31,6 +31,11 @@ export default [
         path: 'nova',
         component: Form,
         meta,
+      }, {
+        name: 'categories.edit',
+        path: ':id/editar',
+        component: Form,
+        meta,
       },
     ],
   },

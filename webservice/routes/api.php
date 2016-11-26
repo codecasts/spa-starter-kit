@@ -9,6 +9,8 @@ Route::group(['middleware' => ['cors', 'api']], function () {
             Route::get('', ['uses' => 'CategoriesController@all']);
             Route::post('nova', ['uses' => 'CategoriesController@create']);
             Route::delete('{id}/remover', ['uses' => 'CategoriesController@remove']);
+            Route::put('{id}/atualizar', ['uses' => 'CategoriesController@update']);
+            Route::get('{id}', ['uses' => 'CategoriesController@get']);
         });
     });
 });

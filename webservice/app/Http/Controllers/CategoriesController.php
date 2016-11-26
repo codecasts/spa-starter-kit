@@ -17,6 +17,16 @@ class CategoriesController extends Controller
         }
     }
 
+    public function get($id)
+    {
+        try {
+            $category = Category::find($id);
+            return response()->json(['result' => 'success', 'category' => $category], 200);
+        } catch(\Exception $e) {
+            return response()->json(['messages' => ['Não foi possível obter a categoria']], 404);
+        }
+    }
+
     public function create(Request $request)
     {
         try {
@@ -24,6 +34,19 @@ class CategoriesController extends Controller
             return response()->json(['result' => 'success'], 200);
         } catch(\Exception $e) {
             return response()->json(['messages' => ['Não foi possível criar a categoria']], 422);
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        try {
+            $input = $request->get('category');
+            $category = Category::find($id);
+            $category->name = $input['name'];
+            $category->save();
+            return response()->json(['result' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['messages' => ['Não foi possível atualizar a categoria']], 422);
         }
     }
 
