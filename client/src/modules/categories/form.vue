@@ -64,7 +64,7 @@
           * Fetch the category from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`categorias/${id}`).then((res) => {
+          this.$http.get(`categories/${id}/get`).then((res) => {
             const { id: _id, name } = res.data.category // http://wesbos.com/destructuring-renaming/
             this.category.id = _id
             this.category.name = name
@@ -85,7 +85,7 @@
         }
       },
       save() {
-        this.$http.post('categorias/nova', { name: this.category.name }).then(() => {
+        this.$http.post('categories/create', { name: this.category.name }).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case
@@ -102,7 +102,7 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'Categoria criada com sucesso' })
+          this.setMessage({ type: 'success', message: 'New category was created' })
 
           /**
           * Resets component's state
@@ -111,7 +111,7 @@
         })
       },
       update() {
-        this.$http.put(`categorias/${this.category.id}/atualizar`, { category: this.category }).then(() => {
+        this.$http.put(`categories/${this.category.id}/update`, { category: this.category }).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case
@@ -128,7 +128,7 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'Categoria atualizada com sucesso' })
+          this.setMessage({ type: 'success', message: 'Category was updated' })
         })
       },
       reset() {

@@ -13,7 +13,7 @@ class CategoriesController extends Controller
             $pager = Category::paginate(10);
             return response()->json(compact('pager'), 200);
         } catch(\Exception $e) {
-            return response()->json(['messages' => ['Não foi possível obter a lista de categorias']], 404);
+            return response()->json(['messages' => ['List of categories not available']], 404);
         }
     }
 
@@ -23,7 +23,7 @@ class CategoriesController extends Controller
             $category = Category::find($id);
             return response()->json(['result' => 'success', 'category' => $category], 200);
         } catch(\Exception $e) {
-            return response()->json(['messages' => ['Não foi possível obter a categoria']], 404);
+            return response()->json(['messages' => ['Category could not be fetched']], 404);
         }
     }
 
@@ -33,7 +33,7 @@ class CategoriesController extends Controller
             Category::create($request->only('name'));
             return response()->json(['result' => 'success'], 200);
         } catch(\Exception $e) {
-            return response()->json(['messages' => ['Não foi possível criar a categoria']], 422);
+            return response()->json(['messages' => ['Failed to create category']], 422);
         }
     }
 
@@ -46,7 +46,7 @@ class CategoriesController extends Controller
             $category->save();
             return response()->json(['result' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['messages' => ['Não foi possível atualizar a categoria']], 422);
+            return response()->json(['messages' => ['Failed to update category']], 422);
         }
     }
 
@@ -57,7 +57,7 @@ class CategoriesController extends Controller
             $category->delete();
             return response()->json(['result' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['messages' => ['Não foi possível remover a categoria']], 422);
+            return response()->json(['messages' => ['Failed to remove category']], 422);
         }
     }
 }

@@ -56,7 +56,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`categorias?page=${this.currentPage}`).then((response) => {
+        this.$http.get(`categories?page=${this.currentPage}`).then((response) => {
           /**
           * Vuex action to set pager object in
           * the Vuex Categories module
@@ -97,8 +97,8 @@
       */
       askRemove(category) {
         swal({
-          title: 'Tem certeza',
-          text: `A categoria ${category.name} será permanentemente removida.`,
+          title: 'Are you sure?',
+          text: `Category ${category.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -111,7 +111,7 @@
       * Makes the HTTP requesto to the API
       */
       remove(category) {
-        this.$http.delete(`categorias/${category.id}/remover`).then(() => {
+        this.$http.delete(`categories/${category.id}/remove`).then(() => {
           /**
           * On success fetch a new set of Categories
           * based on current page number
@@ -121,7 +121,7 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Removido!', 'Registro removido com sucesso.', 'success')
+          swal('Removido!', 'Category removed.', 'success')
 
           /**
           * Redirects back to the main list,
@@ -199,7 +199,7 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-        <h1>Gerenciamento de Categorias</h1>
+        <h1>Category Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -208,7 +208,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="Nova Categoria">
+            title="New Category">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -216,7 +216,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="Nova Categoria">
+            title="New Category">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -234,7 +234,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th colspan="2">Nome</th>
+          <th colspan="2">Category</th>
         </tr>
       </thead>
       <tbody :class="{ blur: fetching }">
@@ -247,7 +247,7 @@
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
-              title="Editar">
+              title="Edit">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"
@@ -255,7 +255,7 @@
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
-              title="Excluir">
+              title="Remove">
               <i class="fa fa-fw fa-times"></i>
             </a>
           </td>

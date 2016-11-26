@@ -151,7 +151,7 @@
   <div>
     <div class="row" v-if="hasData">
       <div class="col-md-6">
-        <p class="rangeInformation">Mostrando {{ currentRange }} de {{ pager.total }}</p>
+        <p class="rangeInformation">Showing {{ currentRange }} of {{ pager.total }}</p>
       </div>
       <div class="col-md-6 text-right">
         <nav aria-label="Page navigation">
