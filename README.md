@@ -16,8 +16,8 @@ They're not just freshly created projects but a fully working application that c
     * Keep user signed in using local stored info
     * HTTP requests with [Axios](https://github.com/mzabriskie/axios)
     * ESLint
-    * Pagination integrated with Laravel's LengthAwarePaginator
-    * Alerts and Confirmation Alerts provided by SweetAlert
+    * Pagination integrated with [Laravel's LengthAwarePaginator](https://laravel.com/docs/5.3/pagination#converting-results-to-json)
+    * Alerts and Confirmation Alerts provided by [SweetAlert](http://t4t5.github.io/sweetalert/)
 2. Server side
     * Laravel 5.3
     * Authentication with JWT
