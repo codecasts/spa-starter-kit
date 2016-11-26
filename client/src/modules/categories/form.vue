@@ -142,7 +142,7 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Nome</label>
+      <label for="name" class="control-label">Category Name</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="category.name">
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Salvar</button>

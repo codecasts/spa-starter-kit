@@ -102,7 +102,7 @@
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
-          confirmButtonText: 'Sim, remova!',
+          confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
         }, () => this.remove(category)) // callback executed when OK is pressed
       },
@@ -121,7 +121,7 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Removido!', 'Category removed.', 'success')
+          swal('Done!', 'Category removed.', 'success')
 
           /**
           * Redirects back to the main list,
