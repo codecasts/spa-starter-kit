@@ -25,6 +25,13 @@
     */
     methods: {
       /**
+      * Navigates to the URL to show
+      * the form to create new category
+      */
+      formNew() {
+        this.$router.push({ name: 'categories.new', query: { page: this.currentPage } })
+      },
+      /**
       * Brings actions from Vuex to the scope of
       * this component
       */
@@ -179,12 +186,18 @@
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
-          <a href="#" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Nova Categoria">
+          <a href="#" @click.prevent="formNew" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Nova Categoria">
             <i class="fa fa-fw fa-plus"></i>
           </a>
         </div>
       </div>
     </div>
+
+    <!-- Form to create/edit will be inserted here  -->
+    <!-- when navigate to /nova or /editar/{id}  -->
+    <!-- see /src/modules/categories/routes.js  -->
+    <router-view></router-view>
+
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
