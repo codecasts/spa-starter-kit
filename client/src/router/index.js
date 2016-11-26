@@ -27,6 +27,12 @@ const router = new Router({
 * requireAuth.
 */
 router.beforeEach((to, from, next) => {
+  /**
+  * Clears all global feedback message
+  * that might be visible
+  */
+  store.dispatch('resetMessages')
+
   let token = store.state.token
   const auth = to.meta.requiresAuth
 

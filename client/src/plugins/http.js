@@ -14,17 +14,6 @@ export function setToken(token) {
   http.defaults.headers.common.Authorization = `Bearer: ${token}`
 }
 
-/**
-* Before making request we clear
-* any message that might be visible
-*/
-http.interceptors.request.use(
-  (request) => {
-    store.dispatch('resetMessages')
-    return request
-  }
-)
-
 http.interceptors.response.use(
   response => response,
   /**
