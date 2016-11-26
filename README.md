@@ -14,7 +14,7 @@ They're not just freshly created projects but a fully working application that c
     * Route management with Vue-router
     * Authentication with JWT
     * Keep user signed in using local stored info
-    * HTTP requests with (https://github.com/mzabriskie/axios)[Axios]
+    * HTTP requests with [Axios](https://github.com/mzabriskie/axios)
     * ESLint
     * Pagination integrated with Laravel's LengthAwarePaginator
     * Alerts and Confirmation Alerts provided by SweetAlert
