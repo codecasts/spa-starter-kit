@@ -212,7 +212,9 @@
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
     <!-- see /src/modules/categories/routes.js  -->
-    <router-view></router-view>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
 
     <table class="table table-bordered table-striped">
       <thead>
@@ -257,5 +259,11 @@
   }
   .blur {
     filter: blur(7px);
+  }
+  .slide-enter-active, .slide-leave-active {
+    transition: opacity .7s ease;
+  }
+  .slide-enter, .slide-leave-active {
+    opacity: 0;
   }
 </style>

@@ -16,8 +16,15 @@
       ...mapActions(['setMessage']),
       submit() {
         this.$http.post('categorias/nova', { name: this.name }).then(() => {
-          this.setMessage({ type: 'success', message: 'Categoria criada com sucesso!' })
+          /**
+          * This event will notify the world about
+          * the category creation. In this case
+          * the Category main component will intercept
+          * the event and refresh the list.
+          */
           this.$bus.$emit('category.created')
+
+          this.setMessage({ type: 'success', message: 'Categoria criada com sucesso!' })
           this.back()
         })
       },
@@ -33,7 +40,7 @@
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
       <label for="name" class="control-label">Nome</label>
-      <input ref="firstInput" autofocus type="text" id="name" class="form-control" v-model="name">
+      <input ref="firstInput" type="text" id="name" class="form-control" v-model="name">
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
   </form>
