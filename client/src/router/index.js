@@ -30,6 +30,10 @@ router.beforeEach((to, from, next) => {
   let token = store.state.token
   const auth = to.meta.requiresAuth
 
+  /**
+  * If there's no token stored in the state
+  * then check localStorage:
+  */
   if (token === '') {
     const localStoredToken = localStorageGetItem('token')
     const localStoredUser = localStorageGetItem('user')
@@ -38,8 +42,12 @@ router.beforeEach((to, from, next) => {
     * Do we have token and user local stored?
     * If so then use it!
     */
-    if (localStoredToken !== undefined && localStoredUser !== undefined) {
-      token = localStorageGetItem('token').token
+    if (localStoredToken !== undefined &&
+        localStoredToken !== null &&
+        localStoredUser !== undefined &&
+        localStoredUser !== null
+      ) {
+      token = localStoredToken.token
       store.dispatch('setToken', token)
       store.dispatch('setUser', localStoredUser.user)
     }
