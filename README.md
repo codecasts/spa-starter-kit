@@ -47,6 +47,14 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 2. Server side
 	* API endpoint is http://**localhost:8000/api**
 
+## Things worth mentioning
+
+1. Error handling is done globally by making use of Axios' interceptors. But you can still .catch() errors within components to perform actions related to that scope. See /client/src/plugins/http.js;
+
+2. The same way error messages lives in one single component (/client/src/modules/general/alerts.vue) and their visibility is controlled by a Vuex property. So to show/hide messages it is just a matter of dispaching a Vuex action from within any component;
+
+3. The spinner displayed during server requests (see top right close to user indentification) is also controlled by a Vuex property. The procedure to show/hide it is the same as outlined in the item 2 above.
+
 ## Contributing
 
 1. Fork it!
