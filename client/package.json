@@ -1,7 +1,7 @@
 {
-  "name": "codecasts-spa-boilerplate",
+  "name": "codecasts-spa-starter-kit",
   "version": "1.0.0",
-  "description": "Client for Codecast's SPA boilerplate",
+  "description": "Client for Codecast's SPA Starter Kit",
   "author": "Fabio Vedovelli <vedovelli@gmail.com>",
   "private": true,
   "scripts": {
