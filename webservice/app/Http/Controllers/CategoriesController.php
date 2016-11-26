@@ -17,6 +17,16 @@ class CategoriesController extends Controller
         }
     }
 
+    public function create(Request $request)
+    {
+        try {
+            Category::create($request->only('name'));
+            return response()->json(['result' => 'success'], 200);
+        } catch(\Exception $e) {
+            return response()->json(['messages' => ['Não foi possível criar a categoria']], 422);
+        }
+    }
+
     public function remove($id)
     {
         try {

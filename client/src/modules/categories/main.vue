@@ -28,8 +28,12 @@
       * Navigates to the URL to show
       * the form to create new category
       */
-      formNew() {
-        this.$router.push({ name: 'categories.new', query: { page: this.currentPage } })
+      showHideForm() {
+        let name = 'categories.new'
+        if (this.$route.name === 'categories.new') {
+          name = 'categories.index'
+        }
+        this.$router.push({ name, query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
@@ -149,12 +153,19 @@
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
+      hasForm() {
+        return this.$route.name === 'categories.new'
+      },
     },
     mounted() {
       /**
       * Listen to pagination navigate event
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
+      /**
+      * Category was created, refresh the list
+      */
+      this.$bus.$on('category.created', () => this.fetch())
       /**
       * We only fetch data the first time
       * component is mounted. We can set
@@ -186,8 +197,13 @@
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
-          <a href="#" @click.prevent="formNew" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="Nova Categoria">
-            <i class="fa fa-fw fa-plus"></i>
+          <a href="#"
+            @click.prevent="showHideForm"
+            class="btn btn-xs btn-default"
+            data-toggle="tooltip" data-placement="top"
+            title="Nova Categoria">
+            <i class="fa fa-fw fa-plus" v-show="!hasForm"></i>
+            <i class="fa fa-fw fa-minus" v-show="hasForm"></i>
           </a>
         </div>
       </div>
