@@ -53,7 +53,9 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 
 2. The same way error messages lives in one single component (/client/src/modules/general/alerts.vue) and their visibility is controlled by a Vuex property. So to show/hide messages it is just a matter of dispaching a Vuex action from within any component;
 
-3. The spinner displayed during server requests (see top right close to user indentification) is also controlled by a Vuex property. The procedure to show/hide it is the same as outlined in the item 2 above.
+3. The spinner displayed during server requests (see top right close to user indentification) is also controlled by a Vuex property. The procedure to show/hide it is the same as outlined in the item 2 above;
+
+4. routes and Vuex modules live close to the modules they work for. Always look for routes.js and store.js inside a module directory. See /client/src/modules/categories.
 
 ## Contributing
 
