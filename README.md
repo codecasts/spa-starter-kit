@@ -1,4 +1,4 @@
-# Codecast's SPA Starter Kit
+# Codecast's Single Page Application Starter Kit
 
 > A **highly opinionated** Single Page Application starter kit built on top of Vue.js and Laravel.
 

@@ -59,7 +59,7 @@
         <input type="email" class="form-control" id="email" v-model="email">
       </div>
       <div class="form-group">
-        <label for="password" class="control-label">Senha</label>
+        <label for="password" class="control-label">Password</label>
         <input type="password" class="form-control" id="password" v-model="password">
       </div>
       <button class="btn btn-primary btn-block" type="submit">Login</button>
