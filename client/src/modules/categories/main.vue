@@ -226,7 +226,7 @@
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
     <!-- see /src/modules/categories/routes.js  -->
-    <transition name="slide">
+    <transition name="fade">
       <router-view></router-view>
     </transition>
 
@@ -237,7 +237,7 @@
           <th colspan="2">Category</th>
         </tr>
       </thead>
-      <tbody :class="{ blur: fetching }">
+      <tbody>
         <tr v-for="category in categories">
           <td width="1%" nowrap>{{ category.id }}</td>
           <td>{{ category.name }}</td>
@@ -276,13 +276,10 @@
   .button-within-header {
     margin-top: 32px;
   }
-  .blur {
-    filter: blur(7px);
-  }
-  .slide-enter-active, .slide-leave-active {
+  .fade-enter-active, .fade-leave-active {
     transition: opacity .7s ease;
   }
-  .slide-enter, .slide-leave-active {
+  .fade-enter, .fade-leave-active {
     opacity: 0;
   }
 </style>
