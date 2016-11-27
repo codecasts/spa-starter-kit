@@ -162,6 +162,19 @@
         return this.$route.name === 'categories.new' || this.$route.name === 'categories.edit'
       },
     },
+    /**
+    * Right before navigate out to another route
+    * clears all event handlers, thus avoiding
+    * multiple handlers to be set and the annoying
+    * behaviour of multiple AJAX calls being made.
+    */
+    beforeRouteLeave(to, from, next) {
+      this.$bus.$off('navigate')
+      this.$bus.$off('category.created')
+      this.$bus.$off('category.updated')
+      jQuery('body').off('keyup')
+      next()
+    },
     mounted() {
       /**
       * Listen to pagination navigate event
@@ -172,15 +185,11 @@
       */
       this.$bus.$on('category.created', () => this.fetch())
       this.$bus.$on('category.updated', () => this.fetch())
+
       /**
-      * We only fetch data the first time
-      * component is mounted. We can set
-      * up a timer to fetch new data
-      * from time to time
+      * Fetch data immediately after component is mounted
       */
-      if (this.pager.data === undefined) {
-        this.fetch()
-      }
+      this.fetch()
     },
     /**
     * This hook is called every time DOM
