@@ -21,9 +21,20 @@ export default {
     <cc-nav-bar v-show="shouldShowNavigation"></cc-nav-bar>
     <cc-alerts></cc-alerts>
     <div class="container">
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
 
 <style lang="sass" src="assets/sass/app.scss"></style>
+
+<style scoped>
+  .fade-enter-active {
+    transition: opacity .5s ease;
+  }
+  .fade-enter {
+    opacity: 0;
+  }
+</style>
