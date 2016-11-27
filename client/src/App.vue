@@ -31,10 +31,10 @@ export default {
 <style lang="sass" src="assets/sass/app.scss"></style>
 
 <style scoped>
-  .fade-enter-active {
+  .fade-enter-active, .fade-leave-active {
     transition: opacity .5s ease;
   }
-  .fade-enter {
+  .fade-enter, .fade-leave-active {
     opacity: 0;
   }
 </style>
