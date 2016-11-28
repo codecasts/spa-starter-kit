@@ -29,14 +29,15 @@ Make sure you have installed **Node** and **NPM** (latest versions) as well as *
 
 ## Installation
 
-1. Client side
+1. Client side - this is a Vue.js project created with vue-cli
 	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/).
-2. Server side
+2. Server side - this is a Laravel 5.3 project
 	* With Terminal:
         * Navigate to **webservice** folder and then:
         * `composer install` to install Laravel and third party packages
         * `touch database/database.sqlite` to create an empty database file
         * `cp .env.example .env` to configure installation
+        * `php artisan key:generate` to generate unique key for the project
         * `php artisan migrate` to create all the tables
         * `php artisan db:seed` to fill the tables with fake data
         * `php artisan serve` to serve application on localhost:8000
