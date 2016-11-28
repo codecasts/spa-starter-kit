@@ -25,12 +25,12 @@ They're not just freshly created projects but a fully working application that c
 
 ## Prerequisites
 
-Make sure you have installed **Node** and **NPM** (latest versions) as well as **PHP 7** and **MySQL**.
+Make sure you have installed **Node** and [**Yarn**](https://yarnpkg.com/) (latest versions) as well as **PHP 7** and **MySQL**.
 
 ## Installation
 
 1. Client side - this is a Vue.js project created with vue-cli
-	* With Terminal `cd client && npm i && npm run dev`. Alternatively you can use Yarn: `cd client && yarn && npm run dev`. More info here: [https://yarnpkg.com/](https://yarnpkg.com/).
+	* With Terminal `cd client && yarn && yarn run dev`.
 2. Server side - this is a Laravel 5.3 project
 	* With Terminal:
         * Navigate to **webservice** folder and then:
