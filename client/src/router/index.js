@@ -1,19 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+import { routes as app } from '../app'
 import { localStorageGetItem } from '../utils/local'
-
-/**
-* Routes are always stored close to
-* the modules they help navigate to
-*/
-import dashboard from '../app/dashboard/routes'
-import categories from '../app/categories/routes'
-import login from '../app/login/routes'
 
 Vue.use(Router)
 
-const routes = [...login, ...categories, ...dashboard]
+const routes = [...app]
 
 const router = new Router({
   routes,
