@@ -1,0 +1,23 @@
+# Docker-Compose configuration file.
+
+version: '2'
+
+services:
+  # dev server with live-reload
+  dev:
+    image: ambientum/node:6
+    container_name: starter-web-dev
+    command: yarn run dev
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 80:8080
+
+  # NGINX preview of 'npm run build' contents
+  preview:
+    image: nginx:stable-alpine
+    container_name: starter-web-preview
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - 9000:80
