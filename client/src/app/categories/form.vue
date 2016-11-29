@@ -40,6 +40,14 @@
       isEditing() {
         return this.category.id > 0
       },
+      isValid() {
+        this.resetMessages()
+        if (this.category.name === '') {
+          this.setMessage({ type: 'error', message: ['Please fill category name'] })
+          return false
+        }
+        return true
+      },
     },
 
     methods: {
@@ -72,19 +80,11 @@
           })
         }
       },
-      isValid() {
-        this.resetMessages()
-        if (this.category.name === '') {
-          this.setMessage({ type: 'error', message: ['Please fill category name'] })
-          return false
-        }
-        return true
-      },
       submit() {
         /**
         * Pre-conditions are met
         */
-        if (this.isValid()) {
+        if (this.isValid) {
           /**
           * Shows the global spinner
           */
@@ -124,7 +124,7 @@
         })
       },
       update() {
-        this.$http.put(`categories/${this.category.id}/update`, { category: this.category }).then(() => {
+        this.$http.put(`categories/${this.category.id}/update`, this.category).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case

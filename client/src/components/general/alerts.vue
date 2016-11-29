@@ -1,6 +1,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import { isEmpty } from 'lodash'
 
   export default {
     computed: {
@@ -11,6 +12,9 @@
       hasErrorMessages() {
         return this.messages.error.length > 0
       },
+      hasValidationMessages() {
+        return !isEmpty(this.messages.validation)
+      },
     },
     methods: {
       ...mapActions(['setMessage']),
@@ -18,6 +22,8 @@
         let obj
         if (type === 'error') {
           obj = { type, message: [] }
+        } else if (type === 'validation') {
+          obj = { type, message: {} }
         } else {
           obj = { type, message: '' }
         }
@@ -45,6 +51,16 @@
       </button>
       <ul>
         <li v-for="error in messages.error">{{ error }}</li>
+      </ul>
+    </div>
+
+    <!-- Validation messages -->
+    <div class="alert alert-danger" v-show="hasValidationMessages">
+      <button type="button" class="close" aria-label="Close" @click="dismiss('validation')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <ul>
+        <li v-for="error in messages.validation">{{ error[0] }}</li>
       </ul>
     </div>
 
