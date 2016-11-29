@@ -29,7 +29,8 @@
     "autoload-dev": {
         "classmap": [
             "tests/Support/",
-            "tests/TestCase.php"
+            "tests/TestCase.php",
+            "tests/ApiTestCase.php"
         ]
     },
     "scripts": {
@@ -46,7 +47,8 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
-        ]
+        ],
+        "test": "phpunit"
     },
     "config": {
         "preferred-install": "dist"
