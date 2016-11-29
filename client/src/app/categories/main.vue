@@ -2,7 +2,7 @@
 <script>
   import Vue from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import CcPagination from '../general/pagination'
+  import CcPagination from 'components/general/pagination'
 
   export default {
     /**

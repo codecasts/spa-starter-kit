@@ -7,9 +7,9 @@ import { localStorageGetItem } from '../utils/local'
 * Routes are always stored close to
 * the modules they help navigate to
 */
-import dashboard from '../modules/dashboard/routes'
-import categories from '../modules/categories/routes'
-import login from '../modules/login/routes'
+import dashboard from '../app/dashboard/routes'
+import categories from '../app/categories/routes'
+import login from '../app/login/routes'
 
 Vue.use(Router)
 

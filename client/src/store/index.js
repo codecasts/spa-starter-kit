@@ -4,7 +4,7 @@ import state from './state'
 import mutations from './mutations'
 import actions from './actions'
 
-import Categories from '../modules/categories/state'
+import Categories from '../app/categories/state'
 
 Vue.use(Vuex)
 
