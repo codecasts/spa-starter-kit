@@ -6,6 +6,7 @@ import { localStorageGetItem } from '../utils/local'
 
 Vue.use(Router)
 
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 const routes = [...app]
 
 const router = new Router({
