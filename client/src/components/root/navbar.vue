@@ -39,10 +39,10 @@
               <a>Categories</a>
             </router-link>
           </ul>
-          <div class="nav navbar-form navbar-right">
+          <div class="nav navbar-form navbar-right" style="margin-right: 100px;">
             <cc-spinner></cc-spinner>
             <span class="username">{{ user.name }}</span>
-            <button class="btn btn-default" @click="logout">Logout</button>
+            <button class="btn btn-default btn-sm" @click="logout">Logout</button>
           </div>
         </div>
       </div>
