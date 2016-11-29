@@ -66,9 +66,10 @@ module.exports = app.listen(port, function (err) {
   }
   var uri = 'http://localhost:' + port
   console.log('Listening at ' + uri + '\n')
+  console.log('API Url ' + config.dev.env.API_URL + '\n')
 
   // when env is testing, don't need open it
-  if (process.env.NODE_ENV !== 'testing') {
+  if (process.env.NODE_ENV !== 'testing' && config.dev.openBrowser) {
     opn(uri)
   }
 })

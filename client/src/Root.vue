@@ -1,6 +1,6 @@
 <script>
-import CcNavBar from './modules/general/navbar'
-import CcAlerts from './modules/general/alerts'
+import CcNavBar from './components/root/navbar'
+import CcAlerts from './components/general/alerts'
 
 export default {
   name: 'Codecasts',
