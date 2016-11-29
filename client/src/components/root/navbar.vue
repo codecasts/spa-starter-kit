@@ -39,7 +39,7 @@
               <a>Categories</a>
             </router-link>
           </ul>
-          <div class="nav navbar-form navbar-right" style="margin-right: 100px;">
+          <div class="nav navbar-form navbar-right spacer">
             <cc-spinner></cc-spinner>
             <span class="username">{{ user.name }}</span>
             <button class="btn btn-default btn-sm" @click="logout">Logout</button>
@@ -51,6 +51,9 @@
 </template>
 
 <style scoped>
+  .spacer {
+    margin-right: 100px;
+  }
   .username {
     padding: 6px 20px;
     border-radius: 20px;
