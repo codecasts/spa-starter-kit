@@ -5,8 +5,9 @@ export default {
   user: {},
   messages: {
     success: '',
-    error: '',
+    error: [],
     warning: '',
+    validation: {},
   },
   fetching: false,
 }

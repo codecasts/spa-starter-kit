@@ -16,8 +16,9 @@ export default {
 
   resetMessages({ commit }) {
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'success', message: '' })
-    commit(TYPES.MAIN_SET_MESSAGE, { type: 'error', message: '' })
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'error', message: [] })
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'warning', message: '' })
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'validation', message: {} })
   },
 
   setToken({ commit }, token) {
