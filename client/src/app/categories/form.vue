@@ -43,7 +43,7 @@
     },
 
     methods: {
-      ...mapActions(['setFetching', 'setMessage']),
+      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -72,16 +72,29 @@
           })
         }
       },
+      isValid() {
+        this.resetMessages()
+        if (this.category.name === '') {
+          this.setMessage({ type: 'error', message: ['Please fill category name'] })
+          return false
+        }
+        return true
+      },
       submit() {
         /**
-        * Shows the global spinner
+        * Pre-conditions are met
         */
-        this.setFetching({ fetching: true })
+        if (this.isValid()) {
+          /**
+          * Shows the global spinner
+          */
+          this.setFetching({ fetching: true })
 
-        if (this.isEditing) {
-          this.update()
-        } else {
-          this.save()
+          if (this.isEditing) {
+            this.update()
+          } else {
+            this.save()
+          }
         }
       },
       save() {
