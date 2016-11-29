@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App'
+import Root from './Root'
 
 /**
 * This is the Vuex store and it is
@@ -42,5 +42,5 @@ new Vue({
   store, // injects the Store into all components
   router, // make Router work with the application
   el: '#app',
-  render: h => h(App),
+  render: h => h(Root),
 })
