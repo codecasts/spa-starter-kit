@@ -22,18 +22,18 @@ const meta = {
 export default [
   {
     name: 'categories.index',
-    path: '/categorias',
+    path: '/categories',
     component: Categories,
     meta,
     children: [
       {
         name: 'categories.new',
-        path: 'nova',
+        path: 'create',
         component: Form,
         meta,
       }, {
         name: 'categories.edit',
-        path: ':id/editar',
+        path: ':id/edit',
         component: Form,
         meta,
       },
