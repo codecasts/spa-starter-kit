@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { isArray } from 'lodash'
 import store from '../store'
 import router from '../router'
 import { apiUrl } from '../config'
@@ -30,7 +31,18 @@ http.interceptors.response.use(
     if (error.response.data.reason === 'token') {
       router.push({ name: 'login.index' })
     }
-    store.dispatch('setMessage', { type: 'error', message: error.response.data.messages })
+    /**
+    * Error messages are sent in arrays
+    */
+    if (isArray(error.response.data)) {
+      store.dispatch('setMessage', { type: 'error', message: error.response.data.messages })
+    /**
+    * Laravel generated validation errors are
+    * sent in an object
+    */
+    } else {
+      store.dispatch('setMessage', { type: 'validation', message: error.response.data })
+    }
     store.dispatch('setFetching', { fetching: false })
     return Promise.reject(error)
   }

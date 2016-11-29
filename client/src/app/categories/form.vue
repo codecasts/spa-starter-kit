@@ -40,10 +40,18 @@
       isEditing() {
         return this.category.id > 0
       },
+      isValid() {
+        this.resetMessages()
+        if (this.category.name === '') {
+          this.setMessage({ type: 'error', message: ['Please fill category name'] })
+          return false
+        }
+        return true
+      },
     },
 
     methods: {
-      ...mapActions(['setFetching', 'setMessage']),
+      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -74,14 +82,19 @@
       },
       submit() {
         /**
-        * Shows the global spinner
+        * Pre-conditions are met
         */
-        this.setFetching({ fetching: true })
+        if (this.isValid) {
+          /**
+          * Shows the global spinner
+          */
+          this.setFetching({ fetching: true })
 
-        if (this.isEditing) {
-          this.update()
-        } else {
-          this.save()
+          if (this.isEditing) {
+            this.update()
+          } else {
+            this.save()
+          }
         }
       },
       save() {
@@ -111,7 +124,7 @@
         })
       },
       update() {
-        this.$http.put(`categories/${this.category.id}/update`, { category: this.category }).then(() => {
+        this.$http.put(`categories/${this.category.id}/update`, this.category).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case
