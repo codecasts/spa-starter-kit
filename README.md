@@ -8,6 +8,10 @@ This package contains two separate projects to act as a starting point for a Sin
 
 They're not just freshly created projects but a fully working application that can be modified and expanded to become your own application.
 
+## Demo
+
+The live demo can be found in [https://spa.codecasts.rocks/](https://spa.codecasts.rocks/).
+
 ## Features
 
 1. Client side
