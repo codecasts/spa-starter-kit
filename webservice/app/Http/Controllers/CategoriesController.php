@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Http\Requests\CategoryRequest;
 
 class CategoriesController extends Controller
 {
@@ -27,7 +28,7 @@ class CategoriesController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function create(CategoryRequest $request)
     {
         try {
             Category::create($request->only('name'));
@@ -37,12 +38,11 @@ class CategoriesController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    public function update($id, CategoryRequest $request)
     {
         try {
-            $input = $request->get('category');
             $category = Category::find($id);
-            $category->name = $input['name'];
+            $category->name = $request->get('name');
             $category->save();
             return response()->json(['result' => 'success'], 200);
         } catch (\Exception $e) {
