@@ -19,8 +19,8 @@ export default {
 <template>
   <div id="app">
     <cc-nav-bar v-show="shouldShowNavigation"></cc-nav-bar>
-    <cc-alerts></cc-alerts>
     <div class="container">
+      <cc-alerts></cc-alerts>
       <transition name="fade">
         <router-view></router-view>
       </transition>

@@ -25,7 +25,7 @@
   <div>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <div class="navbar-header">
+        <div class="navbar-header   spacer">
           <a class="navbar-brand" href="http://www.codecasts.com.br/">
             Codecasts.com.br
           </a>
@@ -39,7 +39,7 @@
               <a>Categories</a>
             </router-link>
           </ul>
-          <div class="nav navbar-form navbar-right spacer">
+          <div class="nav navbar-form navbar-right">
             <cc-spinner></cc-spinner>
             <span class="username">{{ user.name }}</span>
             <button class="btn btn-default btn-sm" @click="logout">Logout</button>
@@ -52,7 +52,7 @@
 
 <style scoped>
   .spacer {
-    margin-right: 100px;
+    margin-left: 120px;
   }
   .username {
     padding: 6px 20px;
