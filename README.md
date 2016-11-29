@@ -55,6 +55,14 @@ Make sure you have installed **Node** and [**Yarn**](https://yarnpkg.com/) (late
 2. Server side
 	* API endpoint is http://**localhost:8000/api**
 
+## Testing
+
+Navigate to **webservice** folder and run the composer test script
+
+``` bash
+$ composer test
+```
+
 ## Things worth mentioning
 
 1. Error handling is done globally by making use of Axios' interceptors. But you can still .catch() errors within components to perform actions related to that scope. See /client/src/plugins/http.js;
