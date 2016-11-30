@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -44,7 +45,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->expectsJson() && $exception instanceof HttpException) {
+            return $this->handleExceptionJsonResponse($exception);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Handle the JSON response for the HTTP exceptions.
+     *
+     * @param  \Exception $exception
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function handleExceptionJsonResponse(Exception $exception)
+    {
+        return response()->json([
+            'messages' => [$exception->getMessage()],
+        ], $exception->getStatusCode());
     }
 
     /**
