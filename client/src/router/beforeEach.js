@@ -1,6 +1,8 @@
 import store from '../store'
 import { localStorageGetItem } from '../utils/local'
 
+const needAuth = (auth, token) => auth !== undefined && auth && token === ''
+
 const beforeEach = (to, from, next) => {
   /**
   * Clears all global feedback message
@@ -39,7 +41,7 @@ const beforeEach = (to, from, next) => {
   * OR we have a token then let the route
   * be normally accessed.
   */
-  if (auth === undefined || !auth || token !== '') {
+  if (!needAuth(auth, token)) {
     next()
   }
 
@@ -48,7 +50,7 @@ const beforeEach = (to, from, next) => {
   * AND the token is empty, then redirect to
   * login.
   */
-  if (auth !== undefined && auth && token === '') {
+  if (needAuth(auth, token)) {
     next({ name: 'login.index' })
   }
 }
