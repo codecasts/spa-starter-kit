@@ -44,6 +44,7 @@ Make sure you have installed **Node** and [**Yarn**](https://yarnpkg.com/) (late
         * `touch database/database.sqlite` to create an empty database file
         * `cp .env.example .env` to configure installation
         * `php artisan key:generate` to generate unique key for the project
+        * `php artisan jwt:secret` to generate unique key for the project
         * `php artisan migrate` to create all the tables
         * `php artisan db:seed` to fill the tables with fake data
         * `php artisan serve` to serve application on localhost:8000
