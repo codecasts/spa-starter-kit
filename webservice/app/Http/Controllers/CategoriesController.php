@@ -12,9 +12,12 @@ class CategoriesController extends Controller
     {
         try {
             $pager = Category::paginate(10);
+
             return response()->json(compact('pager'), 200);
         } catch(\Exception $e) {
-            return response()->json(['messages' => ['List of categories not available']], 404);
+            return response()->json([
+                'messages' => ['Failed to fetch categories'],
+            ], 500);
         }
     }
 
@@ -22,9 +25,21 @@ class CategoriesController extends Controller
     {
         try {
             $category = Category::find($id);
-            return response()->json(['result' => 'success', 'category' => $category], 200);
-        } catch(\Exception $e) {
-            return response()->json(['messages' => ['Category could not be fetched']], 404);
+
+            if (! $category) {
+                return response()->json([
+                    'messages' => ['Category not found'],
+                ], 404);
+            }
+
+            return response()->json([
+                'result' => 'success',
+                'category' => $category,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'messages' => ['Failed to fetch category'],
+            ], 500);
         }
     }
 
@@ -32,9 +47,14 @@ class CategoriesController extends Controller
     {
         try {
             Category::create($request->only('name'));
-            return response()->json(['result' => 'success'], 200);
+
+            return response()->json([
+                'result' => 'success',
+            ], 200);
         } catch(\Exception $e) {
-            return response()->json(['messages' => ['Failed to create category']], 422);
+            return response()->json([
+                'messages' => ['Failed to create category'],
+            ], 500);
         }
     }
 
@@ -42,11 +62,23 @@ class CategoriesController extends Controller
     {
         try {
             $category = Category::find($id);
+
+            if (! $category) {
+                return response()->json([
+                    'messages' => ['Category not found'],
+                ], 404);
+            }
+
             $category->name = $request->get('name');
             $category->save();
-            return response()->json(['result' => 'success'], 200);
+
+            return response()->json([
+                'result' => 'success',
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['messages' => ['Failed to update category']], 422);
+            return response()->json([
+                'messages' => ['Failed to update category'],
+            ], 500);
         }
     }
 
@@ -54,10 +86,22 @@ class CategoriesController extends Controller
     {
         try {
             $category = Category::find($id);
+
+            if (! $category) {
+                return response()->json([
+                    'messages' => ['Category not found'],
+                ], 404);
+            }
+            
             $category->delete();
-            return response()->json(['result' => 'success'], 200);
+
+            return response()->json([
+                'result' => 'success',
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['messages' => ['Failed to remove category']], 422);
+            return response()->json([
+                'messages' => ['Failed to remove category'],
+            ], 500);
         }
     }
 }
