@@ -20,12 +20,18 @@ class CategoriesController extends Controller
 
     public function get($id)
     {
-        try {
-            $category = Category::find($id);
-            return response()->json(['result' => 'success', 'category' => $category], 200);
-        } catch(\Exception $e) {
-            return response()->json(['messages' => ['Category could not be fetched']], 404);
+        $category = Category::find($id);
+
+        if (! $category) {
+            return response()->json([
+                'messages' => ['Category could not be fetched'],
+            ], 404);
         }
+
+        return response()->json([
+            'result' => 'success',
+            'category' => $category
+        ], 200);
     }
 
     public function create(CategoryRequest $request)

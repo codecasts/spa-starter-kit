@@ -11,19 +11,52 @@ class CategoriesControllerTest extends ApiTestCase
 
     /**
      * @test
+     * @dataProvider urlProvider
+     */
+    public function get_not_found_if_category_dont_exist($url)
+    {
+        $this->json('GET', $url);
+
+        $this->assertResponseStatus(404);
+        $this->seeJsonStructure([
+            'messages' => [[]],
+        ]);
+    }
+
+    /**
+     * Url data privider.
+     *
+     * @return array
+     */
+    public function urlProvider()
+    {
+        return [
+            ['/api/categories/1/get'],
+        ];
+    }
+
+    /**
+     * @test
      */
     public function can_get_category()
     {
-        $this->create(Category::class);
+        $this->create(Category::class, [
+            'name' => 'Dummy',
+        ]);
 
         $this->json('GET', '/api/categories/1/get');
 
         $this->assertResponseOk();
+        
         $this->seeJsonStructure([
             'result', 'category' => [
-                'id', 'name',
+                'id', 'name',   
             ],
         ]); 
+        
+        $this->seeJson([
+            'name' => 'Dummy',
+        ]);
     }
 
     /**
