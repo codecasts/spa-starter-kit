@@ -28,7 +28,7 @@ http.interceptors.response.use(
     * then redirect to login. On server side the error
     * messages can be changed on app/Providers/EventServiceProvider.php
     */
-    if (error.response.data.reason === 'token') {
+    if (error.response.status === 401) {
       router.push({ name: 'login.index' })
     }
     /**
