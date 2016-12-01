@@ -12,7 +12,22 @@ class CategoriesControllerTest extends ApiTestCase
     /**
      * @test
      */
-    public function it_can_list_registered_categories()
+    public function can_create_category()
+    {
+        $this->json('POST', '/api/categories/create', [
+            'name' => 'Dummy name',
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeInDatabase('categories', [
+            'name' => 'Dummy name',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_categories()
     {
         $this->times(3)->create(Category::class);
 
