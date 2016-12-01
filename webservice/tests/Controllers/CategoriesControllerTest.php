@@ -11,6 +11,37 @@ class CategoriesControllerTest extends ApiTestCase
 
     /**
      * @test
+     */
+    public function can_delete_category()
+    {
+        $this->create(Category::class);
+
+        $this->json('DELETE', '/api/categories/1/remove');
+
+        $this->assertResponseOk();
+        $this->dontSeeInDatabase('categories', ['id' => 1]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_update_category()
+    {
+        $this->create(Category::class);
+
+        $this->json('PUT', '/api/categories/1/update', [
+            'name' => 'Dummy',
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeInDatabase('categories', [
+            'id' => 1,
+            'name' => 'Dummy',
+        ]);
+    }
+
+    /**
+     * @test
      * @dataProvider urlProvider
      */
     public function get_not_found_if_category_dont_exist($method, $url)
@@ -35,6 +66,7 @@ class CategoriesControllerTest extends ApiTestCase
         return [
             ['GET', '/api/categories/1/get'],
             ['PUT', '/api/categories/1/update'],
+            ['DELETE', '/api/categories/1/remove'],
         ];
     }
 
