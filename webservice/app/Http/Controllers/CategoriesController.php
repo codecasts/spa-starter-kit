@@ -30,7 +30,7 @@ class CategoriesController extends Controller
 
         return response()->json([
             'result' => 'success',
-            'category' => $category
+            'category' => $category,
         ], 200);
     }
 
@@ -46,14 +46,20 @@ class CategoriesController extends Controller
 
     public function update($id, CategoryRequest $request)
     {
-        try {
-            $category = Category::find($id);
-            $category->name = $request->get('name');
-            $category->save();
-            return response()->json(['result' => 'success'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['messages' => ['Failed to update category']], 422);
+        $category = Category::find($id);
+
+        if (! $category) {
+            return response()->json([
+                'messages' => ['Failed to update category'],
+            ], 404);
         }
+
+        $category->name = $request->get('name');
+        $category->save();
+
+        return response()->json([
+            'result' => 'success'
+        ], 200);
     }
 
     public function remove($id)

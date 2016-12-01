@@ -13,9 +13,11 @@ class CategoriesControllerTest extends ApiTestCase
      * @test
      * @dataProvider urlProvider
      */
-    public function get_not_found_if_category_dont_exist($url)
+    public function get_not_found_if_category_dont_exist($method, $url)
     {
-        $this->json('GET', $url);
+        $this->json($method, $url, [
+            'name' => 'Dummy',
+        ]);
 
         $this->assertResponseStatus(404);
         $this->seeJsonStructure([
@@ -31,7 +33,8 @@ class CategoriesControllerTest extends ApiTestCase
     public function urlProvider()
     {
         return [
-            ['/api/categories/1/get'],
+            ['GET', '/api/categories/1/get'],
+            ['PUT', '/api/categories/1/update'],
         ];
     }
 
