@@ -50,7 +50,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ],
-        "test": "phpunit"
+        "test": "phpunit --colors=always"
     },
     "config": {
         "preferred-install": "dist"
