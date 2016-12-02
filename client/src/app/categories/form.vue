@@ -72,7 +72,7 @@
           * Fetch the category from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`categories/${id}/get`).then((res) => {
+          this.$http.get(`categories/${id}`).then((res) => {
             const { id: _id, name } = res.data.category // http://wesbos.com/destructuring-renaming/
             this.category.id = _id
             this.category.name = name
@@ -98,7 +98,7 @@
         }
       },
       save() {
-        this.$http.post('categories/create', { name: this.category.name }).then(() => {
+        this.$http.post('categories', { name: this.category.name }).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case
@@ -124,7 +124,7 @@
         })
       },
       update() {
-        this.$http.put(`categories/${this.category.id}/update`, this.category).then(() => {
+        this.$http.put(`categories/${this.category.id}`, this.category).then(() => {
           /**
           * This event will notify the world about
           * the category creation. In this case

@@ -111,7 +111,7 @@
       * Makes the HTTP requesto to the API
       */
       remove(category) {
-        this.$http.delete(`categories/${category.id}/remove`).then(() => {
+        this.$http.delete(`categories/${category.id}`).then(() => {
           /**
           * On success fetch a new set of Categories
           * based on current page number
