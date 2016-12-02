@@ -6,7 +6,7 @@ Route::group([
     Route::post('/login', 'LoginController@login');
 
     Route::group([
-        'middleware' => 'jwt.auth',
+        'middleware' => 'auth:api',
     ], function () {
         Route::resource('/categories', 'CategoriesController', [
             'except' => ['create', 'edit'],
