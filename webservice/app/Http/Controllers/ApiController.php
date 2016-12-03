@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 abstract class ApiController extends Controller
@@ -33,15 +33,39 @@ abstract class ApiController extends Controller
     }
 
     /**
+     * Return a 429 response.
+     *
+     * @param  string $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responseWithTooManyRequests($message = 'Too Many Requests')
+    {
+        return $this->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS)->responseWithError($message);
+    }
+
+    /**
+     * Return a 401 response.
+     *
+     * @param  string $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responseWithUnauthorized($message = 'Unauthorized')
+    {
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);    
+    }
+
+    /**
      * Return a 500 response.
      *
      * @param  string $message
      *
      * @return \Illuminate\Http\Response
      */
-    protected function responseWithInternalServerError($message = 'Internal server error')
+    protected function responseWithInternalServerError($message = 'Internal Server Error')
     {
-        return $this->setStatusCode(500)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR)->responseWithError($message);
     }
 
     /**
@@ -51,9 +75,9 @@ abstract class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected function responseWithNotFound($message = 'Not found')
+    protected function responseWithNotFound($message = 'Not Found')
     {
-        return $this->setStatusCode(404)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_NOT_FOUND)->responseWithError($message);
     }
 
     /**
