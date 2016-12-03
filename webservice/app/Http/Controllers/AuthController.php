@@ -104,6 +104,19 @@ class AuthController extends ApiController
         return $this->responseWithNoContent();
     }
 
+    /**
+     * Refresh the user's token.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refreshToken(Request $request)
+    {
+        $token = Auth::guard('api')->refresh();
+
+        return $this->response(compact('token'));
+    }
+
     public function username()
     {
         return 'email';

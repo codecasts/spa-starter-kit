@@ -16,7 +16,7 @@ class AuthControllerTest extends ApiTestCase
      */
     public function is_checking_for_invalid_credentials()
     {
-        $this->makeInvalidRequest();
+        $this->makeRequestWithInvalidCredentials();
 
         $this->assertResponseStatus(401);
         $this->seeJsonStructure([
@@ -30,7 +30,7 @@ class AuthControllerTest extends ApiTestCase
     public function is_checking_for_login_throttle()
     {
         for ($i = 0; $i < 6; $i++) {
-            $this->makeInvalidRequest();
+            $this->makeRequestWithInvalidCredentials();
         }
 
         $this->assertResponseStatus(429);
@@ -62,23 +62,15 @@ class AuthControllerTest extends ApiTestCase
     /**
      * @test
      */
-    public function is_checking_for_revoke_token()
+    public function is_checking_for_revoked_token()
     {
-        $user = $this->createUser();
+        $headers = $this->makeHeaders();
 
-        $token = JWTAuth::fromUser($user);
-
-        $headers = [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '.$token
-        ];
-
-        $this->json('POST', '/api/auth/revoke',[], $headers);
+        $this->json('POST', '/api/auth/revoke', [], $headers);
 
         $this->assertResponseStatus(204);
 
-        $this->json('POST', '/api/auth/revoke',[], $headers);
+        $this->json('POST', '/api/auth/revoke', [], $headers);
 
         $this->assertResponseStatus(401);
     }
@@ -94,15 +86,56 @@ class AuthControllerTest extends ApiTestCase
             'Authorization' => 'Bearer invalid'
         ];
 
-        $this->json('POST', '/api/auth/revoke',[], $headers);
+        $this->json('POST', '/api/auth/revoke', [], $headers);
 
         $this->assertResponseStatus(401);
-        $this->seeJsonEquals([
-            'error' => ['Unauthenticated.']
+        $this->seeJsonStructure([
+            'messages' => [],
         ]);
     }
 
-    private function makeInvalidRequest()
+    /**
+     * @test
+     */
+    public function check_access_without_token()
+    {
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ];
+
+        $this->json('POST', '/api/auth/revoke', [], $headers);
+
+        $this->assertResponseStatus(400);
+        $this->seeJsonStructure([
+            'messages' => [],
+        ]);
+    }
+
+    public function is_checking_for_refreshed_token()
+    {
+        $headers = $this->makeHeaders();
+
+        $this->json('POST', '/api/auth/refresh', [], $headers);
+
+        $this->assertResponseOk();
+        $this->seeJsonStructure(['token']);
+    }
+
+    private function makeHeaders()
+    {
+        $user = $this->createUser();
+
+        $token = JWTAuth::fromUser($user);
+
+        return [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
+        ];
+    }
+
+    private function makeRequestWithInvalidCredentials()
     {
         $this->json('POST', '/api/auth/issue', [
             'email' => 'hello@example.com',

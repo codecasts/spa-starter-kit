@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,8 +46,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($request->expectsJson() && $exception instanceof HttpException) {
-            return $this->handleExceptionJsonResponse($exception);
+        if ($request->expectsJson()) {
+
+            if ($exception instanceof UnauthorizedHttpException) {
+                return $this->handleUnauthorizedHttpException($exception);
+            }
+
+            if ($exception instanceof HttpException) {
+                return $this->handleExceptionJsonResponse($exception);
+            }
         }
 
         return parent::render($request, $exception);
@@ -64,6 +72,31 @@ class Handler extends ExceptionHandler
         return response()->json([
             'messages' => [$exception->getMessage()],
         ], $exception->getStatusCode());
+    }
+
+    /**
+     * Handle the JSON response for the UnauthorizedHttpException.
+     *
+     * @param UnauthorizedHttpException $exception
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function handleUnauthorizedHttpException(UnauthorizedHttpException $exception)
+    {
+        $headers = $exception->getHeaders();
+
+        if (isset($headers['WWW-Authenticate']) && $headers['WWW-Authenticate'] == 'jwt-auth') {
+
+            $message = $exception->getMessage();
+
+            if(false === !strpos($message, 'expired')) {
+                return response()->json([
+                    'reason' => 'token_expired',
+                    'messages' => [$exception->getMessage()]
+                ], $exception->getStatusCode());
+            }
+        }
+
+        return $this->handleExceptionJsonResponse($exception);
     }
 
     /**
