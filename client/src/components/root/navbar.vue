@@ -2,6 +2,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import CcSpinner from '../general/spinner'
+  import { version } from '../../config'
 
   export default {
     components: {
@@ -9,6 +10,9 @@
     },
     computed: {
       ...mapState(['user']),
+      version() {
+        return version
+      },
     },
     methods: {
       ...mapActions(['setToken', 'setUser']),
@@ -25,10 +29,11 @@
   <div>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <div class="navbar-header   spacer">
+        <div class="navbar-header spacer">
           <a class="navbar-brand" href="http://www.codecasts.com.br/">
             Codecasts.com.br
-          </a>
+          </a><br>
+          <small class="version">version {{ version }}</small>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -59,5 +64,10 @@
     border-radius: 20px;
     background-color: #ddd;
     display: inline-block;
+  }
+  .version {
+    position: absolute;
+    right: 15px;
+    top: 58px;
   }
 </style>
