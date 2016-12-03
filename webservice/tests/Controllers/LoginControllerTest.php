@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use JWTAuth;
 
-class LoginControllerTest extends ApiTestCase
+class AuthControllerTest extends ApiTestCase
 {
     use DatabaseMigrations, Factory;
 
@@ -15,10 +16,7 @@ class LoginControllerTest extends ApiTestCase
      */
     public function is_checking_for_invalid_credentials()
     {
-        $this->json('POST', '/api/login', [
-            'email' => 'hello@example.com',
-            'password' => 'dummypassword',
-        ]);
+        $this->makeInvalidRequest();
 
         $this->assertResponseStatus(401);
         $this->seeJsonStructure([
@@ -29,19 +27,28 @@ class LoginControllerTest extends ApiTestCase
     /**
      * @test
      */
+    public function is_checking_for_login_throttle()
+    {
+        for ($i = 0; $i < 6; $i++) {
+            $this->makeInvalidRequest();
+        }
+
+        $this->assertResponseStatus(429);
+        $this->seeJsonStructure([
+            'messages' => [[]],
+        ]);
+    }
+
+    /**
+     * @test
+     */
     public function can_get_an_authenticated_token()
     {
-        $email = 'hello@example.com';
-        $password = 'dummypassword';
+        $user = $this->createUser();
 
-        $this->create(User::class, [
-            'email' => $email,
-            'password' => Hash::make($password),
-        ]);
-
-        $this->json('POST', '/api/login', [
-            'email' => $email,
-            'password' => $password,
+        $this->json('POST', '/api/auth/issue', [
+            'email' => $user->email,
+            'password' => 'secret',
         ]);
 
         $this->assertResponseOk();
@@ -49,6 +56,64 @@ class LoginControllerTest extends ApiTestCase
             'token', 'user' => [
                 'id', 'name', 'email',
             ],
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function is_checking_for_revoke_token()
+    {
+        $user = $this->createUser();
+
+        $token = JWTAuth::fromUser($user);
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer '.$token
+        ];
+
+        $this->json('POST', '/api/auth/revoke',[], $headers);
+
+        $this->assertResponseStatus(204);
+
+        $this->json('POST', '/api/auth/revoke',[], $headers);
+
+        $this->assertResponseStatus(401);
+    }
+
+    /**
+     * @test
+     */
+    public function check_unauthorized_access()
+    {
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer invalid'
+        ];
+
+        $this->json('POST', '/api/auth/revoke',[], $headers);
+
+        $this->assertResponseStatus(401);
+        $this->seeJsonEquals([
+            'error' => ['Unauthenticated.']
+        ]);
+    }
+
+    private function makeInvalidRequest()
+    {
+        $this->json('POST', '/api/auth/issue', [
+            'email' => 'hello@example.com',
+            'password' => 'dummypassword',
+        ]);
+    }
+
+    private function createUser()
+    {
+        return $this->create(User::class, [
+            'email' => 'hello@example.com'
         ]);
     }
 }
