@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Requests\CategoryRequest;
 
-class CategoriesController extends Controller
+class CategoriesController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,9 @@ class CategoriesController extends Controller
         try {
             $pager = Category::paginate(10);
 
-            return response()->json(compact('pager'), 200);
+            return $this->response(compact('pager'));
         } catch(\Exception $e) {
-            return response()->json([
-                'messages' => ['Failed to fetch categories'],
-            ], 500);
+            return $this->responseWithInternalServerError('Failed to fetch categories');
         }
     }
 
@@ -36,13 +34,9 @@ class CategoriesController extends Controller
         try {
             Category::create($request->only('name'));
 
-            return response()->json([
-                'result' => 'success',
-            ], 200);
+            return $this->response(['result' => 'success']);
         } catch(\Exception $e) {
-            return response()->json([
-                'messages' => ['Failed to create category'],
-            ], 500);
+            return $this->responseWithInternalServerError('Failed to create category');
         }
     }
 
@@ -58,19 +52,15 @@ class CategoriesController extends Controller
             $category = Category::find($id);
 
             if (! $category) {
-                return response()->json([
-                    'messages' => ['Category not found'],
-                ], 404);
+                return $this->responseWithNotFound('Category not found');
             }
 
-            return response()->json([
+            return $this->response([
                 'result' => 'success',
                 'category' => $category,
-            ], 200);
+            ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'messages' => ['Failed to fetch category'],
-            ], 500);
+            return $this->responseWithInternalServerError('Failed to fetch category');
         }
     }
 
@@ -87,21 +77,15 @@ class CategoriesController extends Controller
             $category = Category::find($id);
 
             if (! $category) {
-                return response()->json([
-                    'messages' => ['Category not found'],
-                ], 404);
+                return $this->responseWithNotFound('Category not found');
             }
 
             $category->name = $request->get('name');
             $category->save();
 
-            return response()->json([
-                'result' => 'success',
-            ], 200);
+            return $this->response(['result' => 'success']);
         } catch (\Exception $e) {
-            return response()->json([
-                'messages' => ['Failed to update category'],
-            ], 500);
+            return $this->responseWithInternalServerError('Failed to update category');
         }
     }
 
@@ -117,20 +101,14 @@ class CategoriesController extends Controller
             $category = Category::find($id);
 
             if (! $category) {
-                return response()->json([
-                    'messages' => ['Category not found'],
-                ], 404);
+                return $this->responseWithNotFound('Category not found');
             }
             
             $category->delete();
 
-            return response()->json([
-                'result' => 'success',
-            ], 200);
+            return $this->response(['result' => 'success']);
         } catch (\Exception $e) {
-            return response()->json([
-                'messages' => ['Failed to remove category'],
-            ], 500);
+            return $this->responseWithInternalServerError('Failed to remove category');
         }
     }
 }
