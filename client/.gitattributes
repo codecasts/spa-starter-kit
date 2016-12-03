@@ -1,0 +1,6 @@
+# Protect web fonts from text encoding and line ending changes.
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.woff  binary
+*.woff2 binary
