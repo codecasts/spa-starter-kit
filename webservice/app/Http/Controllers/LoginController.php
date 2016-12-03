@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Auth;
 use Lang;
 
-class LoginController extends Controller
+class LoginController extends ApiController
 {
     use ThrottlesLogins;
 
@@ -60,7 +60,7 @@ class LoginController extends Controller
 
         $user = Auth::guard('api')->user();
 
-        return response()->json(compact('token', 'user'));
+        return $this->response(compact('token', 'user'));
     }
 
     /**
@@ -73,7 +73,7 @@ class LoginController extends Controller
     {
         $message = Lang::get('auth.failed');
 
-        return response()->json(['messages' => [$message]], 401);
+        return $this->responseWithUnauthorized($message);
     }
 
     /**
@@ -90,7 +90,7 @@ class LoginController extends Controller
 
         $message = Lang::get('auth.throttle', ['seconds' => $seconds]);
 
-        return response()->json(['messages' => [$message]], Response::HTTP_TOO_MANY_REQUESTS);
+        return $this->responseWithTooManyRequests($message);
     }
 
     public function username()
