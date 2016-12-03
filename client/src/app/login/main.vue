@@ -24,7 +24,7 @@
       */
       submit() {
         const payload = { email: this.email, password: this.password }
-        this.$http.post('login', payload).then((response) => {
+        this.$http.post('auth/issue', payload).then((response) => {
           this.handleResponse(response)
         })
       },
