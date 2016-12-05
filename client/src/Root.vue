@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     shouldShowNavigation() {
-      return this.$route.name !== 'login.index'
+      return !(this.$route.path.indexOf('/auth') > -1)
     },
   },
 }
