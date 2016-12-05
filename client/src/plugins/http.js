@@ -29,7 +29,7 @@ http.interceptors.response.use(
     * messages can be changed on app/Providers/EventServiceProvider.php
     */
     if (error.response.status === 401) {
-      router.push({ name: 'auth.singin' })
+      router.push({ name: 'login.index' })
     }
     /**
     * Error messages are sent in arrays
