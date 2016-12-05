@@ -13,7 +13,7 @@ abstract class ApiController extends Controller
      *
      * @var \Illuminate\Contracts\Routing\ResponseFactory
      */
-    protected $response;
+    private $response;
 
     /**
      * HTTP status code.
