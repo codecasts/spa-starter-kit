@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\Transform;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
@@ -19,17 +20,25 @@ abstract class ApiController extends Controller
      *
      * @var int
      */
-    protected $statusCode = 200;
+    protected $statusCode = Response::HTTP_OK;
 
+    /**
+     * Transform.
+     *
+     * @var \App\Transformers\Transform
+     */
+    protected $transform;
 
     /**
      * Creates a new class instance.
      *
-     * @param \Illuminate\Contracts\Routing\ResponseFactory $response
+     * @param ResponseFactory $response
+     * @param Transform       $transform
      */
-    public function __construct(ResponseFactory $response)
+    public function __construct(ResponseFactory $response, Transform $transform)
     {
         $this->response = $response;
+        $this->transform = $transform;
     }
 
     /**
