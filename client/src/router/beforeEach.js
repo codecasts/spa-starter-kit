@@ -51,7 +51,7 @@ const beforeEach = (to, from, next) => {
   * login.
   */
   if (needAuth(auth, token)) {
-    next({ name: 'auth.singin' })
+    next({ name: 'login.index' })
   }
 }
 
