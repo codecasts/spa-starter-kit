@@ -21,12 +21,13 @@ The live demo can be found in [https://spa.codecasts.rocks/](https://spa.codecas
     * Authentication with JWT
     * Keep user signed in using local stored info
     * HTTP requests with [Axios](https://github.com/mzabriskie/axios)
-    * ESLint
+    * ESLint with AirBNB preset
     * Pagination integrated with [Laravel's LengthAwarePaginator](https://laravel.com/docs/5.3/pagination#converting-results-to-json)
     * Alerts and Confirmation Alerts provided by [SweetAlert](http://t4t5.github.io/sweetalert/)
 2. Server side
     * Laravel 5.3
     * Authentication with JWT
+    * [Fractal](http://fractal.thephpleague.com/)
     * Web service RESTful with Dingo *(planned)*
 
 ## Prerequisites
@@ -72,15 +73,18 @@ $ composer test
 
 3. The spinner displayed during server requests (see top right close to user indentification) is also controlled by a Vuex property. The procedure to show/hide it is the same as outlined in the item 2 above;
 
-4. routes and Vuex modules live close to the modules they work for. Always look for routes.js and store.js inside a module directory. See /client/src/modules/categories.
+4. routes and Vuex modules live close to the modules they work for. Always look for routes.js and store.js inside a module directory. See /client/src/modules/categories;
+
+5. **Important**: Laravel project found in the directory *webservice* was modified beyond adding routes and controllers. For instance: the *webservice/app/Exceptions/Handler.php* was modified from its original version to return all exceptions to the client, not only HttpExceptions. Other changes are also in place. So our recommendation is to always use this project to build your own, instead of copying controllers and routes to a new project.
 
 ## Contributing
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+3. Write your code. Comment your code.
+4. Commit your changes: `git commit -am 'Add some feature'`
+5. Push to the branch: `git push origin my-new-feature`
+6. Submit a pull request :D
 
 ## Credits
 
