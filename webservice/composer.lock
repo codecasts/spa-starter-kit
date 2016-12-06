@@ -694,16 +694,16 @@
         },
         {
             "name": "namshi/jose",
-            "version": "7.2.2",
+            "version": "7.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/namshi/jose.git",
-                "reference": "c38b5e46a9e3816a4415268ede5ed08ece558ab6"
+                "reference": "89a24d7eb3040e285dd5925fcad992378b82bcff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/namshi/jose/zipball/c38b5e46a9e3816a4415268ede5ed08ece558ab6",
-                "reference": "c38b5e46a9e3816a4415268ede5ed08ece558ab6",
+                "url": "https://api.github.com/repos/namshi/jose/zipball/89a24d7eb3040e285dd5925fcad992378b82bcff",
+                "reference": "89a24d7eb3040e285dd5925fcad992378b82bcff",
                 "shasum": ""
             },
             "require": {
@@ -753,7 +753,7 @@
                 "jwt",
                 "token"
             ],
-            "time": "2016-10-05 13:30:27"
+            "time": "2016-12-05 07:27:31"
         },
         {
             "name": "nesbot/carbon",
