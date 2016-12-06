@@ -84,7 +84,7 @@ class Handler extends ExceptionHandler
             $code = $e->getStatusCode();
         }
 
-        // If the debugging is on then include in the the exception trace in the body of the response
+        // If the debugging is on then include in the exception trace in the body of the response
         if (config('app.debug')) {
             $body['trace'] = $e->getTrace();
         }
