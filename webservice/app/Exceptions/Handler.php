@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exception\HttpResponseException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -46,7 +48,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($request->expectsJson()) {
-            return $this->handleExceptionJsonResponse($exception);
+            return $this->handleExceptionJsonResponse($request, $exception);
         }
 
         return parent::render($request, $exception);
@@ -55,21 +57,35 @@ class Handler extends ExceptionHandler
     /**
      * Handle the JSON response for the HTTP exceptions.
      *
-     * @param  \Exception $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception               $e
      *
      * @return \Illuminate\Http\Response
      */
-    protected function handleExceptionJsonResponse(Exception $exception)
+    protected function handleExceptionJsonResponse($request, Exception $e)
     {
-        $statusCode = ($exception instanceof HttpException ? $exception->getStatusCode() : 500);
-
-        $data = ['messages' => [$exception->getMessage()]];
-
-        if (config('app.debug')) {
-            $data['trace'] = $exception->getTrace();
+        if ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
         }
 
-        return response()->json($data, $statusCode);
+        if ($e instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($e, $request);
+        }
+
+        $code = 500;
+        $data = [
+            'messages' => [$e->getMessage()],
+        ];
+
+        if ($e instanceof HttpException) {
+            $code = $e->getStatusCode();
+        }
+
+        if (config('app.debug')) {
+            $data['trace'] = $e->getTrace();
+        }
+
+        return response()->json($data, $code);
     }
 
     /**
