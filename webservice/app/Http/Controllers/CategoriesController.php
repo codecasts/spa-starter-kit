@@ -15,9 +15,9 @@ class CategoriesController extends ApiController
      */
     public function index()
     {
-        $pager = Category::paginate(10);
-
-        return $this->response(compact('pager'));
+        return $this->response(
+            $this->transform->collection(Category::paginate(10), new CategoryTransformer)
+        );
     }
 
     /**
@@ -47,10 +47,9 @@ class CategoriesController extends ApiController
             return $this->responseWithNotFound('Category not found');
         }
 
-        return $this->response([
-            'result' => 'success',
-            'category' => $category,
-        ]);
+        return $this->response(
+            $this->transform->item($category, new CategoryTransformer)
+        );
     }
 
     /**
