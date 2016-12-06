@@ -69,4 +69,27 @@ class ProductsControllerTest extends ApiTestCase
             ],
         ]);
     }
+
+    /**
+     * @test
+     */ 
+    public function can_update_product()
+    {
+        $category = $this->create(Category::class);
+        $product = $this->create(Product::class, [
+            'category_id' => $this->create(Category::class)->id,
+        ]);
+
+        $this->json('PUT', '/api/products/1', [
+            'name' => 'Dummy',
+            'category' => $category->id,
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeInDatabase('products', [
+            'id' => $product->id,
+            'name' => 'Dummy',
+            'category_id' => $category->id,
+        ]);
+    }
 }
