@@ -46,7 +46,11 @@ class ProductsController extends ApiController
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+
+        return $this->response(
+            $this->transform->item($product, new ProductTransformer)
+        );
     }
 
     /**

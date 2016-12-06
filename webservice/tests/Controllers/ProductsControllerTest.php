@@ -50,4 +50,23 @@ class ProductsControllerTest extends ApiTestCase
             'category_id' => $category->id,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function can_get_product()
+    {
+        $product = $this->create(Product::class, [
+            'category_id' => $this->create(Category::class)->id,
+        ]);
+
+        $this->json('GET', '/api/products/1');
+
+        $this->assertResponseOk();
+        $this->seeJsonStructure([
+            'data' => [
+                'name', 'category',
+            ],
+        ]);
+    }
 }
