@@ -82,6 +82,12 @@ class ProductsController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->delete();
+
+        return $this->response([
+            'result' => 'success',
+        ]);
     }
 }

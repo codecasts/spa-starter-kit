@@ -92,4 +92,19 @@ class ProductsControllerTest extends ApiTestCase
             'category_id' => $category->id,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function can_delete_product()
+    {
+        $this->create(Product::class, [
+            'category_id' => $this->create(Category::class)->id,
+        ]);
+
+        $this->json('DELETE', '/api/products/1');
+
+        $this->assertResponseOk();
+        $this->dontSeeInDatabase('products', ['id' => 1]);
+    }
 }
