@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Http\Requests\ProductRequest;
 use App\Transformers\ProductTransformer;
 
 class ProductsController extends ApiController
@@ -20,24 +21,21 @@ class ProductsController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category,
+        ]);
+
+        return $this->response([
+            'result' => 'success',
+        ]);
     }
 
     /**
