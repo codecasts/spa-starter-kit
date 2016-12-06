@@ -14,13 +14,9 @@ class CategoriesController extends ApiController
      */
     public function index()
     {
-        try {
-            $pager = Category::paginate(10);
+        $pager = Category::paginate(10);
 
-            return $this->response(compact('pager'));
-        } catch(\Exception $e) {
-            return $this->responseWithInternalServerError('Failed to fetch categories');
-        }
+        return $this->response(compact('pager'));
     }
 
     /**
@@ -31,13 +27,9 @@ class CategoriesController extends ApiController
      */
     public function store(CategoryRequest $request)
     {
-        try {
-            Category::create($request->only('name'));
+        Category::create($request->only('name'));
 
-            return $this->response(['result' => 'success']);
-        } catch(\Exception $e) {
-            return $this->responseWithInternalServerError('Failed to create category');
-        }
+        return $this->response(['result' => 'success']);
     }
 
     /**
@@ -48,20 +40,16 @@ class CategoriesController extends ApiController
      */
     public function show($id)
     {
-        try {
-            $category = Category::find($id);
+        $category = Category::find($id);
 
-            if (! $category) {
-                return $this->responseWithNotFound('Category not found');
-            }
-
-            return $this->response([
-                'result' => 'success',
-                'category' => $category,
-            ]);
-        } catch (\Exception $e) {
-            return $this->responseWithInternalServerError('Failed to fetch category');
+        if (! $category) {
+            return $this->responseWithNotFound('Category not found');
         }
+
+        return $this->response([
+            'result' => 'success',
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -73,20 +61,16 @@ class CategoriesController extends ApiController
      */
     public function update(CategoryRequest $request, $id)
     {
-        try {
-            $category = Category::find($id);
+        $category = Category::find($id);
 
-            if (! $category) {
-                return $this->responseWithNotFound('Category not found');
-            }
-
-            $category->name = $request->get('name');
-            $category->save();
-
-            return $this->response(['result' => 'success']);
-        } catch (\Exception $e) {
-            return $this->responseWithInternalServerError('Failed to update category');
+        if (! $category) {
+            return $this->responseWithNotFound('Category not found');
         }
+
+        $category->name = $request->get('name');
+        $category->save();
+
+        return $this->response(['result' => 'success']);
     }
 
     /**
@@ -97,18 +81,14 @@ class CategoriesController extends ApiController
      */
     public function destroy($id)
     {
-        try {
-            $category = Category::find($id);
+        $category = Category::find($id);
 
-            if (! $category) {
-                return $this->responseWithNotFound('Category not found');
-            }
-            
-            $category->delete();
-
-            return $this->response(['result' => 'success']);
-        } catch (\Exception $e) {
-            return $this->responseWithInternalServerError('Failed to remove category');
+        if (! $category) {
+            return $this->responseWithNotFound('Category not found');
         }
+        
+        $category->delete();
+
+        return $this->response(['result' => 'success']);
     }
 }
