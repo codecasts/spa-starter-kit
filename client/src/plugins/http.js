@@ -12,7 +12,7 @@ const http = axios.create({
 * Helper method to set the header with the token
 */
 export function setToken(token) {
-  http.defaults.headers.common.Authorization = `Bearer: ${token}`
+  http.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
 http.interceptors.response.use(
