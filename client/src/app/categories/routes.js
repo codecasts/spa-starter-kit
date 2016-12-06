@@ -1,19 +1,11 @@
-
 /**
-* Components are lazy-loaded
-* http://router.vuejs.org/en/advanced/lazy-loading.html
-*/
-const Categories = (resolve) => {
-  require.ensure(['./main'], () => {
-    resolve(require('./main')) // eslint-disable-line global-require
-  })
-}
+ * Group components for code splitting in Web pack
+ *
+ * http://router.vuejs.org/en/advanced/lazy-loading.html
+ */
 
-const Form = (resolve) => {
-  require.ensure(['./form'], () => {
-    resolve(require('./form')) // eslint-disable-line global-require
-  })
-}
+const Categories = r => require.ensure([], () => r(require('./main.vue')), 'group-categories')
+const Form = r => require.ensure([], () => r(require('./form.vue')), 'group-categories')
 
 const meta = {
   requiresAuth: true,
