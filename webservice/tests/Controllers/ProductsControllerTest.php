@@ -107,4 +107,35 @@ class ProductsControllerTest extends ApiTestCase
         $this->assertResponseOk();
         $this->dontSeeInDatabase('products', ['id' => 1]);
     }
+
+    /**
+     * @test
+     * @dataProvider urlProvider
+     */
+    public function get_404_if_product_dont_exist($method, $url)
+    {
+        $this->json($method, $url, [
+            'name' => 'Dummy',
+            'category' => $this->create(Category::class)->id,
+        ]);
+
+        $this->assertResponseStatus(404);
+        $this->seeJsonStructure([
+            'messages' => [[]],
+        ]);
+    }
+
+    /**
+     * Url provider.
+     *
+     * @return array
+     */
+    public function urlProvider()
+    {
+        return [
+            ['GET', '/api/products/1'],
+            ['PUT', '/api/products/1'],
+            ['DELETE', '/api/products/1'],
+        ];
+    }
 }

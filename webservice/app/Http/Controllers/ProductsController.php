@@ -48,6 +48,10 @@ class ProductsController extends ApiController
     {
         $product = Product::find($id);
 
+        if (! $product) {
+            return $this->responseWithNotFound('Product not found');
+        }
+
         return $this->response(
             $this->transform->item($product, new ProductTransformer)
         );
@@ -63,6 +67,10 @@ class ProductsController extends ApiController
     public function update(ProductRequest $request, $id)
     {
         $product = Product::find($id);
+
+        if (! $product) {
+            return $this->responseWithNotFound('Product not found');
+        }
 
         $product->name = $request->name;
         $product->category_id = $request->category;
@@ -83,6 +91,10 @@ class ProductsController extends ApiController
     public function destroy($id)
     {
         $product = Product::find($id);
+
+        if (! $product) {
+            return $this->responseWithNotFound('Product not found');
+        }
 
         $product->delete();
 
