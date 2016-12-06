@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Handle the JSON response for the HTTP exceptions.
+     * Handle the JSON response for all the exceptions.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Exception               $e
@@ -64,28 +64,32 @@ class Handler extends ExceptionHandler
      */
     protected function handleExceptionJsonResponse($request, Exception $e)
     {
+        // If is an authentication exception then return a JSON response with status code of 401
         if ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
         }
 
+        // If is a validation exception then return a JSON response with status code of 422
         if ($e instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($e, $request);
         }
 
         $code = 500;
-        $data = [
+        $body = [
             'messages' => [$e->getMessage()],
         ];
 
+        // If is a HttpException the use the appropriate HTTP status code instead of 500
         if ($e instanceof HttpException) {
             $code = $e->getStatusCode();
         }
 
+        // If the debugging is on then include in the the exception trace in the body of the response
         if (config('app.debug')) {
-            $data['trace'] = $e->getTrace();
+            $body['trace'] = $e->getTrace();
         }
 
-        return response()->json($data, $code);
+        return response()->json($body, $code);
     }
 
     /**
