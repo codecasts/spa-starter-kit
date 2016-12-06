@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             $fractal = new Manager;
 
             if (request()->has('include')) {
-                $fractal->parseIncludes(request()->include);
+                $fractal->parseIncludes(request()->query('include'));
             }
 
             $fractal->setSerializer(new DataArraySerializer);
