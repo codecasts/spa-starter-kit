@@ -4,8 +4,8 @@
  * http://router.vuejs.org/en/advanced/lazy-loading.html
  */
 
-const Categories = r => require.ensure([], () => r(require('./main.vue')), 'group-categories')
-const Form = r => require.ensure([], () => r(require('./form.vue')), 'group-categories')
+const Categories = r => require.ensure([], () => r(require('./main.vue')), 'categories-bundle')
+const Form = r => require.ensure([], () => r(require('./form.vue')), 'categories-bundle')
 
 const meta = {
   requiresAuth: true,
