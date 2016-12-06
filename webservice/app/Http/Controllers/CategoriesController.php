@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
+use App\Transformers\CategoryTransformer;
 
 class CategoriesController extends ApiController
 {

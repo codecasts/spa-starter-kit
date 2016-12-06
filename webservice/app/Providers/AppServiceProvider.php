@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use League\Fractal\Manager;
+use App\Transformers\Transform;
 use Illuminate\Support\ServiceProvider;
+use League\Fractal\Serializer\DataArraySerializer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Transform::class, function () {
+            return new Transform(
+                (new Manager)->setSerializer(new DataArraySerializer)
+            );
+        });
     }
 }
