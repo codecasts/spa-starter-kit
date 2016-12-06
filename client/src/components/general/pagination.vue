@@ -3,7 +3,7 @@
   export default {
     // https://vuejs.org/v2/guide/components.html#Prop-Validation
     props: {
-      pager: Object,
+      paginationData: Object,
       currentPage: {
         type: Number,
         default: 1,
@@ -18,7 +18,7 @@
     },
     computed: {
       hasData() {
-        return this.pager.total !== undefined
+        return this.paginationData.total !== undefined
       },
       pages() {
         /**
@@ -27,10 +27,10 @@
         * big array of records
         */
         return this.generatePagesArray(
-          this.currentPage, this.pager.total, this.pager.per_page, parseInt(this.maxItems, 10))
+          this.currentPage, this.paginationData.total, this.paginationData.per_page, parseInt(this.maxItems, 10))
       },
       isLast() {
-        return this.currentPage === this.pager.last_page
+        return this.currentPage === this.paginationData.last_page
       },
       isFirst() {
         return this.currentPage === 1
@@ -46,14 +46,14 @@
         /**
         * ?page=0 or higher than the total number of pages
         */
-        return this.currentPage > this.pager.last_page || this.currentPage < 1
+        return this.currentPage > this.paginationData.last_page || this.currentPage < 1
       },
       currentRange() {
-        let firstItem = (this.pager.per_page * (this.currentPage - 1)) + 1
-        let lastItem = (this.pager.per_page * this.currentPage)
+        let firstItem = (this.paginationData.per_page * (this.currentPage - 1)) + 1
+        let lastItem = (this.paginationData.per_page * this.currentPage)
 
-        if (this.pager.total < lastItem) {
-          lastItem = this.pager.total
+        if (this.paginationData.total < lastItem) {
+          lastItem = this.paginationData.total
         }
         if (this.totalPages === 1) {
           firstItem = 1
@@ -151,7 +151,7 @@
   <div>
     <div class="row" v-if="hasData">
       <div class="col-md-6">
-        <p class="rangeInformation">Showing {{ currentRange }} of {{ pager.total }}</p>
+        <p class="rangeInformation">Showing {{ currentRange }} of {{ paginationData.total }}</p>
       </div>
       <div class="col-md-6 text-right">
         <nav aria-label="Page navigation">

@@ -36,7 +36,7 @@
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['categoriesSetPager', 'setFetching']),
+      ...mapActions(['categoriesSetData', 'setFetching']),
 
       /**
       * Fetch a new set of categories
@@ -56,12 +56,15 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`categories?page=${this.currentPage}`).then((response) => {
+        this.$http.get(`categories?page=${this.currentPage}`).then(({ data }) => {
           /**
-          * Vuex action to set pager object in
+          * Vuex action to set pagination object in
           * the Vuex Categories module
           */
-          this.categoriesSetPager({ pager: response.data.pager })
+          this.categoriesSetData({
+            list: data.data,
+            pagination: data.meta.pagination,
+          })
 
           /**
           * Vuex action to set fetching property
@@ -150,10 +153,11 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pager: state => state.Categories.pager,
+        pagination: state => state.Categories.pagination,
+        list: state => state.Categories.list,
       }),
       categories() {
-        return this.pager.data
+        return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
@@ -273,7 +277,7 @@
     </table>
     <div>
       <cc-pagination
-        :pager="pager"
+        :pagination-data="pagination"
         :current-page="currentPage"
         :max-items="12">
       </cc-pagination>
