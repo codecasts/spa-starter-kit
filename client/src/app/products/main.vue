@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'CcCategories',
+    name: 'CcProducts',
 
     /**
     * Components registered with
@@ -22,32 +22,27 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'categories.edit',
+          name: 'products.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'categories.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'products.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'categories.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'products.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['categoriesSetData', 'setFetching']),
-
-      fetch() {
-        this.fetchPaginated()
-        this.fetchFullList()
-      },
+      ...mapActions(['productsSetData', 'setFetching']),
 
       /**
-      * Fetch a new set of categories
+      * Fetch a new set of products
       * based on the current page
       */
-      fetchPaginated() {
+      fetch() {
         /**
         * Vuex action to set fetching property
         * to true, thus showing the spinner
@@ -61,12 +56,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`categories?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`products?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex Categories module
+          * the Vuex Products module
           */
-          this.categoriesSetData({
+          this.productsSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -81,26 +76,6 @@
       },
 
       /**
-      * Differente from fetch() which always
-      * return a paginated set of categories
-      * this one returns the full set, which
-      * is used by other components in the app.
-      */
-      fetchFullList() {
-        this.setFetching({ fetching: true })
-        this.$http.get('categories/full-list').then(({ data }) => {
-          /**
-          * Vuex action to set full list array in
-          * the Vuex Categories module
-          */
-          this.categoriesSetData({
-            full_list: data.data,
-          })
-          this.setFetching({ fetching: false })
-        })
-      },
-
-      /**
       * Navigate to a specific page, provided in the
       * obj received by the method
       */
@@ -108,61 +83,55 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'categories.index', query: { page: obj.page } })
+        this.$router.push({ name: 'products.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of Categories based on
+        * Fetch a new set of Products based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
         * property is set before making the request.
         */
-        Vue.nextTick(() => this.fetchPaginated())
+        Vue.nextTick(() => this.fetch())
       },
 
       /**
       * Shows a confirmation dialog
       */
-      askRemove(category) {
+      askRemove(product) {
         swal({
           title: 'Are you sure?',
-          text: `Category ${category.name} will be permanently removed.`,
+          text: `Product ${product.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.remove(category)) // callback executed when OK is pressed
+        }, () => this.remove(product)) // callback executed when OK is pressed
       },
 
       /**
       * Makes the HTTP requesto to the API
       */
-      remove(category) {
-        this.$http.delete(`categories/${category.id}`).then(() => {
+      remove(product) {
+        this.$http.delete(`products/${product.id}`).then(() => {
           /**
-          * On success fetch a new set of Categories
+          * On success fetch a new set of Products
           * based on current page number
           */
-          this.fetchPaginated()
-
-          /**
-          * If we remove a category then
-          * the full list must be refreshed
-          */
-          this.fetchFullList()
+          this.fetch()
 
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Category removed.', 'success')
+          swal('Done!', 'Product removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'categories.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'products.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -184,17 +153,17 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Categories.pagination,
-        list: state => state.Categories.list,
+        pagination: state => state.Products.pagination,
+        list: state => state.Products.list,
       }),
-      categories() {
+      products() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'categories.new' || this.$route.name === 'categories.edit'
+        return this.$route.name === 'products.new' || this.$route.name === 'products.edit'
       },
     },
     /**
@@ -205,8 +174,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('category.created')
-      this.$bus.$off('category.updated')
+      this.$bus.$off('product.created')
+      this.$bus.$off('product.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -216,14 +185,15 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Category was created or updated, refresh the list
+      * Product was created or updated, refresh the list
       */
-      this.$bus.$on('category.created', this.fetch)
-      this.$bus.$on('category.updated', this.fetch)
+      this.$bus.$on('product.created', () => this.fetch())
+      this.$bus.$on('product.updated', () => this.fetch())
+
       /**
       * Fetch data immediately after component is mounted
       */
-      this.fetchPaginated()
+      this.fetch()
     },
     /**
     * This hook is called every time DOM
@@ -242,7 +212,7 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-        <h1>Category Management</h1>
+        <h1>Product Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -251,7 +221,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Category">
+            title="New Product">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -259,7 +229,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Category">
+            title="New Product">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -267,8 +237,8 @@
     </div>
 
     <!-- Form to create/edit will be inserted here  -->
-    <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/categories/routes.js  -->
+    <!-- when navigate to /create or /edit/{id}  -->
+    <!-- see /src/modules/products/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -277,16 +247,16 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th colspan="2">Category</th>
+          <th colspan="2">Product</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="category in categories">
-          <td width="1%" nowrap>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
+        <tr v-for="product in products">
+          <td width="1%" nowrap>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
-              @click.prevent="edit(category.id)"
+              @click.prevent="edit(product.id)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
@@ -294,7 +264,7 @@
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"
-              @click="askRemove(category)"
+              @click="askRemove(product)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"

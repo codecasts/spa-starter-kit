@@ -20,6 +20,13 @@ class CategoriesController extends ApiController
         );
     }
 
+    public function fullList()
+    {
+        return $this->response(
+            $this->transform->collection(Category::all(), new CategoryTransformer)
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *

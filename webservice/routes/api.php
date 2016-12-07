@@ -8,6 +8,7 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api',
     ], function () {
+        Route::get('/categories/full-list', ['uses' => 'CategoriesController@fullList']);
         Route::resource('/categories', 'CategoriesController', [
             'except' => ['create', 'edit'],
         ]);
