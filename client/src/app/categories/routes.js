@@ -1,19 +1,26 @@
-
 /**
-* Components are lazy-loaded
-* http://router.vuejs.org/en/advanced/lazy-loading.html
-*/
-const Categories = (resolve) => {
-  require.ensure(['./main'], () => {
-    resolve(require('./main')) // eslint-disable-line global-require
-  })
-}
+ * Components are lazy-loaded
+ * http://router.vuejs.org/en/advanced/lazy-loading.html
+ *
+ * const Categories = (resolve) => {
+ *   require.ensure(['./main'], () => {
+ *     resolve(require('./main')) // eslint-disable-line global-require
+ *  })
+ * }
+ *
+ * const Form = (resolve) => {
+ *   require.ensure(['./form'], () => {
+ *     resolve(require('./form')) // eslint-disable-line global-require
+ *  })
+ * }
+ *
+ * An alternative syntax used below, to group all components into a single
+ * Webpack 'chunk' and JS file.
+ */
 
-const Form = (resolve) => {
-  require.ensure(['./form'], () => {
-    resolve(require('./form')) // eslint-disable-line global-require
-  })
-}
+const Categories = r => require.ensure([], () => r(require('./main.vue')), 'categories-bundle')
+const Form = r => require.ensure([], () => r(require('./form.vue')), 'categories-bundle')
+
 
 const meta = {
   requiresAuth: true,
