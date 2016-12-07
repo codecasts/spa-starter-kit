@@ -2,14 +2,22 @@ import * as TYPES from '../../store/types'
 
 const state = {
   list: [],
+  full_list: [],
   pagination: {},
 }
 
 /* eslint-disable no-param-reassign */
 const mutations = {
   [TYPES.CATEGORIES_SET_DATA](st, obj) {
-    st.list = obj.list
-    st.pagination = obj.pagination
+    if (obj.list) {
+      st.list = obj.list
+    }
+    if (obj.full_list) {
+      st.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.pagination = obj.pagination
+    }
   },
 }
 
