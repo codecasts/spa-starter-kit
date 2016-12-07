@@ -1,13 +1,10 @@
 
 /**
-* Component is lazy-loaded
+* Components are lazy-loaded - See "Grouping Components in the Same Chunk"
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
-const Dashboard = (resolve) => {
-  require.ensure(['./main'], () => {
-    resolve(require('./main')) // eslint-disable-line global-require
-  })
-}
+/* eslint-disable global-require */
+const Dashboard = r => require.ensure([], () => r(require('./main')), 'dashboard-bundle')
 
 export default [
   {
