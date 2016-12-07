@@ -38,11 +38,16 @@
       */
       ...mapActions(['categoriesSetData', 'setFetching']),
 
+      fetch() {
+        this.fetchPaginated()
+        this.fetchFullList()
+      },
+
       /**
       * Fetch a new set of categories
       * based on the current page
       */
-      fetch() {
+      fetchPaginated() {
         /**
         * Vuex action to set fetching property
         * to true, thus showing the spinner
@@ -76,6 +81,26 @@
       },
 
       /**
+      * Differente from fetch() which always
+      * return a paginated set of categories
+      * this one returns the full set, which
+      * is used by other components in the app.
+      */
+      fetchFullList() {
+        this.setFetching({ fetching: true })
+        this.$http.get('categories/full-list').then(({ data }) => {
+          /**
+          * Vuex action to set full list array in
+          * the Vuex Categories module
+          */
+          this.categoriesSetData({
+            full_list: data.data,
+          })
+          this.setFetching({ fetching: false })
+        })
+      },
+
+      /**
       * Navigate to a specific page, provided in the
       * obj received by the method
       */
@@ -92,7 +117,7 @@
         * of a second. This ensures the currentPage
         * property is set before making the request.
         */
-        Vue.nextTick(() => this.fetch())
+        Vue.nextTick(() => this.fetchPaginated())
       },
 
       /**
@@ -119,7 +144,13 @@
           * On success fetch a new set of Categories
           * based on current page number
           */
-          this.fetch()
+          this.fetchPaginated()
+
+          /**
+          * If we remove a category then
+          * the full list must be refreshed
+          */
+          this.fetchFullList()
 
           /**
           * Shows a different dialog based on the result
@@ -187,13 +218,12 @@
       /**
       * Category was created or updated, refresh the list
       */
-      this.$bus.$on('category.created', () => this.fetch())
-      this.$bus.$on('category.updated', () => this.fetch())
-
+      this.$bus.$on('category.created', this.fetch)
+      this.$bus.$on('category.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
-      this.fetch()
+      this.fetchPaginated()
     },
     /**
     * This hook is called every time DOM
