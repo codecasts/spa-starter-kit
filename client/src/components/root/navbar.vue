@@ -43,6 +43,9 @@
             <router-link tag="li" :to="{ name: 'categories.index', query: { page: 1 } }">
               <a>Categories</a>
             </router-link>
+            <router-link tag="li" :to="{ name: 'products.index', query: { page: 1 } }">
+              <a>Products</a>
+            </router-link>
           </ul>
           <div class="nav navbar-form navbar-right">
             <cc-spinner></cc-spinner>
