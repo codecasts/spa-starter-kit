@@ -27,9 +27,15 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Transform::class, function () {
-            return new Transform(
-                (new Manager)->setSerializer(new DataArraySerializer)
-            );
+            $fractal = new Manager;
+
+            if (request()->has('include')) {
+                $fractal->parseIncludes(request()->query('include'));
+            }
+
+            $fractal->setSerializer(new DataArraySerializer);
+
+            return new Transform($fractal);
         });
     }
 }

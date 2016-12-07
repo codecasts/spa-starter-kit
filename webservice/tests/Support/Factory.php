@@ -7,7 +7,7 @@ trait Factory
      *
      * @var int
      */
-    protected $times = 1;
+    private $times = 1;
 
     /**
      * Create resource data.

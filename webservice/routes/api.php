@@ -11,5 +11,9 @@ Route::group([
         Route::resource('/categories', 'CategoriesController', [
             'except' => ['create', 'edit'],
         ]);
+
+        Route::resource('/products', 'ProductsController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });

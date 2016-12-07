@@ -8,6 +8,24 @@ use League\Fractal\TransformerAbstract;
 class ProductTransformer extends TransformerAbstract
 {
     /**
+     * List of resources possible to include.
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'category',
+    ];
+
+    /**
+     * List of default includes.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'category',
+    ];
+
+    /**
      * Transform a product.
      *
      * @param  Product $product
@@ -22,5 +40,17 @@ class ProductTransformer extends TransformerAbstract
             'created_at' => $product->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $product->updated_at->format('Y-m-d H:i:s'),
         ];
+    }
+
+    /**
+     * Include category.
+     *
+     * @param  Product $product
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeCategory(Product $product)
+    {
+        return $this->item($product->category, new CategoryTransformer);
     }
 }
