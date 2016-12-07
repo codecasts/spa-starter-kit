@@ -1,6 +1,6 @@
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'CcProductsForm',
@@ -12,6 +12,7 @@
       return {
         product: {
           id: 0,
+          category: 1,
           name: '',
         },
       }
@@ -22,6 +23,7 @@
     */
     mounted() {
       this.fetch()
+      this.fetchCategories()
     },
 
     /**
@@ -37,6 +39,9 @@
     * is editing instead of creating.
     */
     computed: {
+      ...mapState({
+        categories: state => state.Categories.full_list,
+      }),
       isEditing() {
         return this.product.id > 0
       },
@@ -51,8 +56,7 @@
     },
 
     methods: {
-      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
-
+      ...mapActions(['categoriesSetData', 'setFetching', 'resetMessages', 'setMessage']),
       /**
       * If there's an ID in the route params
       * then use it to fetch the product
@@ -73,9 +77,34 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`products/${id}`).then((res) => {
-            const { id: _id, name } = res.data.product // http://wesbos.com/destructuring-renaming/
-            this.product.id = _id
+            // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, category } = res.data.data
             this.product.name = name
+            this.product.id = _id
+            this.product.category = category.data.id
+            this.setFetching({ fetching: false })
+            // debugger
+            /**
+            * If you're uncertain of where the data comes from
+            * just uncomment the debugger instruction above
+            * open Chrome Dev Tools and reload the page
+            * this will give you the opportunity to
+            * inspect the response and the data
+            */
+          })
+        }
+      },
+      fetchCategories() {
+        if (!this.categories.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get('categories/full-list').then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex Categories module
+            */
+            this.categoriesSetData({
+              full_list: data.data,
+            })
             this.setFetching({ fetching: false })
           })
         }
@@ -98,7 +127,7 @@
         }
       },
       save() {
-        this.$http.post('products', { name: this.product.name }).then(() => {
+        this.$http.post('products', this.product).then(() => {
           /**
           * This event will notify the world about
           * the product creation. In this case
@@ -146,6 +175,7 @@
       },
       reset() {
         this.product.id = 0
+        this.product.category = 1
         this.product.name = ''
       },
     },
@@ -157,6 +187,14 @@
     <div class="form-group">
       <label for="name" class="control-label">Product Name</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="product.name">
+    </div>
+    <div class="form-group">
+      <label for="category" class="control-label">Category</label>
+      <select name="category" id="category" class="form-control" v-model="product.category">
+        <option v-for="category in categories" :value="category.id">
+          {{ category.name }}
+        </option>
+      </select>
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
   </form>

@@ -2,6 +2,7 @@ import * as TYPES from '../../store/types'
 
 const state = {
   list: [],
+  full_list: [],
   pagination: {},
 }
 
@@ -9,6 +10,7 @@ const state = {
 const mutations = {
   [TYPES.CATEGORIES_SET_DATA](st, obj) {
     st.list = obj.list
+    st.full_list = obj.full_list
     st.pagination = obj.pagination
   },
 }
