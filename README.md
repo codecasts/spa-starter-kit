@@ -36,6 +36,21 @@ Make sure you have installed **Node** and [**Yarn**](https://yarnpkg.com/) (late
 
 ## Installation
 
+### Cloning
+
+These commands will download the repository and prepare it for you.
+
+```ssh
+git clone --depth 1 -b master git@github.com:codecasts/spa-starter-kit.git
+cd spa-starter-kit
+rm -rf ./.git/
+git init
+git add --all
+git commit -m "init"
+```
+
+### Setup
+
 1. Client side - this is a Vue.js project created with vue-cli
 	* With Terminal `cd client && yarn && yarn run dev`.
 2. Server side - this is a Laravel 5.3 project
