@@ -95,10 +95,10 @@ $ composer test
 ## Contributing
 
 1. Fork it!
-2. Create your feature branch from **develop**: `git checkout -b my-new-feature`
+2. Create your feature branch from **develop**: `git checkout -b feature/my-new-feature`
 3. Write your code. Comment your code.
 4. Commit your changes: `git commit -am 'Add some feature'`
-5. Push to the branch: `git push origin my-new-feature`
+5. Push to the branch: `git push origin feature/my-new-feature`
 6. Submit a pull request to **develop** branch :D
 
 ## Credits
