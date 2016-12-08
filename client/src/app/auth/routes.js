@@ -8,8 +8,8 @@ const Login = r => require.ensure([], () => r(require('./main')), 'login-bundle'
 
 export default [
   {
-    name: 'login.index',
-    path: '/login',
+    name: 'auth.index',
+    path: '/auth',
     component: Login,
     meta: { requiresAuth: false },
   },
