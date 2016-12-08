@@ -103,7 +103,7 @@ $ composer test
 
 ## Credits
 
-[Fábio Vedovelli](https://github.com/vedovelli)
+[Fábio Vedovelli](https://github.com/vedovelli) and dedicated [contributors](https://github.com/codecasts/spa-starter-kit/graphs/contributors).
 
 ## License
 
