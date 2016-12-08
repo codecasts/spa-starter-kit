@@ -1,8 +1,5 @@
 language: php
 
-services:
-  - mysql
-
 php:
   - 5.6
   - 7.0
@@ -16,7 +13,6 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
   - cd ./webservice
   - cp .env.travis .env
   - travis_retry composer self-update
