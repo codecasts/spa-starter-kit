@@ -16,28 +16,19 @@
       * Map the actions from Vuex to this component.
       * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator
       */
-      ...mapActions(['setToken', 'setUser', 'setMessage']),
+      ...mapActions(['attemptLogin', 'setMessage']),
 
       /**
       * Handle form's submit event
       */
       submit() {
-        const payload = { email: this.email, password: this.password }
-        this.$http.post('auth/token/issue', payload).then((response) => {
-          this.handleResponse(response)
-        })
+        const { email, password } = this
+        this.attemptLogin({ email, password }) // this is a Vuex action
+          .then(() => {
+            this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
+            this.$router.push({ name: 'dashboard.index' })
+          })
       },
-
-      /**
-      * Handle success response from AJAX call
-      */
-      handleResponse(response) {
-        this.setToken(response.data.token) // this is a Vuex action
-        this.setUser(response.data.user) // this is a Vuex action
-        this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
-        this.$router.push({ name: 'dashboard.index' })
-      },
-
       /**
       * Reset component's local state
       */
@@ -62,10 +53,3 @@
     <button class="btn btn-primary btn-block" type="submit">Login</button>
   </form>
 </template>
-
-<style scoped>
-  .container {
-    width: 400px;
-    margin: 100px auto;
-  }
-</style>
