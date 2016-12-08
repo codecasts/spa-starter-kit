@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
+## Cache composer for faster builds
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - cd ./webservice
+  - cp .env.travis .env
+  - travis_retry composer self-update
+  - travis_retry composer update --no-interaction --prefer-dist
+  - php artisan key:gen
+  - php artisan jwt:secret -f
+
+script:
+  - vendor/bin/phpunit
