@@ -1,3 +1,4 @@
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
 import { routes as dashboard } from './dashboard'
 import { routes as categories } from './categories'
 import { routes as products } from './products'
