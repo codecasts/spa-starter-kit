@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
 import Root from './Root'
 
 /**
@@ -26,6 +28,11 @@ import eventbus from './plugins/eventbus'
 * jQuery and Bootstrap includes
 */
 require('./includes')
+
+/**
+* Element UI
+*/
+Vue.use(ElementUI, { locale })
 
 /**
 * Make $http avaible to all components
