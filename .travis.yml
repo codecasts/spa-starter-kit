@@ -22,6 +22,7 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer update --no-interaction --prefer-dist
   - php artisan key:gen
+  - php artisan jwt:secret
 
 script:
   - vendor/bin/phpunit
