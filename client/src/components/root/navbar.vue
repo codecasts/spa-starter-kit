@@ -20,7 +20,7 @@
         this.$http.post('auth/token/revoke')
         this.setToken('')
         this.setUser({})
-        this.$router.push({ name: 'auth.index' })
+        this.$router.push({ name: 'auth.singin' })
       },
     },
   }

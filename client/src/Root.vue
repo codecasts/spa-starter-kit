@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     shouldShowNavigation() {
-      return this.$route.name !== 'auth.index'
+      return this.$route.name !== 'auth.singin'
     },
   },
 }
