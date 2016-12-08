@@ -1,9 +1,14 @@
-import { Singin, Main } from './components'
+import { Singup, Singin, Main } from './components'
 
 const children = [{
   name: 'auth.singin',
   path: 'singin',
   component: Singin,
+  meta: { requiresAuth: false },
+}, {
+  name: 'auth.singup',
+  path: 'singup',
+  component: Singup,
   meta: { requiresAuth: false },
 }]
 

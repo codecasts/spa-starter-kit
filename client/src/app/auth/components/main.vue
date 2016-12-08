@@ -8,6 +8,9 @@
         <router-link tag="li" :to="{ name: 'auth.singin' }">
           <a>Sing in</a>
         </router-link>
+        <router-link tag="li" :to="{ name: 'auth.singup' }">
+          <a>Sing up</a>
+        </router-link>
       </ul>
     </div>
     <div class="col-md-8">

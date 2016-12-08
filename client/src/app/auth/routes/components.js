@@ -5,3 +5,4 @@
 /* eslint-disable global-require */
 export const Main = r => require.ensure([], () => r(require('../components/main')), 'login-bundle')
 export const Singin = r => require.ensure([], () => r(require('../components/forms/singin')), 'login-bundle')
+export const Singup = r => require.ensure([], () => r(require('../components/forms/singup')), 'login-bundle')
