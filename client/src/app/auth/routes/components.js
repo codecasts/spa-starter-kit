@@ -3,6 +3,6 @@
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
 /* eslint-disable global-require */
-export const Main = r => require.ensure([], () => r(require('../components/main')), 'login-bundle')
-export const Singin = r => require.ensure([], () => r(require('../components/forms/singin')), 'login-bundle')
-export const Singup = r => require.ensure([], () => r(require('../components/forms/singup')), 'login-bundle')
+export const Main = r => require.ensure([], () => r(require('../components/main')), 'auth-bundle')
+export const Singin = r => require.ensure([], () => r(require('../components/forms/singin')), 'auth-bundle')
+export const Singup = r => require.ensure([], () => r(require('../components/forms/singup')), 'auth-bundle')
