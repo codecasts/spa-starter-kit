@@ -79,12 +79,12 @@ class Handler extends ExceptionHandler
             'messages' => [$e->getMessage()],
         ];
 
-        // If it's a HttpException the use the appropriate HTTP status code instead of 500
+        // If it's a HttpException then use the appropriate HTTP status code instead of 500
         if ($e instanceof HttpException) {
             $code = $e->getStatusCode();
         }
 
-        // If the debugging is on then include in the exception trace in the body of the response
+        // If the debugging is on then include the exception trace in the body of the response
         if (config('app.debug')) {
             $body['trace'] = $e->getTrace();
         }
