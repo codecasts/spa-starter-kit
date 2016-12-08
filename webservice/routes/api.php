@@ -3,7 +3,7 @@
 Route::group([
     'middleware' => ['cors', 'api'],
 ], function () {
-    Route::post('/login', 'LoginController@login');
+    Route::post('/auth/issue', 'AuthController@login');
 
     Route::group([
         'middleware' => 'auth:api',

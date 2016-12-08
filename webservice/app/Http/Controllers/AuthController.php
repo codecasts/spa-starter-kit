@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Auth;
 use Lang;
 
-class LoginController extends ApiController
+class AuthController extends ApiController
 {
     use ThrottlesLogins;
 

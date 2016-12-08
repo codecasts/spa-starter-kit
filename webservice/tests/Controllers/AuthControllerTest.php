@@ -2,9 +2,7 @@
 
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthControllerTest extends ApiTestCase
@@ -16,7 +14,7 @@ class AuthControllerTest extends ApiTestCase
      */
     public function is_checking_for_invalid_credentials()
     {
-        $this->json('POST', '/api/login', [
+        $this->json('POST', '/api/auth/issue', [
             'email' => 'hello@example.com',
             'password' => 'dummypassword',
         ]);
@@ -40,7 +38,7 @@ class AuthControllerTest extends ApiTestCase
             'password' => Hash::make($password),
         ]);
 
-        $this->json('POST', '/api/login', [
+        $this->json('POST', '/api/auth/issue', [
             'email' => $email,
             'password' => $password,
         ]);
