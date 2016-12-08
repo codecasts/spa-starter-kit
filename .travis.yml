@@ -1,0 +1,27 @@
+language: php
+
+services:
+  - mysql
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - cd ./webservice
+  - cp .env.travis .env
+  - travis_retry composer self-update
+  - travis_retry composer update --no-interaction --prefer-dist
+  - php artisan key:gen
+
+script:
+  - vendor/bin/phpunit
