@@ -130,10 +130,10 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Checks if there was an error related to jwt token
+     * Checks if there was an error related to jwt token.
      *
      * @param array $header
-     * @return boolean
+     * @return bool
      */
     private function hasHeaderWithChallengeJwt(array $headers)
     {
@@ -145,18 +145,18 @@ class Handler extends ExceptionHandler
         $headers = $e->getHeaders();
         $message = $e->getMessage();
 
-        return !! $this->hasHeaderWithChallengeJwt($headers) && $this->hasExpiredTokenMessage($message);
+        return (bool) $this->hasHeaderWithChallengeJwt($headers) && $this->hasExpiredTokenMessage($message);
     }
 
     /**
-     * Checks for expired token message
+     * Checks for expired token message.
      *
      * @param string $message
-     * @return boolean
+     * @return bool
      */
     private function hasExpiredTokenMessage($message)
     {
-        return false === !strpos($message, 'expired');
+        return false === ! strpos($message, 'expired');
     }
 
     /**
