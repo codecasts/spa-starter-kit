@@ -6,7 +6,7 @@ Route::group([
     Route::post('/auth/issue', 'AuthController@login');
 
     Route::group([
-        'middleware' => 'auth:api',
+        'middleware' => 'jwt.auth',
     ], function () {
         Route::get('/categories/full-list', ['uses' => 'CategoriesController@fullList']);
         Route::resource('/categories', 'CategoriesController', [
