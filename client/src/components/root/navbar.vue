@@ -17,6 +17,7 @@
     methods: {
       ...mapActions(['setToken', 'setUser']),
       logout() {
+        this.$http.post('auth/token/revoke')
         this.setToken('')
         this.setUser({})
         this.$router.push({ name: 'login.index' })
