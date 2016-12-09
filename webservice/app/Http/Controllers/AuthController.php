@@ -120,7 +120,7 @@ class AuthController extends ApiController
     /**
      * Returns time to live of the jwt token.
      * @param $token
-     * @return integer
+     * @return int
      */
     private function getTokenTTL($token)
     {
@@ -130,7 +130,7 @@ class AuthController extends ApiController
     }
 
     /**
-     * Returns an array with payload of the jwt token
+     * Returns an array with payload of the jwt token.
      * @param $token
      * @return array
      */
