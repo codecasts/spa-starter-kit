@@ -6,7 +6,7 @@ import { getData } from 'utils/get'
 import { localStorageSetItem } from 'utils/local'
 import * as TYPES from './mutations-types'
 
-export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/login', { email, password })
+export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
      /**
       * functional approach, more readable and generate minus code
       * examples:
@@ -27,13 +27,14 @@ export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/l
       return user // keep promise chain
     })
 
-export const logout = ({ dispatch }) =>
-    // call actions
-   Promise.all([
-     dispatch('setToken', null),
-     dispatch('setUser', {}),
-   ])
-
+export const logout = ({ dispatch }) => {
+  http.post('/auth/token/revoke')
+  // call actions
+  return Promise.all([
+    dispatch('setToken', null),
+    dispatch('setUser', {}),
+  ])
+}
 
 export const setUser = ({ commit }, user) => {
   /**
