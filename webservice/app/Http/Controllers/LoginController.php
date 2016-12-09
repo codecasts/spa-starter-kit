@@ -22,7 +22,6 @@ class LoginController extends ApiController
     {
         // Determine if the user has too many failed login attempts.
         if ($this->hasTooManyLoginAttempts($request)) {
-
             // Fire an event when a lockout occurs.
             $this->fireLockoutEvent($request);
 
@@ -34,7 +33,6 @@ class LoginController extends ApiController
 
         // Attempt to verify the credentials and create a token for the user.
         if ($token = Auth::guard('api')->attempt($credentials)) {
-
             // All good so return the json with token and user.
             return $this->sendLoginResponse($request, $token);
         }
