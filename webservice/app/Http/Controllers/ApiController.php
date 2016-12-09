@@ -62,7 +62,7 @@ abstract class ApiController extends Controller
      */
     protected function responseWithUnauthorized($message = 'Unauthorized')
     {
-        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);    
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);
     }
 
     /**

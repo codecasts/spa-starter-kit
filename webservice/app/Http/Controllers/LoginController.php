@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Auth;
 use Lang;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends ApiController
 {
