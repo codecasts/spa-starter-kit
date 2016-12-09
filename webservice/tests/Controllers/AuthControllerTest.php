@@ -9,12 +9,15 @@ class AuthControllerTest extends ApiTestCase
 {
     use DatabaseMigrations, Factory;
 
+    private $urlTokenIssue = '/api/auth/token/issue';
+    private $urlTokenRevoke = '/api/auth/token/revoke';
+
     /**
      * @test
      */
     public function is_checking_for_invalid_credentials()
     {
-        $this->json('POST', '/api/auth/issue', [
+        $this->json('POST', $this->urlTokenIssue, [
             'email' => 'hello@example.com',
             'password' => 'dummypassword',
         ]);
@@ -38,7 +41,7 @@ class AuthControllerTest extends ApiTestCase
             'password' => Hash::make($password),
         ]);
 
-        $this->json('POST', '/api/auth/issue', [
+        $this->json('POST', $this->urlTokenIssue, [
             'email' => $email,
             'password' => $password,
         ]);
@@ -73,11 +76,11 @@ class AuthControllerTest extends ApiTestCase
     {
         $headers = $this->makeHeaders();
 
-        $this->json('POST', '/api/auth/revoke', [], $headers);
+        $this->json('POST', $this->urlTokenRevoke, [], $headers);
 
         $this->assertResponseStatus(204);
 
-        $this->json('POST', '/api/auth/revoke', [], $headers);
+        $this->json('POST', $this->urlTokenRevoke, [], $headers);
 
         $this->assertResponseStatus(401);
     }
@@ -93,7 +96,7 @@ class AuthControllerTest extends ApiTestCase
             'Authorization' => 'Bearer invalid'
         ];
 
-        $this->json('POST', '/api/auth/revoke', [], $headers);
+        $this->json('POST', $this->urlTokenRevoke, [], $headers);
 
         $this->assertResponseStatus(401);
         $this->seeJsonStructure([
@@ -111,7 +114,7 @@ class AuthControllerTest extends ApiTestCase
             'Content-Type' => 'application/json',
         ];
 
-        $this->json('POST', '/api/auth/revoke', [], $headers);
+        $this->json('POST', $this->urlTokenRevoke, [], $headers);
 
         $this->assertResponseStatus(400);
         $this->seeJsonStructure([
@@ -123,7 +126,7 @@ class AuthControllerTest extends ApiTestCase
     {
         $headers = $this->makeHeaders();
 
-        $this->json('POST', '/api/auth/refresh', [], $headers);
+        $this->json('POST', '/api/auth/token/refresh', [], $headers);
 
         $this->assertResponseOk();
         $this->seeJsonStructure(['token']);
@@ -144,7 +147,7 @@ class AuthControllerTest extends ApiTestCase
 
     private function makeRequestWithInvalidCredentials()
     {
-        $this->json('POST', '/api/auth/issue', [
+        $this->json('POST', $this->urlTokenIssue, [
             'email' => 'hello@example.com',
             'password' => 'dummypassword',
         ]);
