@@ -3,7 +3,6 @@
 import { http, setToken as httpSetToken } from 'plugins/http'
 import { isEmpty } from 'lodash'
 import { getData } from 'utils/get'
-import { localStorageSetItem } from 'utils/local'
 import * as TYPES from './mutations-types'
 
 export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
@@ -37,12 +36,6 @@ export const logout = ({ dispatch }) => {
 }
 
 export const setUser = ({ commit }, user) => {
-  /**
-   * Sets the user to the local storage
-   * for auto-login purpose
-   */
-  localStorageSetItem('user', { user })
-
   // Commit the mutations
   commit(TYPES.SET_USER, user)
 
@@ -52,11 +45,7 @@ export const setUser = ({ commit }, user) => {
 export const setToken = ({ commit }, payload) => {
   // prevent if payload is a object
   const token = (isEmpty(payload)) ? null : payload.token || payload
-  /**
-   * Sets the token to the local storage
-   * for auto-login purpose
-   */
-  localStorageSetItem('token', { token })
+
   /**
    * Set the Axios Authorization header with the token
    */
