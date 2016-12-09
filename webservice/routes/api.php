@@ -10,7 +10,8 @@ Route::group([
         'middleware' => 'jwt.auth',
     ], function () {
         Route::post('/auth/token/revoke', 'AuthController@revokeToken');
-        Route::get('/categories/full-list', ['uses' => 'CategoriesController@fullList']);
+        Route::get('/categories/full-list', 'CategoriesController@fullList');
+
         Route::resource('/categories', 'CategoriesController', [
             'except' => ['create', 'edit'],
         ]);
@@ -18,5 +19,7 @@ Route::group([
         Route::resource('/products', 'ProductsController', [
             'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/me', 'MeController@show');
     });
 });
