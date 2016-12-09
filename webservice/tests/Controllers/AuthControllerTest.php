@@ -1,9 +1,9 @@
 <?php
 
 use App\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthControllerTest extends ApiTestCase
 {

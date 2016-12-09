@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
 use Auth;
 use Lang;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends ApiController
 {
@@ -22,7 +22,6 @@ class AuthController extends ApiController
     {
         // Determine if the user has too many failed login attempts.
         if ($this->hasTooManyLoginAttempts($request)) {
-
             // Fire an event when a lockout occurs.
             $this->fireLockoutEvent($request);
 
@@ -34,7 +33,6 @@ class AuthController extends ApiController
 
         // Attempt to verify the credentials and create a token for the user.
         if ($token = Auth::guard('api')->attempt($credentials)) {
-
             // All good so return the json with token and user.
             return $this->sendLoginResponse($request, $token);
         }
