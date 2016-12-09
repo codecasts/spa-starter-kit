@@ -3,11 +3,13 @@
 Route::group([
     'middleware' => ['cors', 'api'],
 ], function () {
-    Route::post('/login', 'LoginController@login');
+    Route::post('/auth/token/issue', 'AuthController@issueToken');
+    Route::post('/auth/token/refresh', 'AuthController@refreshToken');
 
     Route::group([
-        'middleware' => 'auth:api',
+        'middleware' => 'jwt.auth',
     ], function () {
+        Route::post('/auth/token/revoke', 'AuthController@revokeToken');
         Route::get('/categories/full-list', ['uses' => 'CategoriesController@fullList']);
         Route::resource('/categories', 'CategoriesController', [
             'except' => ['create', 'edit'],
