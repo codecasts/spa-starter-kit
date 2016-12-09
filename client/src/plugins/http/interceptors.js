@@ -1,6 +1,7 @@
 import { isArray } from 'lodash'
 
 export default (http, store, router) => {
+  // https://github.com/mzabriskie/axios#interceptors
   http.interceptors.response.use(
     response => response,
     /**
@@ -9,27 +10,30 @@ export default (http, store, router) => {
     * requests
     */
     (error) => {
+      const { response } = error
       /**
       * If token is either expired, not provided or invalid
       * then redirect to login. On server side the error
       * messages can be changed on app/Providers/EventServiceProvider.php
       */
-      if (error.response.status === 401) {
+      if (response.status === 401) {
         router.push({ name: 'auth.singin' })
       }
       /**
       * Error messages are sent in arrays
       */
-      if (isArray(error.response.data)) {
-        store.dispatch('setMessage', { type: 'error', message: error.response.data.messages })
+      if (isArray(response.data)) {
+        store.dispatch('setMessage', { type: 'error', message: response.data.messages })
       /**
       * Laravel generated validation errors are
       * sent in an object
       */
       } else {
-        store.dispatch('setMessage', { type: 'validation', message: error.response.data })
+        store.dispatch('setMessage', { type: 'validation', message: response.data })
       }
+
       store.dispatch('setFetching', { fetching: false })
+
       return Promise.reject(error)
     }
   )

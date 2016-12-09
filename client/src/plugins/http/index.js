@@ -14,13 +14,14 @@ export function setToken(token) {
   http.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
+// receive store and data by options
+// https://vuejs.org/v2/guide/plugins.html
 export default function install(Vue, { store, router }) {
   interceptors(http, store, router)
-  Object.defineProperties(Vue.prototype, {
-    $http: {
-      get() {
-        return http
-      },
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+  Object.defineProperty(Vue.prototype, '$http', {
+    get() {
+      return http
     },
   })
 }

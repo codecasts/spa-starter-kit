@@ -29,6 +29,7 @@ require('./includes')
 
 /**
 * Make $http avaible to all components
+* Send store and router to httpPlugin (injection)
 */
 Vue.use(httpPlugin, { store, router })
 
