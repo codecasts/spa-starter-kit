@@ -48,8 +48,12 @@ class AuthControllerTest extends ApiTestCase
 
         $this->assertResponseOk();
         $this->seeJsonStructure([
-            'token', 'user' => [
-                'id', 'name', 'email',
+            'token',
+            'token_ttl',
+            'user' => [
+                'id',
+                'name',
+                'email',
             ],
         ]);
     }
