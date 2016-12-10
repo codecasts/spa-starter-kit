@@ -2,10 +2,10 @@
 
 namespace App\Traits;
 
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
-trait Response
+trait Responses
 {
     /**
      * HTTP Response.
@@ -19,7 +19,7 @@ trait Response
      *
      * @var int
      */
-    private $statusCode = HttpResponse::HTTP_OK;
+    private $statusCode = Response::HTTP_OK;
 
     /**
      * Return a 429 response.
@@ -30,7 +30,7 @@ trait Response
      */
     protected function responseWithTooManyRequests($message = 'Too Many Requests')
     {
-        return $this->setStatusCode(HttpResponse::HTTP_TOO_MANY_REQUESTS)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS)->responseWithError($message);
     }
 
     /**
@@ -42,7 +42,7 @@ trait Response
      */
     protected function responseWithUnauthorized($message = 'Unauthorized')
     {
-        return $this->setStatusCode(HttpResponse::HTTP_UNAUTHORIZED)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);
     }
 
     /**
@@ -54,7 +54,7 @@ trait Response
      */
     protected function responseWithInternalServerError($message = 'Internal Server Error')
     {
-        return $this->setStatusCode(HttpResponse::HTTP_INTERNAL_SERVER_ERROR)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR)->responseWithError($message);
     }
 
     /**
@@ -66,7 +66,7 @@ trait Response
      */
     protected function responseWithNotFound($message = 'Not Found')
     {
-        return $this->setStatusCode(HttpResponse::HTTP_NOT_FOUND)->responseWithError($message);
+        return $this->setStatusCode(Response::HTTP_NOT_FOUND)->responseWithError($message);
     }
 
     /**
@@ -92,7 +92,7 @@ trait Response
      */
     protected function responseWithNoContent()
     {
-        return $this->setStatusCode(HttpResponse::HTTP_NO_CONTENT)
+        return $this->setStatusCode(Response::HTTP_NO_CONTENT)
             ->response([]);
     }
 
