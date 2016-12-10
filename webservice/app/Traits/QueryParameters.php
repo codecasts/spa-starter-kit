@@ -14,41 +14,41 @@ trait QueryParameters
     /**
      * Get order parameter.
      *
-     * @param  string $default
+     * @param  string $order
      *
      * @return string
      */
-    protected function getOrder($default = 'desc')
+    protected function getOrder($order = 'desc')
     {
-        return $this->getParameter('order', $default);
+        return $this->getParameter('order', $order);
     }
 
     /**
      * Get sort parameter.
      *
-     * @param  string $default
+     * @param  string $column
      *
      * @return string
      */
-    protected function getSort($default = 'id')
+    protected function getSort($column = 'id')
     {
-        return $this->getParameter('sort', $default);
+        return $this->getParameter('sort', $column);
     }
 
     /**
      * Get limit parameter.
      *
-     * @param  int $default
+     * @param  int $limit
      *
      * @return int
      */
-    protected function getLimit($default = 10)
+    protected function getLimit($limit = 10)
     {
-        return $this->getParameter('limit', $default);
+        return $this->getParameter('limit', $limit);
     }
 
     /**
-     * Get query parameter by name.
+     * Retrive a query parameter from the request.
      *
      * @param  string $name
      * @param  mixed  $default
