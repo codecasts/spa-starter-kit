@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\Routing\ResponseFactory;
 
 trait Responses
 {
