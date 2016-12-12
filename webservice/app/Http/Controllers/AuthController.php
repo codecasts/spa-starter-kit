@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Lang;
+use App\Services\Jwt;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
@@ -57,13 +58,16 @@ class AuthController extends ApiController
 
         $user = Auth::guard('api')->user();
 
-        return $this->response(compact('token', 'user'));
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
+
+        return $this->response(compact('token', 'token_ttl', 'user'));
     }
 
     /**
      * Return error message after determining invalid credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     protected function sendFailedLoginResponse(Request $request)
@@ -76,7 +80,7 @@ class AuthController extends ApiController
     /**
      * Redirect the user after determining they are locked out.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function sendLockoutResponse(Request $request)
@@ -112,7 +116,10 @@ class AuthController extends ApiController
     {
         $token = Auth::guard('api')->refresh();
 
-        return $this->response(compact('token'));
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
+
+        return $this->response(compact('token', 'token_ttl'));
     }
 
     public function username()
