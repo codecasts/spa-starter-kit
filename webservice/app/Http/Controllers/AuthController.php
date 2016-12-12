@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Lang;
+use App\Services\Jwt;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
@@ -57,7 +58,8 @@ class AuthController extends ApiController
 
         $user = Auth::guard('api')->user();
 
-        $token_ttl = $this->getTokenTTL($token);
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
 
         return $this->response(compact('token', 'token_ttl', 'user'));
     }
@@ -114,38 +116,10 @@ class AuthController extends ApiController
     {
         $token = Auth::guard('api')->refresh();
 
-        return $this->response(compact('token'));
-    }
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
 
-    /**
-     * Returns time to live of the jwt token.
-     * @param $token
-     * @return int
-     */
-    private function getTokenTTL($token)
-    {
-        $payload = $this->getPayloadToken($token);
-
-        return isset($payload['exp']) ? $payload['exp'] : 0;
-    }
-
-    /**
-     * Returns an array with payload of the jwt token.
-     * @param $token
-     * @return array
-     */
-    private function getPayloadToken($token)
-    {
-        $arrayPayload = [];
-
-        $parts = explode('.', $token);
-
-        if (count($parts) && isset($parts[1])) {
-            $json = base64_decode($parts[1]);
-            $arrayPayload = json_decode($json, true);
-        }
-
-        return $arrayPayload;
+        return $this->response(compact('token', 'token_ttl'));
     }
 
     public function username()
