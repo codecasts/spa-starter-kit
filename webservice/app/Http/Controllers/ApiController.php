@@ -62,7 +62,7 @@ abstract class ApiController extends Controller
      */
     protected function responseWithUnauthorized($message = 'Unauthorized')
     {
-        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);    
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->responseWithError($message);
     }
 
     /**
@@ -101,6 +101,19 @@ abstract class ApiController extends Controller
         return $this->response([
             'messages' => (is_array($message) ? $message : [$message]),
         ]);
+    }
+
+    /**
+     * Return a 204 response.
+     *
+     * @param  string $message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function responseWithNoContent()
+    {
+        return $this->setStatusCode(Response::HTTP_NO_CONTENT)
+            ->response([]);
     }
 
     /**

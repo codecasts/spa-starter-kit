@@ -37,8 +37,8 @@ class ProductTransformer extends TransformerAbstract
         return [
             'id' => $product->id,
             'name' => $product->name,
-            'created_at' => $product->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $product->updated_at->format('Y-m-d H:i:s'),
+            'created_at' => $product->created_at->toIso8601String(),
+            'updated_at' => $product->updated_at->toIso8601String(),
         ];
     }
 

@@ -93,7 +93,7 @@ class CategoriesController extends ApiController
         if (! $category) {
             return $this->responseWithNotFound('Category not found');
         }
-        
+
         $category->delete();
 
         return $this->response(['result' => 'success']);

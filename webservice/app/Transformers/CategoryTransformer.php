@@ -19,8 +19,8 @@ class CategoryTransformer extends TransformerAbstract
         return [
             'id' => $category->id,
             'name' => $category->name,
-            'created_at' => $category->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $category->updated_at->format('Y-m-d H:i:s'),
+            'created_at' => $category->created_at->toIso8601String(),
+            'updated_at' => $category->updated_at->toIso8601String(),
         ];
     }
 }

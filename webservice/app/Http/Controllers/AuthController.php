@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Auth;
 use Lang;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
-class LoginController extends ApiController
+class AuthController extends ApiController
 {
     use ThrottlesLogins;
 
@@ -19,11 +18,10 @@ class LoginController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function issueToken(Request $request)
     {
         // Determine if the user has too many failed login attempts.
         if ($this->hasTooManyLoginAttempts($request)) {
-
             // Fire an event when a lockout occurs.
             $this->fireLockoutEvent($request);
 
@@ -35,7 +33,6 @@ class LoginController extends ApiController
 
         // Attempt to verify the credentials and create a token for the user.
         if ($token = Auth::guard('api')->attempt($credentials)) {
-
             // All good so return the json with token and user.
             return $this->sendLoginResponse($request, $token);
         }
@@ -91,6 +88,31 @@ class LoginController extends ApiController
         $message = Lang::get('auth.throttle', ['seconds' => $seconds]);
 
         return $this->responseWithTooManyRequests($message);
+    }
+
+    /**
+     * Revoke the user's token.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function revokeToken()
+    {
+        Auth::guard('api')->logout();
+
+        return $this->responseWithNoContent();
+    }
+
+    /**
+     * Refresh the user's token.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refreshToken(Request $request)
+    {
+        $token = Auth::guard('api')->refresh();
+
+        return $this->response(compact('token'));
     }
 
     public function username()

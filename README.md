@@ -1,5 +1,7 @@
 # Codecast's Single Page Application Starter Kit
 
+[![Build Status](https://travis-ci.org/codecasts/spa-starter-kit.svg?branch=develop)](https://travis-ci.org/codecasts/spa-starter-kit)
+
 ![Cover](http://vedovelli.com.br/spas.png)
 
 > A **highly opinionated** Single Page Application starter kit built on top of Vue.js and Laravel.
@@ -25,7 +27,7 @@ The live demo can be found in [https://spa.codecasts.rocks/](https://spa.codecas
     * Pagination integrated with [Laravel's LengthAwarePaginator](https://laravel.com/docs/5.3/pagination#converting-results-to-json)
     * Alerts and Confirmation Alerts provided by [SweetAlert](http://t4t5.github.io/sweetalert/)
 2. Server side
-    * Laravel 5.3
+    * [Laravel 5.3](https://github.com/laravel/laravel/tree/v5.3.16)
     * Authentication with JWT
     * [Fractal](http://fractal.thephpleague.com/)
     * Web service RESTful with Dingo *(planned)*
