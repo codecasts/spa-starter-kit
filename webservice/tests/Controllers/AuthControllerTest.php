@@ -48,8 +48,12 @@ class AuthControllerTest extends ApiTestCase
 
         $this->assertResponseOk();
         $this->seeJsonStructure([
-            'token', 'user' => [
-                'id', 'name', 'email',
+            'token',
+            'token_ttl',
+            'user' => [
+                'id',
+                'name',
+                'email',
             ],
         ]);
     }
@@ -129,7 +133,7 @@ class AuthControllerTest extends ApiTestCase
         $this->json('POST', '/api/auth/token/refresh', [], $headers);
 
         $this->assertResponseOk();
-        $this->seeJsonStructure(['token']);
+        $this->seeJsonStructure(['token', 'token_ttl']);
     }
 
     private function makeHeaders()

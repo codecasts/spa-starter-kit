@@ -15,8 +15,14 @@ class CategoriesController extends ApiController
      */
     public function index()
     {
+        $sort = $this->getSort();
+        $order = $this->getOrder();
+        $limit = $this->getLimit();
+
+        $categories = Category::orderBy($sort, $order)->paginate($limit);
+
         return $this->response(
-            $this->transform->collection(Category::paginate(10), new CategoryTransformer)
+            $this->transform->collection($categories, new CategoryTransformer)
         );
     }
 

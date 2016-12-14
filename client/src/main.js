@@ -1,3 +1,4 @@
+import { sync } from 'vuex-router-sync'
 import Vue from 'vue'
 import Root from './Root'
 
@@ -37,6 +38,9 @@ Vue.use(httpPlugin, { store, router })
 * Make $bus avaible to all components
 */
 Vue.use(eventbus)
+
+// Effortlessly keep vue-router and vuex store in sync.
+sync(store, router) // https://github.com/vuejs/vuex-router-sync/tree/next
 
 /* eslint-disable no-new */
 new Vue({

@@ -15,8 +15,14 @@ class ProductsController extends ApiController
      */
     public function index()
     {
+        $sort = $this->getSort();
+        $order = $this->getOrder();
+        $limit = $this->getLimit();
+
+        $products = Product::orderBy($sort, $order)->paginate($limit);
+
         return $this->response(
-            $this->transform->collection(Product::paginate(10), new ProductTransformer)
+            $this->transform->collection($products, new ProductTransformer)
         );
     }
 
