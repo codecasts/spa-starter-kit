@@ -22,7 +22,7 @@
       * Handle form's submit event
       */
       submit() {
-        const { email, password } = this
+        const { email, password } = this // http://wesbos.com/destructuring-objects/
         this.attemptLogin({ email, password }) // this is a Vuex action
           .then(() => {
             this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
