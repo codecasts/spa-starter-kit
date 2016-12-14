@@ -19,5 +19,10 @@
   .container {
     display: inline-block;
     width: 40px;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    right: 18px;
+    top: 18px;
   }
 </style>

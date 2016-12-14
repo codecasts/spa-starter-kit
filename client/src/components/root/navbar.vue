@@ -1,6 +1,6 @@
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import CcSpinner from '../general/spinner'
   import { version } from '../../config'
 
@@ -9,20 +9,27 @@
       CcSpinner,
     },
     computed: {
-      ...mapState({
-        user: state => state.Auth.user,
-      }),
+      /**
+      * See src/app/auth/vuex/getters.js
+      */
+      ...mapGetters(['currentUser', 'isLogged']),
       version() {
         return version
       },
     },
-    methods: {
-      ...mapActions(['setToken', 'setUser']),
-      logout() {
-        this.setToken('')
-        this.setUser({})
-        this.$router.push({ name: 'login.index' })
+    watch: {
+      isLogged(value) { // isLogged changes when the token changes
+        if (value === false) {
+          this.$router.push({ name: 'auth.singin' })
+        }
       },
+    },
+    methods: {
+      /**
+      * Makes logout() action available withint this component
+      * See /src/app/auth/vuex/actions.js
+      */
+      ...mapActions(['logout']),
       /* eslint-disable no-undef */
       navigate(name) {
         switch (name) {
@@ -43,6 +50,7 @@
 
 <template>
   <div>
+    <cc-spinner></cc-spinner>
     <el-menu theme="dark" default-active="1" class="cc-navigation"
       mode="horizontal" @select="navigate">
       <el-menu-item index="codecasts" class="brand">Codecasts.com.br</el-menu-item>
@@ -53,7 +61,7 @@
         <el-menu-item index="products.index">Products</el-menu-item>
       </el-submenu>
       <el-submenu index="menu-user" class="logout-button">
-        <template slot="title">{{ user.name }}</template>
+        <template slot="title">{{ currentUser.name }}</template>
         <el-menu-item index="logout">Logout</el-menu-item>
       </el-submenu>
     </el-menu>
@@ -64,6 +72,7 @@
 <style scoped>
   .cc-navigation {
     padding-left: 115px;
+    padding-right: 30px;
   }
   .brand {
     font-size: 1.2em;
