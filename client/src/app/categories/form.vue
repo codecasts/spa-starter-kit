@@ -73,7 +73,7 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`categories/${id}`).then((res) => {
-            const { id: _id, name } = res.data.category // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.category.id = _id
             this.category.name = name
             this.setFetching({ fetching: false })
