@@ -3,18 +3,21 @@
     <header class="page-header">
       <h3>Codecasts - SPA - Starter Kit</h3>
     </header>
-    <div class="col-md-4">
-      <ul class="nav nav-pills nav-stacked">
-        <router-link tag="li" :to="{ name: 'auth.singin' }">
-          <a>Sing in</a>
-        </router-link>
-        <router-link tag="li" :to="{ name: 'auth.singup' }">
-          <a>Sing up</a>
-        </router-link>
-      </ul>
-    </div>
-    <div class="col-md-8">
-      <router-view></router-view>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <router-link tag="li" :to="{ name: 'auth.singin' }">
+            <a>Sing in</a>
+          </router-link>
+          <router-link tag="li" :to="{ name: 'auth.singup' }">
+            <a>Sing up</a>
+          </router-link>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
