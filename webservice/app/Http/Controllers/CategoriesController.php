@@ -15,8 +15,21 @@ class CategoriesController extends ApiController
      */
     public function index()
     {
+        $sort = $this->getSort();
+        $order = $this->getOrder();
+        $limit = $this->getLimit();
+
+        $categories = Category::orderBy($sort, $order)->paginate($limit);
+
         return $this->response(
-            $this->transform->collection(Category::paginate(10), new CategoryTransformer)
+            $this->transform->collection($categories, new CategoryTransformer)
+        );
+    }
+
+    public function fullList()
+    {
+        return $this->response(
+            $this->transform->collection(Category::all(), new CategoryTransformer)
         );
     }
 
@@ -86,7 +99,7 @@ class CategoriesController extends ApiController
         if (! $category) {
             return $this->responseWithNotFound('Category not found');
         }
-        
+
         $category->delete();
 
         return $this->response(['result' => 'success']);

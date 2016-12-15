@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Auth;
 use Lang;
+use App\Services\Jwt;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
-class LoginController extends ApiController
+class AuthController extends ApiController
 {
     use ThrottlesLogins;
 
@@ -19,11 +19,10 @@ class LoginController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function issueToken(Request $request)
     {
         // Determine if the user has too many failed login attempts.
         if ($this->hasTooManyLoginAttempts($request)) {
-
             // Fire an event when a lockout occurs.
             $this->fireLockoutEvent($request);
 
@@ -35,7 +34,6 @@ class LoginController extends ApiController
 
         // Attempt to verify the credentials and create a token for the user.
         if ($token = Auth::guard('api')->attempt($credentials)) {
-
             // All good so return the json with token and user.
             return $this->sendLoginResponse($request, $token);
         }
@@ -60,13 +58,16 @@ class LoginController extends ApiController
 
         $user = Auth::guard('api')->user();
 
-        return $this->response(compact('token', 'user'));
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
+
+        return $this->response(compact('token', 'token_ttl', 'user'));
     }
 
     /**
      * Return error message after determining invalid credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     protected function sendFailedLoginResponse(Request $request)
@@ -79,7 +80,7 @@ class LoginController extends ApiController
     /**
      * Redirect the user after determining they are locked out.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function sendLockoutResponse(Request $request)
@@ -91,6 +92,34 @@ class LoginController extends ApiController
         $message = Lang::get('auth.throttle', ['seconds' => $seconds]);
 
         return $this->responseWithTooManyRequests($message);
+    }
+
+    /**
+     * Revoke the user's token.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function revokeToken()
+    {
+        Auth::guard('api')->logout();
+
+        return $this->responseWithNoContent();
+    }
+
+    /**
+     * Refresh the user's token.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refreshToken(Request $request)
+    {
+        $token = Auth::guard('api')->refresh();
+
+        // get time to live of token form JWT service.
+        $token_ttl = (new Jwt($token))->getTokenTTL();
+
+        return $this->response(compact('token', 'token_ttl'));
     }
 
     public function username()

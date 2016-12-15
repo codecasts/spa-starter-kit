@@ -1,3 +1,3 @@
-import { vuex as modules } from '../app'
+import { vuex as app } from '../app'
 // create a new object and preserv original keys
-export default { ...modules }
+export default { ...app.modules }

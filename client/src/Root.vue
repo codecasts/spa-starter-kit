@@ -1,4 +1,5 @@
 <script>
+import { mapGetters } from 'vuex'
 import CcNavBar from './components/root/navbar'
 import CcAlerts from './components/general/alerts'
 
@@ -9,9 +10,7 @@ export default {
     CcAlerts,
   },
   computed: {
-    shouldShowNavigation() {
-      return this.$route.name !== 'login.index'
-    },
+    ...mapGetters(['shouldShowNavigation']),
   },
 }
 </script>

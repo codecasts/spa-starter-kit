@@ -1,19 +1,11 @@
 
 /**
-* Components are lazy-loaded
+* Components are lazy-loaded - See "Grouping Components in the Same Chunk"
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
-const Categories = (resolve) => {
-  require.ensure(['./main'], () => {
-    resolve(require('./main')) // eslint-disable-line global-require
-  })
-}
-
-const Form = (resolve) => {
-  require.ensure(['./form'], () => {
-    resolve(require('./form')) // eslint-disable-line global-require
-  })
-}
+/* eslint-disable global-require */
+const Categories = r => require.ensure([], () => r(require('./main')), 'categories-bundle')
+const Form = r => require.ensure([], () => r(require('./form')), 'categories-bundle')
 
 const meta = {
   requiresAuth: true,

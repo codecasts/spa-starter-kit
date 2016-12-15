@@ -1,5 +1,7 @@
 # Codecast's Single Page Application Starter Kit
 
+[![Build Status](https://travis-ci.org/codecasts/spa-starter-kit.svg?branch=develop)](https://travis-ci.org/codecasts/spa-starter-kit)
+
 ![Cover](http://vedovelli.com.br/spas.png)
 
 > A **highly opinionated** Single Page Application starter kit built on top of Vue.js and Laravel.
@@ -25,7 +27,7 @@ The live demo can be found in [https://spa.codecasts.rocks/](https://spa.codecas
     * Pagination integrated with [Laravel's LengthAwarePaginator](https://laravel.com/docs/5.3/pagination#converting-results-to-json)
     * Alerts and Confirmation Alerts provided by [SweetAlert](http://t4t5.github.io/sweetalert/)
 2. Server side
-    * Laravel 5.3
+    * [Laravel 5.3](https://github.com/laravel/laravel/tree/v5.3.16)
     * Authentication with JWT
     * [Fractal](http://fractal.thephpleague.com/)
     * Web service RESTful with Dingo *(planned)*
@@ -95,15 +97,15 @@ $ composer test
 ## Contributing
 
 1. Fork it!
-2. Create your feature branch from **develop**: `git checkout -b my-new-feature`
+2. Create your feature branch from **develop**: `git checkout -b feature/my-new-feature`
 3. Write your code. Comment your code.
 4. Commit your changes: `git commit -am 'Add some feature'`
-5. Push to the branch: `git push origin my-new-feature`
+5. Push to the branch: `git push origin feature/my-new-feature`
 6. Submit a pull request to **develop** branch :D
 
 ## Credits
 
-[Fábio Vedovelli](https://github.com/vedovelli)
+[Fábio Vedovelli](https://github.com/vedovelli) and dedicated [contributors](https://github.com/codecasts/spa-starter-kit/graphs/contributors).
 
 ## License
 
