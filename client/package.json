@@ -1,6 +1,6 @@
 {
   "name": "codecasts-spa-starter-kit",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Client for Codecast's SPA Starter Kit",
   "author": "Fabio Vedovelli <vedovelli@gmail.com>",
   "private": true,
