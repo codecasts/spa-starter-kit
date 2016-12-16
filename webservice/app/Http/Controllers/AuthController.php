@@ -7,6 +7,7 @@ use Lang;
 use App\Services\Jwt;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Transformers\UserTransformer;
 
 class AuthController extends ApiController
 {
@@ -55,8 +56,9 @@ class AuthController extends ApiController
     {
         // Clear the login locks for the given user credentials.
         $this->clearLoginAttempts($request);
-
-        $user = Auth::guard('api')->user();
+        
+        // Get current user authenticated.
+        $user = $this->transform->item($request->user(), new UserTransformer());
 
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
