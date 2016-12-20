@@ -51,9 +51,11 @@ class AuthControllerTest extends ApiTestCase
             'token',
             'token_ttl',
             'user' => [
-                'id',
-                'name',
-                'email',
+		'data' => [
+	                'id',
+        	        'name',
+                	'email',
+		],
             ],
         ]);
     }
