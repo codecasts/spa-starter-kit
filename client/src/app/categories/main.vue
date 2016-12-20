@@ -191,7 +191,7 @@
         return this.list
       },
       currentPage() {
-        return parseInt(this.$route.query.page, 10)
+        return parseInt(this.$route.query.page, 10) || 1
       },
       isFormVisible() {
         return this.$route.name === 'categories.new' || this.$route.name === 'categories.edit'
