@@ -27,10 +27,13 @@
         * big array of records
         */
         return this.generatePagesArray(
-          this.currentPage, this.paginationData.total, this.paginationData.per_page, parseInt(this.maxItems, 10))
+          this.currentPage,
+          this.paginationData.total,
+          this.paginationData.per_page,
+          parseInt(this.maxItems, 10))
       },
       isLast() {
-        return this.currentPage === this.paginationData.last_page
+        return this.currentPage === this.paginationData.total_pages
       },
       isFirst() {
         return this.currentPage === 1
@@ -46,7 +49,7 @@
         /**
         * ?page=0 or higher than the total number of pages
         */
-        return this.currentPage > this.paginationData.last_page || this.currentPage < 1
+        return this.currentPage > this.paginationData.total_pages || this.currentPage < 1
       },
       currentRange() {
         let firstItem = (this.paginationData.per_page * (this.currentPage - 1)) + 1
