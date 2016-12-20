@@ -273,19 +273,14 @@
       <router-view></router-view>
     </transition>
 
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th colspan="2">Category</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="category in categories">
-          <td width="1%" nowrap>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
-          <td width="1%" nowrap="nowrap">
-            <a href="#"
+    <!-- el-table and its children comes from Element UI -->
+    <!-- http://element.eleme.io/#/en-US/component/table -->
+    <el-table :data="categories" stripe border style="width: 100%">
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="name" label="Category"></el-table-column>
+      <el-table-column inline-template label="Options" width="100">
+        <div>
+          <a href="#"
               @click.prevent="edit(category.id)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
@@ -301,10 +296,9 @@
               title="Remove">
               <i class="fa fa-fw fa-times"></i>
             </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        </div>
+      </el-table-column>
+    </el-table>
     <div>
       <cc-pagination
         :pagination-data="pagination"
