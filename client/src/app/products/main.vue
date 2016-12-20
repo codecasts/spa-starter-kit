@@ -20,7 +20,8 @@
     },
 
     methods: {
-      edit(id) {
+      edit(index) {
+        const { id } = this.products[index]
         this.$router.push({
           name: 'products.edit',
           params: { id },
@@ -98,7 +99,8 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(product) {
+      askRemove(index) {
+        const product = this.products[index]
         swal({
           title: 'Are you sure?',
           text: `Product ${product.name} will be permanently removed.`,
@@ -216,22 +218,18 @@
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
-          <a href="#"
+          <el-button
+            @click="create"
             v-show="!isFormVisible"
-            @click.prevent="create"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Product">
-            <i class="fa fa-fw fa-plus"></i>
-          </a>
-          <a href="#"
+            type="default"
+            icon="plus"
+            size="mini"></el-button>
+          <el-button
+            @click="hide"
             v-show="isFormVisible"
-            @click.prevent="hide"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Product">
-            <i class="fa fa-fw fa-minus"></i>
-          </a>
+            type="default"
+            icon="minus"
+            size="mini"></el-button>
         </div>
       </div>
     </div>
@@ -243,38 +241,18 @@
       <router-view></router-view>
     </transition>
 
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th colspan="2">Product</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products">
-          <td width="1%" nowrap>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
-          <td width="1%" nowrap="nowrap">
-            <a href="#"
-              @click.prevent="edit(product.id)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Edit">
-              <i class="fa fa-fw fa-pencil"></i>
-            </a>
-            <a href="#"
-              @click="askRemove(product)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Remove">
-              <i class="fa fa-fw fa-times"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- el-table and its children comes from Element UI -->
+    <!-- http://element.eleme.io/#/en-US/component/table -->
+    <el-table :data="products" stripe border style="width: 100%">
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="name" label="Product"></el-table-column>
+      <el-table-column inline-template label="Options" width="100">
+        <div>
+          <el-button @click="edit($index)" type="default" icon="edit" size="mini"></el-button>
+          <el-button @click="askRemove($index)" type="default" icon="delete" size="mini"></el-button>
+        </div>
+      </el-table-column>
+    </el-table>
     <div>
       <cc-pagination
         :pagination-data="pagination"
