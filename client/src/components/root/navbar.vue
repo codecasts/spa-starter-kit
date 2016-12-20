@@ -61,7 +61,7 @@
         <el-menu-item index="products.index">Products</el-menu-item>
       </el-submenu>
       <el-submenu index="menu-user" class="logout-button">
-        <template slot="title">{{ currentUser.name }}</template>
+        <template slot="title">{{ currentUser.data.name }}</template>
         <el-menu-item index="logout">Logout</el-menu-item>
       </el-submenu>
     </el-menu>
