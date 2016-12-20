@@ -248,22 +248,18 @@
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
-          <a href="#"
+          <el-button
+            @click="create"
             v-show="!isFormVisible"
-            @click.prevent="create"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Category">
-            <i class="fa fa-fw fa-plus"></i>
-          </a>
-          <a href="#"
+            type="default"
+            icon="plus"
+            size="mini"></el-button>
+          <el-button
+            @click="hide"
             v-show="isFormVisible"
-            @click.prevent="hide"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Category">
-            <i class="fa fa-fw fa-minus"></i>
-          </a>
+            type="default"
+            icon="minus"
+            size="mini"></el-button>
         </div>
       </div>
     </div>
@@ -282,22 +278,8 @@
       <el-table-column prop="name" label="Category"></el-table-column>
       <el-table-column inline-template label="Options" width="100">
         <div>
-          <a href="#"
-              @click.prevent="edit($index)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Edit">
-              <i class="fa fa-fw fa-pencil"></i>
-            </a>
-            <a href="#"
-              @click="askRemove($index)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Remove">
-              <i class="fa fa-fw fa-times"></i>
-            </a>
+          <el-button @click="edit($index)" type="default" icon="edit" size="mini"></el-button>
+          <el-button @click="askRemove($index)" type="default" icon="delete" size="mini"></el-button>
         </div>
       </el-table-column>
     </el-table>
