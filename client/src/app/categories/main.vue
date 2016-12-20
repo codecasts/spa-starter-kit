@@ -20,7 +20,8 @@
     },
 
     methods: {
-      edit(id) {
+      edit(index) {
+        const { id } = this.categories[index]
         this.$router.push({
           name: 'categories.edit',
           params: { id },
@@ -123,7 +124,8 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(category) {
+      askRemove(index) {
+        const category = this.categories[index]
         swal({
           title: 'Are you sure?',
           text: `Category ${category.name} will be permanently removed.`,
@@ -281,7 +283,7 @@
       <el-table-column inline-template label="Options" width="100">
         <div>
           <a href="#"
-              @click.prevent="edit(category.id)"
+              @click.prevent="edit($index)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
@@ -289,7 +291,7 @@
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"
-              @click="askRemove(category)"
+              @click="askRemove($index)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
