@@ -5,13 +5,6 @@ namespace App\Traits;
 trait QueryParameters
 {
     /**
-     * HTTP Request.
-     *
-     * @var \Illuminate\Http\Request
-     */
-    private $request;
-
-    /**
      * Get order parameter.
      *
      * @param  string $order
