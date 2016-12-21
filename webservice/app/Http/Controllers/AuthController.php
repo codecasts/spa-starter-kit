@@ -58,7 +58,7 @@ class AuthController extends ApiController
         $this->clearLoginAttempts($request);
 
         // Get current user authenticated.
-        $user = $this->transform->item(Auth::guard('api')->user(), new UserTransformer());
+        $user = $this->response->transform->item(Auth::guard('api')->user(), new UserTransformer());
 
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
