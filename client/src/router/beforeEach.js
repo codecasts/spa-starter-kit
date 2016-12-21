@@ -28,8 +28,7 @@ const beforeEach = (to, from, next) => {
       .then(() => {
         next()
       })
-      .catch((err) => {
-        console.log({ err });
+      .catch(() => {
         next({ name: 'auth.singin' })
       })
   }
