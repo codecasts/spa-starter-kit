@@ -21,9 +21,7 @@ class ProductsController extends ApiController
 
         $products = Product::orderBy($sort, $order)->paginate($limit);
 
-        return $this->response(
-            $this->transform->collection($products, new ProductTransformer)
-        );
+        return $this->response->collection($products, new ProductTransformer);
     }
 
     /**
@@ -39,7 +37,7 @@ class ProductsController extends ApiController
             'category_id' => $request->category,
         ]);
 
-        return $this->response([
+        return $this->response->with([
             'result' => 'success',
         ]);
     }
@@ -55,12 +53,10 @@ class ProductsController extends ApiController
         $product = Product::find($id);
 
         if (! $product) {
-            return $this->responseWithNotFound('Product not found');
+            return $this->response->withNotFound('Product not found');
         }
 
-        return $this->response(
-            $this->transform->item($product, new ProductTransformer)
-        );
+        return $this->response->item($product, new ProductTransformer);
     }
 
     /**
@@ -75,7 +71,7 @@ class ProductsController extends ApiController
         $product = Product::find($id);
 
         if (! $product) {
-            return $this->responseWithNotFound('Product not found');
+            return $this->response->withNotFound('Product not found');
         }
 
         $product->name = $request->name;
@@ -83,7 +79,7 @@ class ProductsController extends ApiController
 
         $product->save();
 
-        return $this->response([
+        return $this->response->with([
             'result' => 'success',
         ]);
     }
@@ -99,12 +95,12 @@ class ProductsController extends ApiController
         $product = Product::find($id);
 
         if (! $product) {
-            return $this->responseWithNotFound('Product not found');
+            return $this->response->withNotFound('Product not found');
         }
 
         $product->delete();
 
-        return $this->response([
+        return $this->response->with([
             'result' => 'success',
         ]);
     }
