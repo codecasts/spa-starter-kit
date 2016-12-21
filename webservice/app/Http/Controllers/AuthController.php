@@ -63,7 +63,7 @@ class AuthController extends ApiController
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
 
-        return $this->response(compact('token', 'token_ttl', 'user'));
+        return $this->response->with(compact('token', 'token_ttl', 'user'));
     }
 
     /**
@@ -76,7 +76,7 @@ class AuthController extends ApiController
     {
         $message = Lang::get('auth.failed');
 
-        return $this->responseWithUnauthorized($message);
+        return $this->response->withUnauthorized($message);
     }
 
     /**
@@ -93,7 +93,7 @@ class AuthController extends ApiController
 
         $message = Lang::get('auth.throttle', ['seconds' => $seconds]);
 
-        return $this->responseWithTooManyRequests($message);
+        return $this->response->withTooManyRequests($message);
     }
 
     /**
@@ -105,7 +105,7 @@ class AuthController extends ApiController
     {
         Auth::guard('api')->logout();
 
-        return $this->responseWithNoContent();
+        return $this->response->withNoContent();
     }
 
     /**
@@ -121,7 +121,7 @@ class AuthController extends ApiController
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
 
-        return $this->response(compact('token', 'token_ttl'));
+        return $this->response->with(compact('token', 'token_ttl'));
     }
 
     public function username()
