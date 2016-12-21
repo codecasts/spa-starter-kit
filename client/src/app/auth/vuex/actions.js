@@ -61,23 +61,38 @@ export const setToken = ({ commit }, payload) => {
 }
 
 export const checkUserToken = ({ dispatch, state }) => {
+  // If the token exists then all validation has already been done
   if (!isEmpty(state.token)) {
     return Promise.resolve(state.token)
   }
 
+  /**
+   * Token does not exist yet
+   * - Recover it from localstorage
+   * - Recover also the user, validating the token also
+   */
   return localforage.getItem(userTokenStorageKey)
     .then((token) => {
       if (isEmpty(token)) {
-        return Promise.reject('NO_TOKEN')
+        // Token is not saved in localstorage
+        return Promise.reject('NO_TOKEN') // Reject promise
       }
-      return dispatch('setToken', token)
+      // Put the token in the vuex store
+      return dispatch('setToken', token) // keep promise chain
     })
+    // With the token in hand, retrieves the user's data, validating the token
     .then(() => dispatch('loadUser'))
 }
 
+/**
+ * Retrieves updated user information
+ * If something goes wrong, the user's token is probably invalid
+ */
 export const loadUser = ({ dispatch }) => services.loadUserData()
+  // store user's data
   .then(user => dispatch('setUser', user.data))
   .catch(() => {
+    // Process failure, delete the token
     dispatch('setToken', '')
-    return Promise.reject('FAIL_IN_LOAD_USER')
+    return Promise.reject('FAIL_IN_LOAD_USER') // keep promise chain
   })
