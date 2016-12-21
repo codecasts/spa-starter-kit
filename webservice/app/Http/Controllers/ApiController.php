@@ -30,7 +30,6 @@ abstract class ApiController extends Controller
      *
      * @param Request   $request
      * @param Response  $response
-     * @param Transform $transform
      */
     public function __construct(Request $request, Response $response)
     {
