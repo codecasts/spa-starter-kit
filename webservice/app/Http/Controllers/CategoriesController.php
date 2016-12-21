@@ -44,7 +44,7 @@ class CategoriesController extends ApiController
     {
         Category::create($request->only('name'));
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }
@@ -84,7 +84,7 @@ class CategoriesController extends ApiController
         $category->name = $request->get('name');
         $category->save();
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }
@@ -105,7 +105,7 @@ class CategoriesController extends ApiController
 
         $category->delete();
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }

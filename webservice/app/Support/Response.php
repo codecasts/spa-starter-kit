@@ -107,7 +107,7 @@ class Response
      */
     public function withError($message)
     {
-        return $this->with([
+        return $this->json([
             'messages' => (is_array($message) ? $message : [$message]),
         ]);
     }
@@ -123,7 +123,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_NO_CONTENT
-        )->with();
+        )->json();
     }
 
     /**
@@ -136,7 +136,7 @@ class Response
      */
     public function item($item, TransformerAbstract $transformer)
     {
-        return $this->with(
+        return $this->json(
             $this->transform->item($item, $transformer)
         );
     }
@@ -151,7 +151,7 @@ class Response
      */
     public function collection($items, TransformerAbstract $transformer)
     {
-        return $this->with(
+        return $this->json(
             $this->transform->collection($items, $transformer)
         );
     }
@@ -164,7 +164,7 @@ class Response
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function with($data = [], array $headers = [])
+    public function json($data = [], array $headers = [])
     {
         return $this->response->json($data, $this->statusCode, $headers);
     }

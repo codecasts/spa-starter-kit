@@ -37,7 +37,7 @@ class ProductsController extends ApiController
             'category_id' => $request->category,
         ]);
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }
@@ -79,7 +79,7 @@ class ProductsController extends ApiController
 
         $product->save();
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }
@@ -100,7 +100,7 @@ class ProductsController extends ApiController
 
         $product->delete();
 
-        return $this->response->with([
+        return $this->response->json([
             'result' => 'success',
         ]);
     }
