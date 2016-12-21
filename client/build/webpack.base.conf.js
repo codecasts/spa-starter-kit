@@ -34,6 +34,7 @@ module.exports = {
     fallback: [path.join(__dirname, '../node_modules')]
   },
   module: {
+    noParse: [new RegExp('node_modules/localforage/dist/localforage.js')],
     loaders: [
       {
         test: /\.vue$/,
