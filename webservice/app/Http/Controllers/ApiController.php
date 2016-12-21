@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\Responses;
 use Illuminate\Http\Request;
 use App\Traits\QueryParameters;
 use App\Transformers\Transform;
@@ -10,7 +9,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 
 abstract class ApiController extends Controller
 {
-    use Responses, QueryParameters;
+    use QueryParameters;
 
     /**
      * Transform.
