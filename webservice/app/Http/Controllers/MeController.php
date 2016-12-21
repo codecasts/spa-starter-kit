@@ -14,8 +14,8 @@ class MeController extends ApiController
      */
     public function show()
     {
-        return $this->response(
-            $this->transform->item(Auth::guard('api')->user(), new UserTransformer)
-        );
+        $user = Auth::guard('api')->user();
+
+        return $this->response->item($user, new UserTransformer);
     }
 }
