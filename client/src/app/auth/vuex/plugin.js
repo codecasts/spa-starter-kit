@@ -1,22 +1,22 @@
-import { localStorageSetItem } from 'utils/local'
+import localforage from 'localforage'
+// plugins and src are alias. see client/build/webpack.base.conf.js
+import { userTokenStorageKey } from 'src/config'
+import { setToken as httpSetToken } from 'plugins/http'
 import * as TYPES from './mutations-types'
 
 const subscribe = (store) => {
   store.subscribe((mutation, { Auth }) => {
-    if (TYPES.SET_USER === mutation.type) {
-      /**
-       * Sets the user to the local storage
-       * for auto-login purpose
-       */
-      localStorageSetItem('user', { user: Auth.user })
-    }
-
     if (TYPES.SET_TOKEN === mutation.type) {
+      /**
+       * Set the Axios Authorization header with the token
+       */
+      httpSetToken(Auth.token)
+
       /**
        * Sets the token to the local storage
        * for auto-login purpose
        */
-      localStorageSetItem('token', { token: Auth.token })
+      localforage.setItem(userTokenStorageKey, Auth.token)
     }
   })
 }

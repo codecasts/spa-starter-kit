@@ -1,24 +1,12 @@
-// plugins and utils are alias. see client/build/webpack.base.conf.js
-// import http client
-import { http, setToken as httpSetToken } from 'plugins/http'
+import localforage from 'localforage'
+// src is a alias. see client/build/webpack.base.conf.js
+import { userTokenStorageKey } from 'src/config'
 import { isEmpty } from 'lodash'
-import { getData } from 'utils/get'
 import * as TYPES from './mutations-types'
+import * as services from '../services'
 
-export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
-     /**
-      * functional approach, more readable and generate minus code
-      * examples:
-      * PromiseObject.then(response => response.data)
-      * PromiseObject.then({ data } => data)
-      *
-      * We do this many times in many locations.
-      * We know that .then accepts a function and what arguments it receives
-      * This is because in JavaScript functions are first class citizens.
-      * In summary we can pass functions as arguments and also receive functions as results
-      * (first-class function and higher-order function)
-      */
-    .then(getData) // .then(response => getData(response))
+export const attemptLogin = ({ dispatch }, payload) =>
+    services.postLogin(payload)
     .then(({ token, user }) => {
       dispatch('setUser', user.data)
       dispatch('setToken', token)
@@ -27,7 +15,7 @@ export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/a
     })
 
 export const logout = ({ dispatch }) => {
-  http.post('/auth/token/revoke')
+  services.revokeToken()
   // call actions
   return Promise.all([
     dispatch('setToken', null),
@@ -46,13 +34,45 @@ export const setToken = ({ commit }, payload) => {
   // prevent if payload is a object
   const token = (isEmpty(payload)) ? null : payload.token || payload
 
-  /**
-   * Set the Axios Authorization header with the token
-   */
-  httpSetToken(token)
-
   // Commit the mutations
   commit(TYPES.SET_TOKEN, token)
 
   return Promise.resolve(token) // keep promise chain
 }
+
+export const checkUserToken = ({ dispatch, state }) => {
+  // If the token exists then all validation has already been done
+  if (!isEmpty(state.token)) {
+    return Promise.resolve(state.token)
+  }
+
+  /**
+   * Token does not exist yet
+   * - Recover it from localstorage
+   * - Recover also the user, validating the token also
+   */
+  return localforage.getItem(userTokenStorageKey)
+    .then((token) => {
+      if (isEmpty(token)) {
+        // Token is not saved in localstorage
+        return Promise.reject('NO_TOKEN') // Reject promise
+      }
+      // Put the token in the vuex store
+      return dispatch('setToken', token) // keep promise chain
+    })
+    // With the token in hand, retrieves the user's data, validating the token
+    .then(() => dispatch('loadUser'))
+}
+
+/**
+ * Retrieves updated user information
+ * If something goes wrong, the user's token is probably invalid
+ */
+export const loadUser = ({ dispatch }) => services.loadUserData()
+  // store user's data
+  .then(user => dispatch('setUser', user.data))
+  .catch(() => {
+    // Process failure, delete the token
+    dispatch('setToken', '')
+    return Promise.reject('FAIL_IN_LOAD_USER') // keep promise chain
+  })
