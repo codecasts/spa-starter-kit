@@ -1,9 +1,12 @@
-// plugins and utils are alias. see client/build/webpack.base.conf.js
+import localforage from 'localforage'
+// plugins, utils and src are alias. see client/build/webpack.base.conf.js
 // import http client
 import { http, setToken as httpSetToken } from 'plugins/http'
+import { userTokenStorageKey } from 'src/config'
 import { isEmpty } from 'lodash'
 import { getData } from 'utils/get'
 import * as TYPES from './mutations-types'
+import * as services from '../services'
 
 export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
      /**
@@ -56,3 +59,25 @@ export const setToken = ({ commit }, payload) => {
 
   return Promise.resolve(token) // keep promise chain
 }
+
+export const checkUserToken = ({ dispatch, state }) => {
+  if (!isEmpty(state.token)) {
+    return Promise.resolve(state.token)
+  }
+
+  return localforage.getItem(userTokenStorageKey)
+    .then((token) => {
+      if (isEmpty(token)) {
+        return Promise.reject('NO_TOKEN')
+      }
+      return dispatch('setToken', token)
+    })
+    .then(() => dispatch('loadUser'))
+}
+
+export const loadUser = ({ dispatch }) => services.loadUserData()
+  .then(user => dispatch('setUser', user.data))
+  .catch(() => {
+    dispatch('setToken', '')
+    return Promise.reject('FAIL_IN_LOAD_USER')
+  })
