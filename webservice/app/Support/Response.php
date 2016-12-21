@@ -48,11 +48,11 @@ class Response
      *
      * @param  string $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withTooManyRequests($message = 'Too Many Requests')
     {
-        return $this->status(
+        return $this->setStatusCode(
             HttpResponse::HTTP_TOO_MANY_REQUESTS
         )->withError($message);
     }
@@ -62,11 +62,11 @@ class Response
      *
      * @param  string $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withUnauthorized($message = 'Unauthorized')
     {
-        return $this->status(
+        return $this->setStatusCode(
             HttpResponse::HTTP_UNAUTHORIZED
         )->withError($message);
     }
@@ -76,11 +76,11 @@ class Response
      *
      * @param  string $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withInternalServerError($message = 'Internal Server Error')
     {
-        return $this->status(
+        return $this->setStatusCode(
             HttpResponse::HTTP_INTERNAL_SERVER_ERROR
         )->withError($message);
     }
@@ -90,11 +90,11 @@ class Response
      *
      * @param  string $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withNotFound($message = 'Not Found')
     {
-        return $this->status(
+        return $this->setStatusCode(
             HttpResponse::HTTP_NOT_FOUND
         )->withError($message);
     }
@@ -104,7 +104,7 @@ class Response
      *
      * @param  mixed $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withError($message)
     {
@@ -118,11 +118,11 @@ class Response
      *
      * @param  string $message
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function withNoContent()
     {
-        return $this->status(
+        return $this->setStatusCode(
             HttpResponse::HTTP_NO_CONTENT
         )->with();
     }
@@ -133,7 +133,7 @@ class Response
      * @param  mixed               $item
      * @param  TransformerAbstract $transformer
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function item($item, TransformerAbstract $transformer)
     {
@@ -148,7 +148,7 @@ class Response
      * @param  mixed               $items
      * @param  TransformerAbstract $transformer
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function collection($items, TransformerAbstract $transformer)
     {
@@ -163,7 +163,7 @@ class Response
      * @param  mixed  $data
      * @param  array  $headers
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function with($data = [], array $headers = [])
     {
@@ -177,10 +177,20 @@ class Response
      *
      * @return self
      */
-    public function status($statusCode)
+    public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
 
         return $this;
+    }
+
+    /**
+     * Gets the HTTP status code.
+     *
+     * @return int
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }
