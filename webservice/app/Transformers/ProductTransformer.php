@@ -47,10 +47,12 @@ class ProductTransformer extends TransformerAbstract
      *
      * @param  Product $product
      *
-     * @return \League\Fractal\Resource\Item
+     * @return \League\Fractal\Resource\Item|null
      */
     public function includeCategory(Product $product)
     {
-        return $this->item($product->category, new CategoryTransformer);
+        if ($product->category) {
+            return $this->item($product->category, new CategoryTransformer);
+        }
     }
 }

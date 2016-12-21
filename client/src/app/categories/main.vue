@@ -20,7 +20,8 @@
     },
 
     methods: {
-      edit(id) {
+      edit(index) {
+        const { id } = this.categories[index]
         this.$router.push({
           name: 'categories.edit',
           params: { id },
@@ -123,7 +124,8 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(category) {
+      askRemove(index) {
+        const category = this.categories[index]
         swal({
           title: 'Are you sure?',
           text: `Category ${category.name} will be permanently removed.`,
@@ -191,7 +193,7 @@
         return this.list
       },
       currentPage() {
-        return parseInt(this.$route.query.page, 10)
+        return parseInt(this.$route.query.page, 10) || 1
       },
       isFormVisible() {
         return this.$route.name === 'categories.new' || this.$route.name === 'categories.edit'
@@ -246,22 +248,18 @@
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
-          <a href="#"
+          <el-button
+            @click="create"
             v-show="!isFormVisible"
-            @click.prevent="create"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Category">
-            <i class="fa fa-fw fa-plus"></i>
-          </a>
-          <a href="#"
+            type="default"
+            icon="plus"
+            size="mini"></el-button>
+          <el-button
+            @click="hide"
             v-show="isFormVisible"
-            @click.prevent="hide"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New Category">
-            <i class="fa fa-fw fa-minus"></i>
-          </a>
+            type="default"
+            icon="minus"
+            size="mini"></el-button>
         </div>
       </div>
     </div>
@@ -273,38 +271,18 @@
       <router-view></router-view>
     </transition>
 
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th colspan="2">Category</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="category in categories">
-          <td width="1%" nowrap>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
-          <td width="1%" nowrap="nowrap">
-            <a href="#"
-              @click.prevent="edit(category.id)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Edit">
-              <i class="fa fa-fw fa-pencil"></i>
-            </a>
-            <a href="#"
-              @click="askRemove(category)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Remove">
-              <i class="fa fa-fw fa-times"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- el-table and its children comes from Element UI -->
+    <!-- http://element.eleme.io/#/en-US/component/table -->
+    <el-table :data="categories" stripe border style="width: 100%">
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="name" label="Category"></el-table-column>
+      <el-table-column inline-template label="Options" width="100">
+        <div>
+          <el-button @click="edit($index)" type="default" icon="edit" size="mini"></el-button>
+          <el-button @click="askRemove($index)" type="default" icon="delete" size="mini"></el-button>
+        </div>
+      </el-table-column>
+    </el-table>
     <div>
       <cc-pagination
         :pagination-data="pagination"

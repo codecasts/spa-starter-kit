@@ -51,6 +51,8 @@
 <template>
   <div>
     <cc-spinner></cc-spinner>
+    <!-- el-menu and its children comes from Element UI -->
+    <!-- http://element.eleme.io/#/en-US/component/menu -->
     <el-menu theme="dark" default-active="1" class="cc-navigation"
       mode="horizontal" @select="navigate">
       <el-menu-item index="codecasts" class="brand">Codecasts.com.br</el-menu-item>

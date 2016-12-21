@@ -20,7 +20,7 @@ export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/a
       */
     .then(getData) // .then(response => getData(response))
     .then(({ token, user }) => {
-      dispatch('setUser', user)
+      dispatch('setUser', user.data)
       dispatch('setToken', token)
 
       return user // keep promise chain
