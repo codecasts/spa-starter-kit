@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Transformers\Transform;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
@@ -15,6 +16,13 @@ class Response
     private $response;
 
     /**
+     * API transformer helper.
+     *
+     * @var \App\Transformers\Transform
+     */
+    private $transform;
+
+    /**
      * HTTP status code.
      *
      * @var int
@@ -23,10 +31,14 @@ class Response
 
     /**
      * Create a new class instance.
+     *
+     * @param ResponseFactory $response
+     * @param Transform       $transform
      */
-    public function __construct(ResponseFactory $response)
+    public function __construct(ResponseFactory $response, Transform $transform)
     {
         $this->response = $response;
+        $this->transform = $transform;
     }
 
 
@@ -39,7 +51,9 @@ class Response
      */
     public function withTooManyRequests($message = 'Too Many Requests')
     {
-        return $this->status(HttpResponse::HTTP_TOO_MANY_REQUESTS)->withError($message);
+        return $this->status(
+            HttpResponse::HTTP_TOO_MANY_REQUESTS
+        )->withError($message);
     }
 
     /**
@@ -51,7 +65,9 @@ class Response
      */
     public function withUnauthorized($message = 'Unauthorized')
     {
-        return $this->status(HttpResponse::HTTP_UNAUTHORIZED)->withError($message);
+        return $this->status(
+            HttpResponse::HTTP_UNAUTHORIZED
+        )->withError($message);
     }
 
     /**
@@ -63,7 +79,9 @@ class Response
      */
     public function withInternalServerError($message = 'Internal Server Error')
     {
-        return $this->status(HttpResponse::HTTP_INTERNAL_SERVER_ERROR)->withError($message);
+        return $this->status(
+            HttpResponse::HTTP_INTERNAL_SERVER_ERROR
+        )->withError($message);
     }
 
     /**
@@ -75,7 +93,9 @@ class Response
      */
     public function withNotFound($message = 'Not Found')
     {
-        return $this->status(HttpResponse::HTTP_NOT_FOUND)->withError($message);
+        return $this->status(
+            HttpResponse::HTTP_NOT_FOUND
+        )->withError($message);
     }
 
     /**
@@ -87,7 +107,7 @@ class Response
      */
     public function withError($message)
     {
-        return $this->make([
+        return $this->with([
             'messages' => (is_array($message) ? $message : [$message]),
         ]);
     }
@@ -101,8 +121,39 @@ class Response
      */
     public function withNoContent()
     {
-        return $this->status(HttpResponse::HTTP_NO_CONTENT)
-            ->make([]);
+        return $this->status(
+            HttpResponse::HTTP_NO_CONTENT
+        )->with();
+    }
+
+    /**
+     * Make a JSON response with the transformed item.
+     *
+     * @param  mixed               $item
+     * @param  TransformerAbstract $transformer
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function item($item, TransformerAbstract $transformer)
+    {
+        return $this->with(
+            $this->transform->item($item, $transformer)
+        );
+    }
+
+    /**
+     * Make a JSON response with the transformed items.
+     *
+     * @param  mixed               $items
+     * @param  TransformerAbstract $transformer
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function collection($items, TransformerAbstract $transformer)
+    {
+        return $this->with(
+            $this->transform->collection($items, $transformer)
+        );
     }
 
     /**
@@ -113,7 +164,7 @@ class Response
      *
      * @return \Illuminate\Http\Response
      */
-    public function make($data, array $headers = [])
+    public function with($data = [], array $headers = [])
     {
         return $this->response->json($data, $this->statusCode, $headers);
     }

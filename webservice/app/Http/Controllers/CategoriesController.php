@@ -21,16 +21,17 @@ class CategoriesController extends ApiController
 
         $categories = Category::orderBy($sort, $order)->paginate($limit);
 
-        return $this->response(
-            $this->transform->collection($categories, new CategoryTransformer)
-        );
+        return $this->response->collection($categories, new CategoryTransformer);
     }
 
+    /**
+     * Display a full list of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function fullList()
     {
-        return $this->response(
-            $this->transform->collection(Category::all(), new CategoryTransformer)
-        );
+        return $this->response->collection(Category::all(), new CategoryTransformer);
     }
 
     /**
@@ -43,7 +44,9 @@ class CategoriesController extends ApiController
     {
         Category::create($request->only('name'));
 
-        return $this->response(['result' => 'success']);
+        return $this->response->with([
+            'result' => 'success',
+        ]);
     }
 
     /**
@@ -57,12 +60,10 @@ class CategoriesController extends ApiController
         $category = Category::find($id);
 
         if (! $category) {
-            return $this->responseWithNotFound('Category not found');
+            return $this->response->withNotFound('Category not found');
         }
 
-        return $this->response(
-            $this->transform->item($category, new CategoryTransformer)
-        );
+        return $this->response->item($category, new CategoryTransformer);
     }
 
     /**
@@ -77,13 +78,15 @@ class CategoriesController extends ApiController
         $category = Category::find($id);
 
         if (! $category) {
-            return $this->responseWithNotFound('Category not found');
+            return $this->response->withNotFound('Category not found');
         }
 
         $category->name = $request->get('name');
         $category->save();
 
-        return $this->response(['result' => 'success']);
+        return $this->response->with([
+            'result' => 'success',
+        ]);
     }
 
     /**
@@ -97,11 +100,13 @@ class CategoriesController extends ApiController
         $category = Category::find($id);
 
         if (! $category) {
-            return $this->responseWithNotFound('Category not found');
+            return $this->response->withNotFound('Category not found');
         }
 
         $category->delete();
 
-        return $this->response(['result' => 'success']);
+        return $this->response->with([
+            'result' => 'success',
+        ]);
     }
 }

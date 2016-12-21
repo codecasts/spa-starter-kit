@@ -26,23 +26,15 @@ abstract class ApiController extends Controller
     protected $response;
 
     /**
-     * API transformer helper.
-     *
-     * @var \App\Transformers\Transform
-     */
-    protected $transform;
-
-    /**
      * Creates a new class instance.
      *
      * @param Request   $request
      * @param Response  $response
      * @param Transform $transform
      */
-    public function __construct(Request $request, Response $response, Transform $transform)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;
-        $this->transform = $transform;
     }
 }
