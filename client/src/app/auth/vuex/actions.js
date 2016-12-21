@@ -1,27 +1,12 @@
 import localforage from 'localforage'
-// plugins, utils and src are alias. see client/build/webpack.base.conf.js
-// import http client
-import { http, setToken as httpSetToken } from 'plugins/http'
+// src is a alias. see client/build/webpack.base.conf.js
 import { userTokenStorageKey } from 'src/config'
 import { isEmpty } from 'lodash'
-import { getData } from 'utils/get'
 import * as TYPES from './mutations-types'
 import * as services from '../services'
 
-export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
-     /**
-      * functional approach, more readable and generate minus code
-      * examples:
-      * PromiseObject.then(response => response.data)
-      * PromiseObject.then({ data } => data)
-      *
-      * We do this many times in many locations.
-      * We know that .then accepts a function and what arguments it receives
-      * This is because in JavaScript functions are first class citizens.
-      * In summary we can pass functions as arguments and also receive functions as results
-      * (first-class function and higher-order function)
-      */
-    .then(getData) // .then(response => getData(response))
+export const attemptLogin = ({ dispatch }, payload) =>
+    services.postLogin(payload)
     .then(({ token, user }) => {
       dispatch('setUser', user.data)
       dispatch('setToken', token)
@@ -30,7 +15,7 @@ export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/a
     })
 
 export const logout = ({ dispatch }) => {
-  http.post('/auth/token/revoke')
+  services.revokeToken()
   // call actions
   return Promise.all([
     dispatch('setToken', null),
@@ -48,11 +33,6 @@ export const setUser = ({ commit }, user) => {
 export const setToken = ({ commit }, payload) => {
   // prevent if payload is a object
   const token = (isEmpty(payload)) ? null : payload.token || payload
-
-  /**
-   * Set the Axios Authorization header with the token
-   */
-  httpSetToken(token)
 
   // Commit the mutations
   commit(TYPES.SET_TOKEN, token)
