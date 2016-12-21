@@ -42,7 +42,6 @@ class Response
         $this->transform = $transform;
     }
 
-
     /**
      * Return a 429 response.
      *
