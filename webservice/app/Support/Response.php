@@ -118,6 +118,18 @@ class Response
     }
 
     /**
+     * Make a 204 response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function withNoContent()
+    {
+        return $this->setStatusCode(
+            HttpResponse::HTTP_NO_CONTENT
+        )->json();
+    }
+
+    /**
      * Make an error response.
      *
      * @param  mixed $message
@@ -131,19 +143,6 @@ class Response
         ]);
     }
 
-    /**
-     * Make a 204 response.
-     *
-     * @param  string $message
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function withNoContent()
-    {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_NO_CONTENT
-        )->json();
-    }
 
     /**
      * Make a JSON response with the transformed item.

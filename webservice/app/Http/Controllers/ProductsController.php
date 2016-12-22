@@ -32,14 +32,12 @@ class ProductsController extends ApiController
      */
     public function store(ProductRequest $request)
     {
-        Product::create([
+        $product = Product::create([
             'name' => $request->name,
             'category_id' => $request->category,
         ]);
 
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->withCreated($product, new ProductTransformer);
     }
 
     /**
@@ -74,14 +72,12 @@ class ProductsController extends ApiController
             return $this->response->withNotFound('Product not found');
         }
 
-        $product->name = $request->name;
-        $product->category_id = $request->category;
+        $product->fill([
+            'name' => $request->name,
+            'category_id' => $request->category,
+        ])->save();
 
-        $product->save();
-
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->withNoContent();
     }
 
     /**
@@ -100,8 +96,6 @@ class ProductsController extends ApiController
 
         $product->delete();
 
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->withNoContent();
     }
 }

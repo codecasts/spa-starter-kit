@@ -10,51 +10,41 @@ class ProductsControllerTest extends ApiTestCase
 {
     use DatabaseMigrations, WithoutMiddleware, Factory;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_list_products()
     {
-        $category = $this->create(Category::class);
-
         $this->times(5)->create(Product::class, [
-            'category_id' => $category->id,
+            'category_id' => $this->times(1)->create(Category::class)->id,
         ]);
 
         $this->json('GET', '/api/products');
 
         $this->assertResponseOk();
         $this->seeJsonStructure([
-            'data' => [
-                '*' => ['name', 'category'],
-            ],
+            'data' => ['*' => ['id', 'name', 'category']],
             'meta' => ['pagination' => []],
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_create_product()
     {
-        $category = $this->create(Category::class);
+        $product = $this->fake->sentence;
+        $category = $this->create(Category::class)->id;
 
         $this->json('POST', '/api/products', [
-            'name' => 'Dummy',
-            'category' => $category->id,
+            'name' => $product,
+            'category' => $category,
         ]);
 
-        $this->assertResponseOk();
-        $this->seeInDatabase('products', [
-            'name' => 'Dummy',
-            'category_id' => $category->id,
-        ]);
+        $this->assertResponseStatus(201);
+        $this->seeJsonStructure(['data' => ['id', 'name', 'category']]);
+        $this->seeJson(['name' => $product]);
+        $this->seeInDatabase('products', ['name' => $product, 'category_id' => $category]);
     }
 
-    /**
-     * @test
-     */
-    public function can_get_product()
+    /** @test */
+    public function can_show_product()
     {
         $product = $this->create(Product::class, [
             'category_id' => $this->create(Category::class)->id,
@@ -63,39 +53,32 @@ class ProductsControllerTest extends ApiTestCase
         $this->json('GET', '/api/products/1');
 
         $this->assertResponseOk();
-        $this->seeJsonStructure([
-            'data' => [
-                'name', 'category',
-            ],
-        ]);
+        $this->seeJsonStructure(['data' => ['id', 'name', 'category']]);
+        $this->seeJson(['name' => $product->name]);
     }
 
-    /**
-     * @test
-     */ 
+    /** @test */
     public function can_update_product()
     {
-        $category = $this->create(Category::class);
-        $product = $this->create(Product::class, [
+        $this->create(Product::class, [
             'category_id' => $this->create(Category::class)->id,
         ]);
 
+        $category = $this->create(Category::class)->id;
+
         $this->json('PUT', '/api/products/1', [
-            'name' => 'Dummy',
-            'category' => $category->id,
+            'name' => 'new product name',
+            'category' => $category,
         ]);
 
-        $this->assertResponseOk();
+        $this->assertResponseStatus(204);
         $this->seeInDatabase('products', [
-            'id' => $product->id,
-            'name' => 'Dummy',
-            'category_id' => $category->id,
+            'name' => 'new product name',
+            'category_id' => $category,
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function can_delete_product()
     {
         $this->create(Product::class, [
@@ -104,37 +87,34 @@ class ProductsControllerTest extends ApiTestCase
 
         $this->json('DELETE', '/api/products/1');
 
-        $this->assertResponseOk();
+        $this->assertResponseStatus(204);
         $this->dontSeeInDatabase('products', ['id' => 1]);
     }
 
     /**
      * @test
-     * @dataProvider urlProvider
+     * @dataProvider requestUrlProvider
      */
-    public function get_404_if_product_dont_exist($method, $url)
+    public function get_404_when_product_dont_exist($method, $url, $data = [])
     {
-        $this->json($method, $url, [
-            'name' => 'Dummy',
-            'category' => $this->create(Category::class)->id,
-        ]);
+        $this->create(Category::class);
+
+        $this->json($method, $url, $data);
 
         $this->assertResponseStatus(404);
-        $this->seeJsonStructure([
-            'messages' => [[]],
-        ]);
+        $this->seeJsonStructure(['messages' => []]);
     }
 
     /**
-     * Url provider.
+     * Request Url provider.
      *
      * @return array
      */
-    public function urlProvider()
+    public function requestUrlProvider()
     {
         return [
             ['GET', '/api/products/1'],
-            ['PUT', '/api/products/1'],
+            ['PUT', '/api/products/1', ['name' => 'update', 'category' => 1]],
             ['DELETE', '/api/products/1'],
         ];
     }

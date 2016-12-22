@@ -17,7 +17,10 @@ class CategoriesControllerTest extends ApiTestCase
         $this->json('GET', '/api/categories');
 
         $this->assertResponseOk();
-        $this->seeJsonStructure(['data' => ['*' => ['id', 'name']]]);
+        $this->seeJsonStructure([
+            'data' => ['*' => ['id', 'name']],
+            'meta' => ['pagination' => []],
+        ]);
     }
 
     /** @test */
@@ -38,12 +41,13 @@ class CategoriesControllerTest extends ApiTestCase
     /** @test */
     public function can_show_category()
     {
-        $this->create(Category::class);
+        $category = $this->create(Category::class);
 
         $this->json('GET', '/api/categories/1');
 
         $this->assertResponseOk();
         $this->seeJsonStructure(['data' => ['id', 'name']]);
+        $this->seeJson(['name' => $category->name]);
     }
 
     /** @test */
