@@ -54,6 +54,10 @@ class Response
     {
         $this->setStatusCode(HttpResponse::HTTP_CREATED);
 
+        if (is_null($resource)) {
+            return $this->json();
+        }
+
         if (! $transformer) {
             return $this->json($resource);
         }
