@@ -1,6 +1,5 @@
 
 <script>
-  import Vue from 'vue'
   import { mapActions, mapState } from 'vuex'
   import CcPagination from 'components/general/pagination'
 
@@ -85,15 +84,6 @@
         * Push the page number to the query string
         */
         this.$router.push({ name: 'products.index', query: { page: obj.page } })
-
-        /**
-        * Fetch a new set of Products based on
-        * current page number. Mind the nextTick()
-        * which delays a the request a fraction
-        * of a second. This ensures the currentPage
-        * property is set before making the request.
-        */
-        Vue.nextTick(() => this.fetch())
       },
 
       /**
@@ -146,6 +136,11 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
+    },
+
+    watch: {
+      // when page change, fetch new data
+      currentPage: 'fetch',
     },
 
     /**
