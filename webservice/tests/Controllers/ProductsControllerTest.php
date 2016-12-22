@@ -71,10 +71,14 @@ class ProductsControllerTest extends ApiTestCase
             'category' => $category,
         ]);
 
-        $this->assertResponseStatus(204);
+        $this->assertResponseStatus(200);
         $this->seeInDatabase('products', [
             'name' => 'new product name',
             'category_id' => $category,
+        ]);
+        $this->seeJson(['id' => 1]);
+        $this->seeJsonStructure([
+            'data' => ['id', 'name', 'category'],
         ]);
     }
 

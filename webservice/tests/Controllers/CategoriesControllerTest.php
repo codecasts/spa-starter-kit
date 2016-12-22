@@ -59,8 +59,12 @@ class CategoriesControllerTest extends ApiTestCase
             'name' => 'new category name',
         ]);
 
-        $this->assertResponseStatus(204);
+        $this->assertResponseStatus(200);
         $this->seeInDatabase('categories', ['name' => 'new category name']);
+        $this->seeJson(['id' => 1]);
+        $this->seeJsonStructure([
+            'data' => ['id', 'name'],
+        ]);
     }
 
     /** @test */

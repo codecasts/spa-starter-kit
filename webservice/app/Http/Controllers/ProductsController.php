@@ -77,7 +77,7 @@ class ProductsController extends ApiController
             'category_id' => $request->category,
         ])->save();
 
-        return $this->response->withNoContent();
+        return $this->response->item($product, new ProductTransformer);
     }
 
     /**

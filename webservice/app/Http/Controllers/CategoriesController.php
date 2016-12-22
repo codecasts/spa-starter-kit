@@ -81,7 +81,7 @@ class CategoriesController extends ApiController
 
         $category->fill($request->all())->save();
 
-        return $this->response->withNoContent();
+        return $this->response->item($category, new CategoryTransformer);
     }
 
     /**
