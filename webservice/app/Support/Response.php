@@ -143,7 +143,6 @@ class Response
         ]);
     }
 
-
     /**
      * Make a JSON response with the transformed item.
      *
