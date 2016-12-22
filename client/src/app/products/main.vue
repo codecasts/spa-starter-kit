@@ -238,7 +238,7 @@
 
     <!-- el-table and its children comes from Element UI -->
     <!-- http://element.eleme.io/#/en-US/component/table -->
-    <el-table :data="products" stripe border style="width: 100%">
+    <el-table v-loading.body="fetching" :data="products" stripe border style="width: 100%">
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="Product"></el-table-column>
       <el-table-column inline-template label="Options" width="100">
