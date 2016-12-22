@@ -42,11 +42,9 @@ class CategoriesController extends ApiController
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->only('name'));
+        $category = Category::create($request->all());
 
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->withCreated($category, new CategoryTransformer);
     }
 
     /**
@@ -81,12 +79,9 @@ class CategoriesController extends ApiController
             return $this->response->withNotFound('Category not found');
         }
 
-        $category->name = $request->get('name');
-        $category->save();
+        $category->fill($request->all())->save();
 
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->item($category, new CategoryTransformer);
     }
 
     /**
@@ -105,8 +100,6 @@ class CategoriesController extends ApiController
 
         $category->delete();
 
-        return $this->response->json([
-            'result' => 'success',
-        ]);
+        return $this->response->withNoContent();
     }
 }
