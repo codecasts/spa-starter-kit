@@ -43,6 +43,29 @@ class Response
     }
 
     /**
+     * Return a 201 response with the given created resource.
+     *
+     * @param  mixed|null               $resource
+     * @param  TransformerAbstract|null $transformer
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function withCreated($resource = null, TransformerAbstract $transformer = null)
+    {
+        $this->setStatusCode(HttpResponse::HTTP_CREATED);
+
+        if (is_null($resource)) {
+            return $this->json();
+        }
+
+        if (! $transformer) {
+            return $this->json($resource);
+        }
+
+        return $this->item($resource, $transformer);
+    }
+
+    /**
      * Return a 429 response.
      *
      * @param  string $message
@@ -99,6 +122,18 @@ class Response
     }
 
     /**
+     * Make a 204 response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function withNoContent()
+    {
+        return $this->setStatusCode(
+            HttpResponse::HTTP_NO_CONTENT
+        )->json();
+    }
+
+    /**
      * Make an error response.
      *
      * @param  mixed $message
@@ -110,20 +145,6 @@ class Response
         return $this->json([
             'messages' => (is_array($message) ? $message : [$message]),
         ]);
-    }
-
-    /**
-     * Make a 204 response.
-     *
-     * @param  string $message
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function withNoContent()
-    {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_NO_CONTENT
-        )->json();
     }
 
     /**
