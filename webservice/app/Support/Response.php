@@ -43,6 +43,25 @@ class Response
     }
 
     /**
+     * Return a 201 response with the given created resource.
+     *
+     * @param  mixed|null               $resource
+     * @param  TransformerAbstract|null $transformer
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function withCreated($resource = null, TransformerAbstract $transformer = null)
+    {
+        $this->setStatusCode(HttpResponse::HTTP_CREATED);
+
+        if (! $transformer) {
+            return $this->json($resource);
+        }
+
+        return $this->item($resource, $transformer);
+    }
+
+    /**
      * Return a 429 response.
      *
      * @param  string $message

@@ -9,123 +9,90 @@ class CategoriesControllerTest extends ApiTestCase
 {
     use DatabaseMigrations, WithoutMiddleware, Factory;
 
-    /**
-     * @test
-     */
+    /** @test */
+    public function can_list_categories()
+    {
+        $this->times(5)->create(Category::class);
+
+        $this->json('GET', '/api/categories');
+
+        $this->assertResponseOk();
+        $this->seeJsonStructure(['data' => ['*' => ['id', 'name']]]);
+    }
+
+    /** @test */
+    public function can_create_category()
+    {
+        $category = $this->make(Category::class);
+
+        $this->json('POST', '/api/categories', [
+            'name' => $category->name,
+        ]);
+
+        $this->assertResponseStatus(201);
+        $this->seeJsonStructure(['data' => ['id', 'name']]);
+        $this->seeJson(['name' => $category->name]);
+        $this->seeInDatabase('categories', ['name' => $category->name]);
+    }
+
+    /** @test */
+    public function can_show_category()
+    {
+        $this->create(Category::class);
+
+        $this->json('GET', '/api/categories/1');
+
+        $this->assertResponseOk();
+        $this->seeJsonStructure(['data' => ['id', 'name']]);
+    }
+
+    /** @test */
+    public function can_update_category()
+    {
+        $this->create(Category::class);
+
+        $this->json('PUT', '/api/categories/1', [
+            'name' => 'new category name',
+        ]);
+
+        $this->assertResponseStatus(204);
+        $this->seeInDatabase('categories', ['name' => 'new category name']);
+    }
+
+    /** @test */
     public function can_delete_category()
     {
         $this->create(Category::class);
 
         $this->json('DELETE', '/api/categories/1');
 
-        $this->assertResponseOk();
+        $this->assertResponseStatus(204);
         $this->dontSeeInDatabase('categories', ['id' => 1]);
     }
 
     /**
      * @test
+     * @dataProvider requestUrlProvider
      */
-    public function can_update_category()
+    public function get_404_when_category_dont_exist($method, $url, $data = [])
     {
-        $this->create(Category::class);
-
-        $this->json('PUT', '/api/categories/1', [
-            'name' => 'Dummy',
-        ]);
-
-        $this->assertResponseOk();
-        $this->seeInDatabase('categories', [
-            'id' => 1,
-            'name' => 'Dummy',
-        ]);
-    }
-
-    /**
-     * @test
-     * @dataProvider urlProvider
-     */
-    public function get_not_found_if_category_dont_exist($method, $url)
-    {
-        $this->json($method, $url, [
-            'name' => 'Dummy',
-        ]);
+        $this->json($method, $url, $data);
 
         $this->assertResponseStatus(404);
-        $this->seeJsonStructure([
-            'messages' => [[]],
-        ]);
+        $this->seeJsonStructure(['messages' => []]);
     }
 
     /**
-     * Url data privider.
+     * Request Url provider.
      *
      * @return array
      */
-    public function urlProvider()
+    public function requestUrlProvider()
     {
         return [
             ['GET', '/api/categories/1'],
-            ['PUT', '/api/categories/1'],
+            ['PUT', '/api/categories/1', ['name' => 'update']],
             ['DELETE', '/api/categories/1'],
         ];
-    }
-
-    /**
-     * @test
-     */
-    public function can_get_category()
-    {
-        $this->create(Category::class, [
-            'name' => 'Dummy',
-        ]);
-
-        $this->json('GET', '/api/categories/1');
-
-        $this->assertResponseOk();
-        
-        $this->seeJsonStructure([
-            'data' => [
-                'id', 'name',   
-            ],
-        ]); 
-        
-        $this->seeJson([
-            'name' => 'Dummy',
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function can_create_category()
-    {
-        $this->json('POST', '/api/categories', [
-            'name' => 'Dummy name',
-        ]);
-
-        $this->assertResponseOk();
-        $this->seeInDatabase('categories', [
-            'name' => 'Dummy name',
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function can_get_categories()
-    {
-        $this->times(3)->create(Category::class);
-
-        $this->json('GET', '/api/categories');
-
-        $this->assertResponseOk();
-        $this->seeJsonStructure([
-            'data' => [
-                '*' => ['id', 'name'],
-            ],
-            'meta' => [
-                'pagination' => [],
-            ],
-        ]);
     }
 }
