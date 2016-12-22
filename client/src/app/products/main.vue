@@ -1,7 +1,6 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import CcPagination from 'components/general/pagination'
 
   export default {
     /**
@@ -9,14 +8,6 @@
     * Vue.js Devtools
     */
     name: 'CcProducts',
-
-    /**
-    * Components registered with
-    * this component
-    */
-    components: {
-      CcPagination,
-    },
 
     methods: {
       edit(index) {
@@ -79,11 +70,11 @@
       * Navigate to a specific page, provided in the
       * obj received by the method
       */
-      navigate(obj) {
+      navigate(page) {
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'products.index', query: { page: obj.page } })
+        this.$router.push({ name: 'products.index', query: { page } })
       },
 
       /**
@@ -170,17 +161,12 @@
     * behaviour of multiple AJAX calls being made.
     */
     beforeRouteLeave(to, from, next) {
-      this.$bus.$off('navigate')
       this.$bus.$off('product.created')
       this.$bus.$off('product.updated')
       jQuery('body').off('keyup')
       next()
     },
     mounted() {
-      /**
-      * Listen to pagination navigate event
-      */
-      this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
       * Product was created or updated, refresh the list
       */
@@ -248,17 +234,22 @@
         </div>
       </el-table-column>
     </el-table>
-    <div>
-      <cc-pagination
-        :pagination-data="pagination"
-        :current-page="currentPage"
-        :max-items="12">
-      </cc-pagination>
+    <div class="pagination">
+      <el-pagination
+        @current-change="navigate"
+        :current-page="pagination.current_page"
+        :page-size="pagination.per_page"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <style scoped>
+  .pagination {
+    float: right;
+  }
   .button-within-header {
     margin-top: 32px;
   }
