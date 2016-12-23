@@ -31,7 +31,7 @@ class Transform
     /**
      * Transform a collection of data.
      *
-     * @param  EloquentCollection|LengthAwarePaginator $data
+     * @param  mixed               $data
      * @param  TransformerAbstract $transformer
      *
      * @return array
@@ -50,12 +50,12 @@ class Transform
     /**
      * Transform a single data.
      *
-     * @param  Model               $data
+     * @param  mixed               $data
      * @param  TransformerAbstract $transformer
      *
      * @return array
      */
-    public function item(Model $data, TransformerAbstract $transformer)
+    public function item($data, TransformerAbstract $transformer)
     {
         return $this->fractal->createData(
             new FractalItem($data, $transformer)
