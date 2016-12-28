@@ -208,16 +208,6 @@
       */
       this.fetchPaginated()
     },
-    /**
-    * This hook is called every time DOM
-    * gets updated.
-    */
-    updated() {
-      /**
-      * start Bootstrap Tooltip
-      */
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    },
   }
 </script>
 
