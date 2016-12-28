@@ -239,6 +239,7 @@
 <style scoped>
   .pagination {
     float: right;
+    margin-top: 20px;
   }
   .button-within-header {
     margin-top: 32px;
