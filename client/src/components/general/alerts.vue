@@ -1,7 +1,6 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import { isEmpty } from 'lodash'
 
   export default {
     computed: {
@@ -13,7 +12,7 @@
         return this.messages.error.length > 0
       },
       hasValidationMessages() {
-        return !isEmpty(this.messages.validation)
+        return this.messages.validation.length > 0
       },
       formatedErrorMessage() {
         return this.messages.error.map(msg => `&bull; ${msg}`).join('<br>')

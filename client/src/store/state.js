@@ -5,7 +5,7 @@ export default {
     success: '',
     error: [],
     warning: '',
-    validation: {},
+    validation: [],
   },
   fetching: false,
 }
