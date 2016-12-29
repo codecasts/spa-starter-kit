@@ -17,7 +17,7 @@ abstract class ApiController extends Controller
     /**
      * API parameters helper.
      *
-     * @var string
+     * @var \App\Support\Parameters
      */
     protected $parameters;
 
