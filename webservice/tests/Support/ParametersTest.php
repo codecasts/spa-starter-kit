@@ -12,30 +12,30 @@ class ParametersTest extends TestCase
     public function can_get_order()
     {
         $parameters = $this->getQueryParameterInstance([
-            'order' => 'desc',
+            'order' => 'some_order',
         ]);
 
-        $this->assertEquals('desc', $parameters->order());
+        $this->assertEquals('some_order', $parameters->order());
     }
 
     /** @test */
     public function can_get_sort()
     {
         $parameters = $this->getQueryParameterInstance([
-            'sort' => 'id',
+            'sort' => 'column_name',
         ]);
 
-        $this->assertEquals('id', $parameters->sort());
+        $this->assertEquals('column_name', $parameters->sort());
     }
 
     /** @test */
     public function can_get_limit()
     {
         $parameters = $this->getQueryParameterInstance([
-            'limit' => 10,
+            'limit' => 99,
         ]);
 
-        $this->assertEquals(10, $parameters->limit());
+        $this->assertEquals(99, $parameters->limit());
     }
 
     /** @test */
