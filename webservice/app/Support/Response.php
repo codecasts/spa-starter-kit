@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Transformers\Transform;
+use App\Support\Transform;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -19,7 +19,7 @@ class Response
     /**
      * API transformer helper.
      *
-     * @var \App\Transformers\Transform
+     * @var \App\Support\Transform
      */
     public $transform;
 

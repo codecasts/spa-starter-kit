@@ -1,7 +1,7 @@
 <?php
 
 use App\Support\Response;
-use App\Transformers\Transform;
+use App\Support\Transform;
 use Illuminate\Http\JsonResponse;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Contracts\Routing\ResponseFactory;

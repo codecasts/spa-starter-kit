@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use League\Fractal\Manager;
-use App\Transformers\Transform;
+use App\Support\Transform;
 use Illuminate\Support\ServiceProvider;
 use League\Fractal\Serializer\DataArraySerializer;
 
