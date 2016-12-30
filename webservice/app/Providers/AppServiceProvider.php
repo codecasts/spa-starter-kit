@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use League\Fractal\Manager;
 use App\Support\Transform;
+use League\Fractal\Manager;
 use Illuminate\Support\ServiceProvider;
-use League\Fractal\Serializer\DataArraySerializer;
 
 class AppServiceProvider extends ServiceProvider
 {

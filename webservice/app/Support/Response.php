@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use App\Support\Transform;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
