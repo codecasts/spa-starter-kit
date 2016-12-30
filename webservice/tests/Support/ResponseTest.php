@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Http\JsonResponse;
 use App\Support\Response;
 use App\Support\Transform;
-use Illuminate\Http\JsonResponse;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -46,11 +46,11 @@ class ResponseTest extends TestCase
     /** @test */
     public function can_make_an_error_response()
     {
-        $response = $this->getResponseInstance()->withError('error');
+        $response = $this->getResponseInstance()->withError('message');
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals([
-            'messages' => ['error'],
+            'messages' => ['message'],
         ], $response->getData(true));
     }
 
@@ -107,10 +107,10 @@ class ResponseTest extends TestCase
     /** @test */
     public function can_make_created_response()
     {
-        $response = $this->getResponseInstance()->withCreated(['test']);
+        $response = $this->getResponseInstance()->withCreated();
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(['test'], $response->getData(true));
+        $this->assertEquals([], $response->getData(true));
         $this->assertEquals(201, $response->status());
     }
 

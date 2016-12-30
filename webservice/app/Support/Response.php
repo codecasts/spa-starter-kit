@@ -58,10 +58,6 @@ class Response
             return $this->json();
         }
 
-        if (! $transformer) {
-            return $this->json($resource);
-        }
-
         return $this->item($resource, $transformer);
     }
 
@@ -150,12 +146,12 @@ class Response
     /**
      * Make a JSON response with the transformed item.
      *
-     * @param  mixed               $item
-     * @param  TransformerAbstract $transformer
+     * @param  mixed                    $item
+     * @param  TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function item($item, TransformerAbstract $transformer)
+    public function item($item, TransformerAbstract $transformer = null)
     {
         return $this->json(
             $this->transform->item($item, $transformer)
@@ -165,12 +161,12 @@ class Response
     /**
      * Make a JSON response with the transformed items.
      *
-     * @param  mixed               $items
-     * @param  TransformerAbstract $transformer
+     * @param  mixed                    $items
+     * @param  TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function collection($items, TransformerAbstract $transformer)
+    public function collection($items, TransformerAbstract $transformer = null)
     {
         return $this->json(
             $this->transform->collection($items, $transformer)
