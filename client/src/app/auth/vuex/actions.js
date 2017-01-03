@@ -19,7 +19,7 @@ export const logout = ({ dispatch }) => {
   // call actions
   return Promise.all([
     dispatch('setToken', null),
-    dispatch('setUser', {}),
+    dispatch('setUser', {})
   ])
 }
 

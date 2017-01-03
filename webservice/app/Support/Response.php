@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use App\Transformers\Transform;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -19,7 +18,7 @@ class Response
     /**
      * API transformer helper.
      *
-     * @var \App\Transformers\Transform
+     * @var \App\Support\Transform
      */
     public $transform;
 
@@ -56,10 +55,6 @@ class Response
 
         if (is_null($resource)) {
             return $this->json();
-        }
-
-        if (! $transformer) {
-            return $this->json($resource);
         }
 
         return $this->item($resource, $transformer);
@@ -150,12 +145,12 @@ class Response
     /**
      * Make a JSON response with the transformed item.
      *
-     * @param  mixed               $item
-     * @param  TransformerAbstract $transformer
+     * @param  mixed                    $item
+     * @param  TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function item($item, TransformerAbstract $transformer)
+    public function item($item, TransformerAbstract $transformer = null)
     {
         return $this->json(
             $this->transform->item($item, $transformer)
@@ -165,12 +160,12 @@ class Response
     /**
      * Make a JSON response with the transformed items.
      *
-     * @param  mixed               $items
-     * @param  TransformerAbstract $transformer
+     * @param  mixed                    $items
+     * @param  TransformerAbstract|null $transformer
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function collection($items, TransformerAbstract $transformer)
+    public function collection($items, TransformerAbstract $transformer = null)
     {
         return $this->json(
             $this->transform->collection($items, $transformer)

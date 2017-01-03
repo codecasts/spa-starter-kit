@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Http\Requests\ProductRequest;
-use App\Transformers\ProductTransformer;
 
 class ProductsController extends ApiController
 {
@@ -15,13 +14,13 @@ class ProductsController extends ApiController
      */
     public function index()
     {
-        $sort = $this->getSort();
-        $order = $this->getOrder();
-        $limit = $this->getLimit();
+        $sort = $this->parameters->sort();
+        $order = $this->parameters->order();
+        $limit = $this->parameters->limit();
 
         $products = Product::orderBy($sort, $order)->paginate($limit);
 
-        return $this->response->collection($products, new ProductTransformer);
+        return $this->response->collection($products);
     }
 
     /**
@@ -37,7 +36,7 @@ class ProductsController extends ApiController
             'category_id' => $request->category,
         ]);
 
-        return $this->response->withCreated($product, new ProductTransformer);
+        return $this->response->withCreated($product);
     }
 
     /**
@@ -54,7 +53,7 @@ class ProductsController extends ApiController
             return $this->response->withNotFound('Product not found');
         }
 
-        return $this->response->item($product, new ProductTransformer);
+        return $this->response->item($product);
     }
 
     /**
@@ -77,7 +76,7 @@ class ProductsController extends ApiController
             'category_id' => $request->category,
         ])->save();
 
-        return $this->response->item($product, new ProductTransformer);
+        return $this->response->item($product);
     }
 
     /**
