@@ -15,6 +15,8 @@ class Parameters
 
     /**
      * Create a new class instance.
+     *
+     * @param Request $request
      */
     public function __construct(Request $request)
     {

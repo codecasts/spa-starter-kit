@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
+use App\Support\Transform;
 use League\Fractal\Manager;
-use App\Transformers\Transform;
 use Illuminate\Support\ServiceProvider;
-use League\Fractal\Serializer\DataArraySerializer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,14 +25,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Transform::class, function () {
+        $this->app->bind(Transform::class, function ($app) {
             $fractal = new Manager;
+            $serializer = $app['config']->get('api.serializer');
 
             if (request()->has('include')) {
                 $fractal->parseIncludes(request()->query('include'));
             }
 
-            $fractal->setSerializer(new DataArraySerializer);
+            $fractal->setSerializer(new $serializer);
 
             return new Transform($fractal);
         });
