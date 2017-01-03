@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Transformers\UserTransformer;
 
 class MeController extends ApiController
 {
@@ -16,6 +15,6 @@ class MeController extends ApiController
     {
         $user = Auth::guard('api')->user();
 
-        return $this->response->item($user, new UserTransformer);
+        return $this->response->item($user);
     }
 }

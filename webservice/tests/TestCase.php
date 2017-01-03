@@ -22,4 +22,11 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
-use App\Transformers\CategoryTransformer;
 
 class CategoriesController extends ApiController
 {
@@ -15,13 +14,13 @@ class CategoriesController extends ApiController
      */
     public function index()
     {
-        $sort = $this->getSort();
-        $order = $this->getOrder();
-        $limit = $this->getLimit();
+        $sort = $this->parameters->sort();
+        $order = $this->parameters->order();
+        $limit = $this->parameters->limit();
 
         $categories = Category::orderBy($sort, $order)->paginate($limit);
 
-        return $this->response->collection($categories, new CategoryTransformer);
+        return $this->response->collection($categories);
     }
 
     /**
@@ -31,7 +30,7 @@ class CategoriesController extends ApiController
      */
     public function fullList()
     {
-        return $this->response->collection(Category::all(), new CategoryTransformer);
+        return $this->response->collection(Category::all());
     }
 
     /**
@@ -44,7 +43,7 @@ class CategoriesController extends ApiController
     {
         $category = Category::create($request->all());
 
-        return $this->response->withCreated($category, new CategoryTransformer);
+        return $this->response->withCreated($category);
     }
 
     /**
@@ -61,7 +60,7 @@ class CategoriesController extends ApiController
             return $this->response->withNotFound('Category not found');
         }
 
-        return $this->response->item($category, new CategoryTransformer);
+        return $this->response->item($category);
     }
 
     /**
@@ -81,7 +80,7 @@ class CategoriesController extends ApiController
 
         $category->fill($request->all())->save();
 
-        return $this->response->item($category, new CategoryTransformer);
+        return $this->response->item($category);
     }
 
     /**
