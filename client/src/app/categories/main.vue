@@ -208,16 +208,6 @@
       */
       this.fetchPaginated()
     },
-    /**
-    * This hook is called every time DOM
-    * gets updated.
-    */
-    updated() {
-      /**
-      * start Bootstrap Tooltip
-      */
-      jQuery('[data-toggle="tooltip"]').tooltip()
-    },
   }
 </script>
 
@@ -279,6 +269,7 @@
 <style scoped>
   .pagination {
     float: right;
+    margin-top: 20px;
   }
   .button-within-header {
     margin-top: 32px;

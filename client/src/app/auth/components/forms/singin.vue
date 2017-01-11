@@ -41,15 +41,15 @@
 </script>
 
 <template>
-  <form class="well" @submit.prevent="submit">
-    <div class="form-group">
-      <label for="email" class="control-label">E-mail</label>
-      <input type="email" class="form-control" id="email" v-model="email">
-    </div>
-    <div class="form-group">
-      <label for="password" class="control-label">Password</label>
-      <input type="password" class="form-control" id="password" v-model="password">
-    </div>
-    <button class="btn btn-primary btn-block" type="submit">Login</button>
-  </form>
+  <div class="well">
+    <el-form ref="form">
+      <el-form-item label="E-mail">
+        <el-input v-model="email"></el-input>
+      </el-form-item>
+      <el-form-item label="Password">
+        <el-input v-model="password" type="password"></el-input>
+      </el-form-item>
+      <el-button @click="submit">Login</el-button>
+    </el-form>
+  </div>
 </template>

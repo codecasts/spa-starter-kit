@@ -59,9 +59,8 @@
       * from the server
       */
       fetch() {
-        this.$refs.firstInput.focus()
-
         const id = this.$route.params.id
+
         /**
         * This same component is used for create
         * and update so we have to check if
@@ -153,11 +152,12 @@
 </script>
 
 <template>
-  <form @submit.prevent="submit" class="well">
-    <div class="form-group">
-      <label for="name" class="control-label">Category Name</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="category.name">
-    </div>
-    <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
-  </form>
+  <div class="well">
+    <el-form ref="form" :model="category" label-width="120px">
+      <el-form-item label="Category name">
+        <el-input v-model="category.name"></el-input>
+      </el-form-item>
+      <el-button @click="submit">Save</el-button>
+    </el-form>
+  </div>
 </template>

@@ -63,8 +63,6 @@
       * from the server
       */
       fetch() {
-        this.$refs.firstInput.focus()
-
         const id = this.$route.params.id
         /**
         * This same component is used for create
@@ -183,19 +181,21 @@
 </script>
 
 <template>
-  <form @submit.prevent="submit" class="well">
-    <div class="form-group">
-      <label for="name" class="control-label">Product Name</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="product.name">
-    </div>
-    <div class="form-group">
-      <label for="category" class="control-label">Category</label>
-      <select name="category" id="category" class="form-control" v-model="product.category">
-        <option v-for="category in categories" :value="category.id">
-          {{ category.name }}
-        </option>
-      </select>
-    </div>
-    <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
-  </form>
+  <div class="well">
+    <el-form ref="form" :model="product" label-width="120px">
+      <el-form-item label="Product name">
+        <el-input v-model="product.name"></el-input>
+      </el-form-item>
+      <el-form-item label="Category">
+        <el-select v-model="product.category" placeholder="Select Category" filterable>
+          <el-option
+            v-for="category in categories"
+            :label="category.name"
+            :value="category.id">
+          </el-option>
+        </el-select>
+        <el-button @click="submit">Save</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>

@@ -15,6 +15,6 @@ export default {
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'success', message: '' })
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'error', message: [] })
     commit(TYPES.MAIN_SET_MESSAGE, { type: 'warning', message: '' })
-    commit(TYPES.MAIN_SET_MESSAGE, { type: 'validation', message: {} })
+    commit(TYPES.MAIN_SET_MESSAGE, { type: 'validation', message: [] })
   },
 }
