@@ -153,7 +153,7 @@
 
 <template>
   <div class="well">
-    <el-form ref="form" :model="category">
+    <el-form ref="form" :model="category" label-width="120px">
       <el-form-item label="Category name">
         <el-input v-model="category.name"></el-input>
       </el-form-item>

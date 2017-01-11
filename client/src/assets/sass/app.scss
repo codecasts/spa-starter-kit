@@ -9,7 +9,7 @@
 // You can look at node_modules/bootstrap-sass/assets/stylesheets/bootstrap
 // To see what can be included here. If you want/need to whole Bootstrap
 // then just uncomment the line below. Don't forget to remove all other
-// bootstrap related lines (lines 15-19)
+// bootstrap related lines (lines 14-21)
 // @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
@@ -18,6 +18,7 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/wells";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs";
 
 // SweetAlert
 @import "../../../node_modules/sweetalert/dev/sweetalert.scss";

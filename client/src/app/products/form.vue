@@ -182,7 +182,7 @@
 
 <template>
   <div class="well">
-    <el-form ref="form" :model="product">
+    <el-form ref="form" :model="product" label-width="120px">
       <el-form-item label="Product name">
         <el-input v-model="product.name"></el-input>
       </el-form-item>
@@ -194,8 +194,8 @@
             :value="category.id">
           </el-option>
         </el-select>
+        <el-button @click="submit">Save</el-button>
       </el-form-item>
-      <el-button @click="submit">Save</el-button>
     </el-form>
   </div>
 </template>
