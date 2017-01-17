@@ -1,14 +1,14 @@
-import { Singup, Singin, Main } from './components'
+import { Signup, Signin, Main } from './components'
 
 const children = [{
-  name: 'auth.singin',
-  path: 'singin',
-  component: Singin,
+  name: 'auth.signin',
+  path: 'signin',
+  component: Signin,
   meta: { requiresAuth: false },
 }, {
-  name: 'auth.singup',
-  path: 'singup',
-  component: Singup,
+  name: 'auth.signup',
+  path: 'signup',
+  component: Signup,
   meta: { requiresAuth: false },
 }]
 
@@ -17,6 +17,6 @@ export default [{
   name: 'auth',
   path: '/auth',
   component: Main,
-  redirect: { name: 'auth.singin' },
+  redirect: { name: 'auth.signin' },
   meta: { requiresAuth: false },
 }]
