@@ -20,7 +20,7 @@
     watch: {
       isLogged(value) { // isLogged changes when the token changes
         if (value === false) {
-          this.$router.push({ name: 'auth.singin' })
+          this.$router.push({ name: 'auth.signin' })
         }
       },
     },
