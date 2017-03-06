@@ -56,7 +56,7 @@
 
     <el-alert
       :title="formatedErrorMessage"
-      v-show="hasValidationMessage"
+      v-show="hasValidationMessages"
       type="warning"
       @close="dismiss('validation')"
       show-icon></el-alert>
