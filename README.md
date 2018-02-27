@@ -94,7 +94,7 @@ $ composer test
 
 5. **Important**: Laravel project found in the directory *webservice* was modified beyond adding routes and controllers. For instance: the *webservice/app/Exceptions/Handler.php* was modified from its original version to return all exceptions to the client, not only HttpExceptions. Other changes are also in place. So our recommendation is to always use this project to build your own, instead of copying controllers and routes to a new project.
 
-## Contributing
+## Contributing [![Open Source Helpers](https://www.codetriage.com/codecasts/spa-starter-kit/badges/users.svg)](https://www.codetriage.com/codecasts/spa-starter-kit)
 
 1. Fork it!
 2. Create your feature branch from **develop**: `git checkout -b feature/my-new-feature`
@@ -102,6 +102,8 @@ $ composer test
 4. Commit your changes: `git commit -am 'Add some feature'`
 5. Push to the branch: `git push origin feature/my-new-feature`
 6. Submit a pull request to **develop** branch :D
+
+In addition to contributing code, you can help to triage issues. This can include reproducing bug reports, or asking for vital information such as version numbers or reproduction instructions. If you would like to start triaging issues, one easy way to get started is to [subscribe to spa-starter-kit on CodeTriage](https://www.codetriage.com/codecasts/spa-starter-kit).
 
 ## Credits
 
